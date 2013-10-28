@@ -34,29 +34,41 @@ public class Song {
 	 * 
 	 * @param path
 	 *            path of the song
-	 * @throws InvalidFileException
-	 * @see org.farng.mp3
+	 * 
 	 */
-	public Song(String path) throws InvalidFileException {
+	public Song(String path) {
 		this.path = path;
 
+		// Default value
+		this.title = new File(path).getName();
+		this.album = "";
+		this.artist = "";
+		this.year = "1970";
+		this.lyrics = "";
+
+		// Get ID3 tag
+		try {
+			this.updateID3Tags();
+		} catch (InvalidFileException e) {
+		}
+
+	}
+
+	/**
+	 * Update ID3 tag value
+	 * 
+	 * @see org.farng.mp3
+	 */
+	public void updateID3Tags() throws InvalidFileException {
 		// Get and test file
 		File song = new File(path);
 		if (!song.exists() || !song.isFile()) {
 			throw new InvalidFileException(path);
 		} else {
-
-			// Default value
-			this.title = song.getName();
-			this.album = "";
-			this.artist = "";
-			this.year = "1970";
-			this.lyrics = "";
-
 			try {
-				// Get id3 tags
 				MP3File mp3file = new MP3File(song);
 
+				// Get ID3 tags
 				if (mp3file.hasID3v2Tag()) {
 					ID3v2_4 tag = new ID3v2_4(mp3file.getID3v2Tag());
 
@@ -74,12 +86,9 @@ public class Song {
 					this.year = tag.getYearReleased();
 					this.lyrics = tag.getSongLyric();
 				}
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (TagException e) {
-				e.printStackTrace();
+			} catch (IOException | TagException e) {
 			}
+
 		}
 	}
 
