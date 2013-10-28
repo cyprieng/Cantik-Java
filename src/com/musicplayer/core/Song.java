@@ -34,50 +34,52 @@ public class Song {
 	 * 
 	 * @param path
 	 *            path of the song
+	 * @throws InvalidFileException
 	 * @see org.farng.mp3
 	 */
-	public Song(String path) {
+	public Song(String path) throws InvalidFileException {
 		this.path = path;
 
 		// Get and test file
 		File song = new File(path);
 		if (!song.exists() || !song.isFile()) {
-			return;
-		}
+			throw new InvalidFileException(path);
+		} else {
 
-		// Default value
-		this.title = song.getName();
-		this.album = "";
-		this.artist = "";
-		this.year = "1970";
-		this.lyrics = "";
+			// Default value
+			this.title = song.getName();
+			this.album = "";
+			this.artist = "";
+			this.year = "1970";
+			this.lyrics = "";
 
-		try {
-			// Get id3 tags
-			MP3File mp3file = new MP3File(song);
+			try {
+				// Get id3 tags
+				MP3File mp3file = new MP3File(song);
 
-			if (mp3file.hasID3v2Tag()) {
-				ID3v2_4 tag = new ID3v2_4(mp3file.getID3v2Tag());
+				if (mp3file.hasID3v2Tag()) {
+					ID3v2_4 tag = new ID3v2_4(mp3file.getID3v2Tag());
 
-				this.title = tag.getSongTitle();
-				this.album = tag.getAlbumTitle();
-				this.artist = tag.getLeadArtist();
-				this.year = tag.getYearReleased();
-				this.lyrics = tag.getSongLyric();
-			} else if (mp3file.hasID3v1Tag()) {
-				ID3v1 tag = new ID3v1(mp3file.getID3v1Tag());
+					this.title = tag.getSongTitle();
+					this.album = tag.getAlbumTitle();
+					this.artist = tag.getLeadArtist();
+					this.year = tag.getYearReleased();
+					this.lyrics = tag.getSongLyric();
+				} else if (mp3file.hasID3v1Tag()) {
+					ID3v1 tag = new ID3v1(mp3file.getID3v1Tag());
 
-				this.title = tag.getSongTitle();
-				this.album = tag.getAlbumTitle();
-				this.artist = tag.getLeadArtist();
-				this.year = tag.getYearReleased();
-				this.lyrics = tag.getSongLyric();
+					this.title = tag.getSongTitle();
+					this.album = tag.getAlbumTitle();
+					this.artist = tag.getLeadArtist();
+					this.year = tag.getYearReleased();
+					this.lyrics = tag.getSongLyric();
+				}
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (TagException e) {
+				e.printStackTrace();
 			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (TagException e) {
-			e.printStackTrace();
 		}
 	}
 
