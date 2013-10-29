@@ -131,6 +131,15 @@ public class Song {
 		}
 	}
 
+	/**
+	 * Retrieve the song's path
+	 * 
+	 * @return the path of the song
+	 */
+	public String getPath() {
+		return path;
+	}
+
 	@Override
 	public String toString() {
 		return "Song [path=" + path + ", title=" + title + ", album=" + album
