@@ -52,6 +52,17 @@ public class Playlist {
 	}
 
 	/**
+	 * Get the Song at the given index
+	 * 
+	 * @param index
+	 *            Index of the song to retrieve
+	 * @return the selected song
+	 */
+	public static Song getSong(int index) {
+		return Playlist.songList.get(index);
+	}
+
+	/**
 	 * Remove the song at the given index
 	 * 
 	 * @param index
@@ -82,7 +93,7 @@ public class Playlist {
 
 		while (li.hasNext())
 			out += li.next() + "\n";
-		
-		return "Playlist: \n"+ out;
+
+		return "Playlist: \n" + out;
 	}
 }
