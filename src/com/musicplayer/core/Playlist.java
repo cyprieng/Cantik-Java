@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import com.musicplayer.player.Player;
+
 /**
  * Class to store and manage playlist. It uses singleton design pattern.
  * 
@@ -23,10 +25,16 @@ public class Playlist {
 	private List<Song> songList;
 
 	/**
+	 * Current track index
+	 */
+	private int curentTrack;
+
+	/**
 	 * Constructor of Playlist. Init witch an empty songList
 	 */
 	private Playlist() {
 		this.songList = new LinkedList<Song>();
+		this.curentTrack = 0;
 	}
 
 	/**
@@ -56,10 +64,14 @@ public class Playlist {
 	 * 
 	 * @param index
 	 *            Index of the song to retrieve
-	 * @return the selected song
+	 * @return the selected song or null if it not exists
 	 */
 	public Song getSong(int index) {
-		return this.songList.get(index);
+		try {
+			return this.songList.get(index);
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 
 	/**
@@ -84,6 +96,53 @@ public class Playlist {
 	 */
 	public void randomize() {
 		Collections.shuffle(this.songList);
+	}
+
+	/**
+	 * Start playing the playlist
+	 */
+	public void play() {
+		if (this.getSong(0) != null) { // Song exists
+			// Play
+			Player.setFile(this.getSong(0).getPath());
+			Player.play();
+
+			this.curentTrack = 0;
+		} else {
+			Player.stopPlaying();
+		}
+	}
+
+	/**
+	 * Start playing the playlist from the selected song
+	 * 
+	 * @param index
+	 *            Index of the first song to play
+	 */
+	public void play(int index) {
+		if (this.getSong(index) != null) { // Song exists
+			// Play
+			Player.setFile(this.getSong(index).getPath());
+			Player.play();
+
+			this.curentTrack = index;
+		} else {
+			Player.stopPlaying();
+		}
+	}
+
+	/**
+	 * Jump to next track
+	 */
+	public void next() {
+		this.play(this.curentTrack + 1);
+	}
+
+	/**
+	 * Jump to last track
+	 */
+	public void back() {
+		this.play(this.curentTrack - 1);
 	}
 
 	@Override

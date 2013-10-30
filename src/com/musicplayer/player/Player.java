@@ -1,5 +1,7 @@
 package com.musicplayer.player;
 
+import com.musicplayer.core.Playlist;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.media.Media;
@@ -24,6 +26,7 @@ public class Player extends Application {
 
 	/**
 	 * Store the PlayerLaunchThread
+	 * 
 	 * @see PlayerLaunchThread
 	 */
 	private static PlayerLaunchThread plc;
@@ -58,6 +61,15 @@ public class Player extends Application {
 				String fileToLoad = "file:///" + Player.file;
 				Media m = new Media(fileToLoad);
 				Player.mediaPlayer = new MediaPlayer(m);
+
+				// Jump to next track at the end of the file
+				Player.mediaPlayer.setOnEndOfMedia(new Runnable() {
+					@Override
+					public void run() {
+						Playlist playlist = Playlist.getPlaylist();
+						playlist.next();
+					}
+				});
 			} catch (Exception e) {
 			}
 		}
@@ -72,8 +84,8 @@ public class Player extends Application {
 	public static void setFile(String file) {
 		Player.file = file.replace("\\", "/");
 
-		if (Player.mediaPlayer != null) { //Delete actual mediaPlayer
-			Player.mediaPlayer.stop();
+		if (Player.mediaPlayer != null) { // Delete actual mediaPlayer
+			Player.stopPlaying();
 			Player.mediaPlayer = null;
 		}
 
@@ -92,5 +104,12 @@ public class Player extends Application {
 	 */
 	public static void pause() {
 		Player.mediaPlayer.pause();
+	}
+
+	/**
+	 * Stop the player
+	 */
+	public static void stopPlaying() {
+		Player.mediaPlayer.stop();
 	}
 }
