@@ -20,13 +20,13 @@ public class Playlist {
 	/**
 	 * List of Song
 	 */
-	private static List<Song> songList;
+	private List<Song> songList;
 
 	/**
 	 * Constructor of Playlist. Init witch an empty songList
 	 */
 	private Playlist() {
-		Playlist.songList = new LinkedList<Song>();
+		this.songList = new LinkedList<Song>();
 	}
 
 	/**
@@ -47,8 +47,8 @@ public class Playlist {
 	 * @param song
 	 *            The Song to add to the list
 	 */
-	public static void addSong(Song song) {
-		Playlist.songList.add(song);
+	public void addSong(Song song) {
+		this.songList.add(song);
 	}
 
 	/**
@@ -58,8 +58,8 @@ public class Playlist {
 	 *            Index of the song to retrieve
 	 * @return the selected song
 	 */
-	public static Song getSong(int index) {
-		return Playlist.songList.get(index);
+	public Song getSong(int index) {
+		return this.songList.get(index);
 	}
 
 	/**
@@ -68,28 +68,28 @@ public class Playlist {
 	 * @param index
 	 *            Index of the song to remove
 	 */
-	public static void removeSong(int index) {
-		Playlist.songList.remove(index);
+	public void removeSong(int index) {
+		this.songList.remove(index);
 	}
 
 	/**
 	 * Empty the song list
 	 */
-	public static void reset() {
-		Playlist.songList.removeAll(songList);
+	public void reset() {
+		this.songList.removeAll(songList);
 	}
 
 	/**
 	 * Randomize the song list
 	 */
-	public static void randomize() {
-		Collections.shuffle(songList);
+	public void randomize() {
+		Collections.shuffle(this.songList);
 	}
 
 	@Override
 	public String toString() {
 		String out = "";
-		ListIterator<Song> li = Playlist.songList.listIterator();
+		ListIterator<Song> li = this.songList.listIterator();
 
 		while (li.hasNext())
 			out += li.next() + "\n";
