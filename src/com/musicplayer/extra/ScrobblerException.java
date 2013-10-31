@@ -10,10 +10,9 @@ public class ScrobblerException extends Exception {
 	private static final long serialVersionUID = 5405605093471491000L;
 
 	/**
-	 * Constructor which show a warning
+	 * Constructor with standard message
 	 */
 	public ScrobblerException() {
-		System.out
-				.println("Scrobble impossible: not actived or wrong username/password!");
+		super("Scrobble impossible: not actived or wrong username/password!");
 	}
 }

@@ -13,13 +13,13 @@ public class InvalidFileException extends Exception {
 	 * Exception constructor with no specified path
 	 */
 	public InvalidFileException() {
-		System.out.println("File does not exist!");
+		super("File does not exist");
 	}
 
 	/**
 	 * Exception constructor with specified path
 	 */
 	public InvalidFileException(String path) {
-		System.out.println("File(" + path + ") does not exist!");
+		super("File(" + path + ") does not exist");
 	}
 }
