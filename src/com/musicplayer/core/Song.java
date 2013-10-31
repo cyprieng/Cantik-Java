@@ -165,6 +165,15 @@ public class Song {
 		return year;
 	}
 
+	/**
+	 * Get the duration of the song
+	 * 
+	 * @return Duration in second
+	 */
+	public int getDuration() {
+		return duration;
+	}
+
 	@Override
 	public String toString() {
 		return "Song [path=" + path + ", title=" + title + ", album=" + album

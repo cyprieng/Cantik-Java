@@ -6,12 +6,17 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
 /**
- * Parse config file to retrieve lastfm login
+ * Parse config file. It uses singleton design pattern
  * 
  * @author cyprien
  * 
  */
 public class ConfigFileParser {
+	/**
+	 * Store the config
+	 */
+	private static ConfigFileParser config;
+
 	/*
 	 * Define if we need to use lastfm or not
 	 */
@@ -25,7 +30,7 @@ public class ConfigFileParser {
 	/**
 	 * Constructor: parse the file
 	 */
-	public ConfigFileParser() {
+	private ConfigFileParser() {
 		// Default value
 		this.lastfmStatus = false;
 		this.lastfmUsername = "";
@@ -72,6 +77,46 @@ public class ConfigFileParser {
 			} catch (Exception e) {
 			}
 		}
+	}
+
+	/**
+	 * Get the unique ConfigFileParser instance
+	 * 
+	 * @return the unique ConfigFileParser instance
+	 */
+	public static ConfigFileParser getConfigFileParser() {
+		if (ConfigFileParser.config == null) {
+			ConfigFileParser.config = new ConfigFileParser();
+		}
+
+		return ConfigFileParser.config;
+	}
+
+	/**
+	 * Get the lastfm status
+	 * 
+	 * @return True if enabled
+	 */
+	public boolean isLastfmStatus() {
+		return lastfmStatus;
+	}
+
+	/**
+	 * Get lastfm username
+	 * 
+	 * @return Lastfm username
+	 */
+	public String getLastfmUsername() {
+		return lastfmUsername;
+	}
+
+	/**
+	 * Get lastfm password
+	 * 
+	 * @return Lastfm password
+	 */
+	public String getLastfmPassword() {
+		return lastfmPassword;
 	}
 
 	@Override
