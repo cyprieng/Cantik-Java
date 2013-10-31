@@ -6,9 +6,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-import org.farng.mp3.MP3File;
-import org.farng.mp3.id3.ID3v1;
-import org.farng.mp3.id3.ID3v2_4;
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.TagException;
 
 /**
  * Class which stores data about a song: path and ID3 tag
@@ -23,9 +28,14 @@ public class Song {
 	private String path;
 
 	/**
-	 * ID3 tags values
+	 * Tags values
 	 */
 	private String title, album, artist, year, lyric;
+
+	/**
+	 * Song duration in second
+	 */
+	private int duration;
 
 	/**
 	 * Song constructor
@@ -48,50 +58,34 @@ public class Song {
 			this.artist = "";
 			this.year = "1970";
 			this.lyric = "";
+			this.duration = 0;
 
-			this.updateID3Tags();
+			// Get tags
+			this.updateTags();
 		}
 
 	}
 
 	/**
-	 * Update ID3 tag value
+	 * Update tags value
 	 * 
-	 * @see org.farng.mp3
+	 * @see jaudiotagger
 	 */
-	public void updateID3Tags() {
+	public void updateTags() {
 		try {
-			File song = new File(path);
-			MP3File mp3file = new MP3File(song);
+			// Read file
+			AudioFile f = AudioFileIO.read(new File(this.path));
+			Tag tag = f.getTag();
 
-			// Get ID3 tags
-			if (mp3file.hasID3v1Tag()) {
-				ID3v1 tag = new ID3v1(mp3file.getID3v1Tag());
-
-				this.title = tag.getSongTitle();
-				this.album = tag.getAlbumTitle();
-				this.artist = tag.getLeadArtist();
-				this.year = tag.getYearReleased();
-
-				try {
-					this.lyric = tag.getSongLyric();
-				} catch (UnsupportedOperationException e) {
-				}
-
-			} else if (mp3file.hasID3v2Tag()) {
-				ID3v2_4 tag = new ID3v2_4(mp3file.getID3v2Tag());
-
-				this.title = tag.getSongTitle();
-				this.album = tag.getAlbumTitle();
-				this.artist = tag.getLeadArtist();
-				this.year = tag.getYearReleased();
-
-				try {
-					this.lyric = tag.getSongLyric();
-				} catch (UnsupportedOperationException e) {
-				}
-			}
-		} catch (Exception e) {
+			// Read tags
+			this.title = tag.getFirst(FieldKey.TITLE);
+			this.album = tag.getFirst(FieldKey.ALBUM);
+			this.artist = tag.getFirst(FieldKey.ARTIST);
+			this.year = tag.getFirst(FieldKey.YEAR);
+			this.lyric = tag.getFirst(FieldKey.LYRICS);
+			this.duration = f.getAudioHeader().getTrackLength();
+		} catch (CannotReadException | IOException | TagException
+				| ReadOnlyFileException | InvalidAudioFrameException e) {
 		}
 	}
 
@@ -135,10 +129,46 @@ public class Song {
 		return path;
 	}
 
+	/**
+	 * Get the song title
+	 * 
+	 * @return Title of the song
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * Get the album title
+	 * 
+	 * @return Album title
+	 */
+	public String getAlbum() {
+		return album;
+	}
+
+	/**
+	 * Get the Artist name
+	 * 
+	 * @return Artist name
+	 */
+	public String getArtist() {
+		return artist;
+	}
+
+	/**
+	 * Get the year of the song
+	 * 
+	 * @return Year of the song
+	 */
+	public String getYear() {
+		return year;
+	}
+
 	@Override
 	public String toString() {
 		return "Song [path=" + path + ", title=" + title + ", album=" + album
 				+ ", artist=" + artist + ", year=" + year + ", lyric=" + lyric
-				+ "]";
+				+ ", duration=" + duration + "]";
 	}
 }
