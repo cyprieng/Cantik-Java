@@ -46,6 +46,9 @@ public class Scrobbler {
 				Scrobbler.session = Authenticator.getMobileSession(
 						config.getLastfmUsername(), config.getLastfmPassword(),
 						Scrobbler.KEY, Scrobbler.SECRET);
+
+				if (Scrobbler.session == null)
+					throw new ScrobblerException();
 			}
 		}
 	}
