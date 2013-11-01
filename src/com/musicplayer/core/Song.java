@@ -47,7 +47,7 @@ public class Song {
 	public Song(String path) throws InvalidFileException {
 		// Test file
 		File song = new File(path);
-		if (!song.exists() || !song.isFile()) {
+		if (!song.exists() || !song.isFile() || !checkExtension(path)) {
 			throw new InvalidFileException(path);
 		} else {
 			this.path = path;
@@ -118,6 +118,29 @@ public class Song {
 		} else { // Return ID3 tag value
 			return this.lyric;
 		}
+	}
+
+	/**
+	 * Check if the song has a correct extension
+	 * 
+	 * @param filename
+	 *            The path of the file
+	 * 
+	 * @return true if it is a correct extension
+	 */
+	public static boolean checkExtension(String fileName) {
+		// Get extension
+		String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1,
+				fileName.length()).toUpperCase();
+
+		// Check if it is in SongExtension enum
+		for (SongExtension ext : SongExtension.values()) {
+			if (ext.name().equals(fileExt)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
