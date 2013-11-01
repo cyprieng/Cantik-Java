@@ -1,6 +1,9 @@
 package com.musicplayer.player;
 
+import com.musicplayer.core.InvalidFileException;
 import com.musicplayer.core.Playlist;
+import com.musicplayer.core.Song;
+import com.musicplayer.extra.Scrobbler;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -62,10 +65,17 @@ public class Player extends Application {
 				Media m = new Media(fileToLoad);
 				Player.mediaPlayer = new MediaPlayer(m);
 
-				// Jump to next track at the end of the file
+				// Scrobble and jump to next track at the end of the file
 				Player.mediaPlayer.setOnEndOfMedia(new Runnable() {
 					@Override
 					public void run() {
+						// Scrobble file
+						try {
+							Scrobbler.scrobble(new Song(Player.file));
+						} catch (InvalidFileException e) {
+						}
+
+						// Jump to next track
 						Playlist playlist = Playlist.getPlaylist();
 						playlist.next();
 					}
@@ -97,6 +107,12 @@ public class Player extends Application {
 	 */
 	public static void play() {
 		Player.mediaPlayer.play();
+
+		// Scrobble file
+		try {
+			Scrobbler.updateNowPlaying(new Song(Player.file));
+		} catch (InvalidFileException e) {
+		}
 	}
 
 	/**
