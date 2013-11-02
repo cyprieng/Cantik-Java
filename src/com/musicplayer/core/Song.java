@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.URL;
 
 import org.jaudiotagger.audio.AudioFile;
@@ -21,7 +22,9 @@ import org.jaudiotagger.tag.TagException;
  * @author cyprien
  * 
  */
-public class Song {
+public class Song implements Serializable {
+	private static final long serialVersionUID = -2359300133101740540L;
+
 	/**
 	 * Path of the song
 	 */

@@ -12,7 +12,7 @@ import java.util.Hashtable;
  * @author cyprien
  * 
  */
-public class MusicLibrary {
+public class MusicLibrary extends Thread {
 	/**
 	 * Store the unique instance of MusicLibrary
 	 */
@@ -32,6 +32,7 @@ public class MusicLibrary {
 	 * Constructor which only init library var
 	 */
 	private MusicLibrary() {
+		super("MusicLibrary");
 		this.library = new Hashtable<String, Hashtable<String, ArrayList<Song>>>();
 	}
 
@@ -56,7 +57,17 @@ public class MusicLibrary {
 	 */
 	public void loadLibraryFolder(String path) {
 		this.libraryPath = path;
-		this.scanFolder(new File(path));
+
+		try {
+			// Get library from file
+			this.library = (Hashtable<String, Hashtable<String, ArrayList<Song>>>) ObjectFileWriter
+					.get(new File("library"));
+		} catch (Exception e) {
+
+		} finally {
+			// Start the thread => scan the library
+			this.start();
+		}
 	}
 
 	/**
@@ -110,6 +121,19 @@ public class MusicLibrary {
 			for (File f : list) {
 				this.scanFolder(f);
 			}
+		}
+	}
+
+	/**
+	 * Thread run function => scan the folder and store it in a file
+	 */
+	public void run() {
+		// Scan library
+		this.scanFolder(new File(this.libraryPath));
+		try {
+			// Store library in file
+			ObjectFileWriter.store(this.library, new File("library"));
+		} catch (Exception e) {
 		}
 	}
 
