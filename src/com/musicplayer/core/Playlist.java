@@ -1,5 +1,6 @@
 package com.musicplayer.core;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,6 +58,18 @@ public class Playlist {
 	 */
 	public void addSong(Song song) {
 		this.songList.add(song);
+	}
+
+	/**
+	 * Add an ArrayList of song to the playlist
+	 * 
+	 * @param songArray
+	 *            The ArrayList of song to add
+	 */
+	public void addSongArray(ArrayList<Song> songArray) {
+		for (int i = 0; i < songArray.size(); i++) {
+			this.addSong(songArray.get(i));
+		}
 	}
 
 	/**
