@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
+import com.musicplayer.core.Core;
+
 /**
  * Parse config file. It uses singleton design pattern
  * 
@@ -37,7 +39,7 @@ public class ConfigFileParser {
 		this.lastfmPassword = "";
 
 		// Test file
-		File configFile = new File("config");
+		File configFile = new File(Core.getUserPath() + "config");
 		if (configFile.exists() && configFile.isFile()) {
 			try {
 				// Read config file

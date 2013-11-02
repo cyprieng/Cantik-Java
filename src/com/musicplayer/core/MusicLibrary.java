@@ -61,7 +61,7 @@ public class MusicLibrary extends Thread {
 		try {
 			// Get library from file
 			this.library = (Hashtable<String, Hashtable<String, ArrayList<Song>>>) ObjectFileWriter
-					.get(new File("library"));
+					.get(new File(Core.getUserPath() + "library"));
 		} catch (Exception e) {
 
 		} finally {
@@ -132,7 +132,7 @@ public class MusicLibrary extends Thread {
 		this.scanFolder(new File(this.libraryPath));
 		try {
 			// Store library in file
-			ObjectFileWriter.store(this.library, new File("library"));
+			ObjectFileWriter.store(this.library, new File(Core.getUserPath() + "library"));
 		} catch (Exception e) {
 		}
 	}
