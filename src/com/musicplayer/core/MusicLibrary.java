@@ -24,9 +24,10 @@ public class MusicLibrary extends Thread {
 	private String libraryPath;
 
 	/**
-	 * Structure storing the music library
+	 * Structure storing the music library and the temporary one
 	 */
-	private Hashtable<String, Hashtable<String, ArrayList<Song>>> library;
+	private Hashtable<String, Hashtable<String, ArrayList<Song>>> library,
+			libraryTemp;
 
 	/**
 	 * Constructor which only init library var
@@ -77,25 +78,26 @@ public class MusicLibrary extends Thread {
 	 *            Song to add to the library
 	 */
 	public void addSong(Song song) {
-		if (!library.containsKey(song.getArtist())) { // Artist does not exist
-														// => create artist
-			library.put(song.getArtist(),
+		if (!libraryTemp.containsKey(song.getArtist())) { // Artist does not
+															// exist
+															// => create artist
+			libraryTemp.put(song.getArtist(),
 					new Hashtable<String, ArrayList<Song>>());
 		}
-		if (!((Hashtable<String, ArrayList<Song>>) library
-				.get(song.getArtist())).containsKey(song.getAlbum())) { // Album
-																		// does
-																		// not
-																		// exist
-																		// =>
-																		// create
-																		// album
-			((Hashtable<String, ArrayList<Song>>) library.get(song.getArtist()))
-					.put(song.getAlbum(), new ArrayList<Song>());
+		if (!((Hashtable<String, ArrayList<Song>>) libraryTemp.get(song
+				.getArtist())).containsKey(song.getAlbum())) { // Album
+																// does
+																// not
+																// exist
+																// =>
+																// create
+																// album
+			((Hashtable<String, ArrayList<Song>>) libraryTemp.get(song
+					.getArtist())).put(song.getAlbum(), new ArrayList<Song>());
 		}
 
 		// Create song
-		((ArrayList<Song>) ((Hashtable<String, ArrayList<Song>>) library
+		((ArrayList<Song>) ((Hashtable<String, ArrayList<Song>>) libraryTemp
 				.get(song.getArtist())).get(song.getAlbum())).add(song);
 	}
 
@@ -128,11 +130,17 @@ public class MusicLibrary extends Thread {
 	 * Thread run function => scan the folder and store it in a file
 	 */
 	public void run() {
-		// Scan library
-		this.scanFolder(new File(this.libraryPath));
+		this.libraryTemp = new Hashtable<String, Hashtable<String, ArrayList<Song>>>(); // Init
+																						// var
+		this.scanFolder(new File(this.libraryPath)); // Scan library
+		this.library = this.libraryTemp; // Set the library value to the
+											// temporary one
+		this.libraryTemp = null; // Destroy the temporary library
+
 		try {
 			// Store library in file
-			ObjectFileWriter.store(this.library, new File(Core.getUserPath() + "library"));
+			ObjectFileWriter.store(this.library, new File(Core.getUserPath()
+					+ "library"));
 		} catch (Exception e) {
 		}
 	}
