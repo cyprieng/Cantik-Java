@@ -44,7 +44,7 @@ public class ConfigFileParser {
 			try {
 				// Read config file
 				BufferedReader br = new BufferedReader(new InputStreamReader(
-						new FileInputStream("config")));
+						new FileInputStream(Core.getUserPath() + "config")));
 
 				String str;
 				while ((str = br.readLine()) != null) {
