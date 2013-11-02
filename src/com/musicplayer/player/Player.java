@@ -61,7 +61,8 @@ public class Player extends Application {
 
 			try {
 				// Load file
-				String fileToLoad = "file:///" + Player.file;
+				String fileToLoad = "file:///"
+						+ Player.file.replace(" ", "%20");
 				Media m = new Media(fileToLoad);
 				Player.mediaPlayer = new MediaPlayer(m);
 
