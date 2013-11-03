@@ -1,8 +1,6 @@
 package com.musicplayer.player;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URLEncoder;
 
 import com.musicplayer.core.InvalidFileException;
 import com.musicplayer.core.Playlist;
