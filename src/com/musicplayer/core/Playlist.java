@@ -1,7 +1,6 @@
 package com.musicplayer.core;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -31,11 +30,17 @@ public class Playlist {
 	private int curentTrack;
 
 	/**
+	 * Random status
+	 */
+	private boolean random;
+
+	/**
 	 * Constructor of Playlist. Init witch an empty songList
 	 */
 	private Playlist() {
 		this.songList = new LinkedList<Song>();
 		this.curentTrack = 0;
+		this.random = false;
 	}
 
 	/**
@@ -105,13 +110,6 @@ public class Playlist {
 	}
 
 	/**
-	 * Randomize the song list
-	 */
-	public void randomize() {
-		Collections.shuffle(this.songList);
-	}
-
-	/**
 	 * Start playing the playlist
 	 */
 	public void play() {
@@ -148,7 +146,13 @@ public class Playlist {
 	 * Jump to next track
 	 */
 	public void next() {
-		this.play(this.curentTrack + 1);
+		if (random) {
+			// Random song
+			this.play((int) (Math.random() * (this.songList.size() + 1)));
+		} else {
+			// Next song
+			this.play(this.curentTrack + 1);
+		}
 	}
 
 	/**
@@ -156,6 +160,16 @@ public class Playlist {
 	 */
 	public void back() {
 		this.play(this.curentTrack - 1);
+	}
+
+	/**
+	 * Set the random status
+	 * 
+	 * @param random
+	 *            True to enable random, false to disable
+	 */
+	public void setRandom(boolean random) {
+		this.random = random;
 	}
 
 	@Override
