@@ -35,12 +35,18 @@ public class Playlist {
 	private boolean random;
 
 	/**
+	 * Repeat status
+	 */
+	private RepeatState repeat;
+
+	/**
 	 * Constructor of Playlist. Init witch an empty songList
 	 */
 	private Playlist() {
 		this.songList = new LinkedList<Song>();
 		this.curentTrack = 0;
 		this.random = false;
+		this.repeat = RepeatState.OFF;
 	}
 
 	/**
@@ -146,12 +152,22 @@ public class Playlist {
 	 * Jump to next track
 	 */
 	public void next() {
-		if (random) {
-			// Random song
-			this.play((int) (Math.random() * (this.songList.size() + 1)));
+		if (this.repeat == RepeatState.SONG) { // Repeat song
+			this.play(this.curentTrack);
 		} else {
-			// Next song
-			this.play(this.curentTrack + 1);
+			if (random) { // Random song
+				this.play((int) (Math.random() * (this.songList.size() + 1)));
+			} else {
+				if (this.curentTrack + 1 >= this.songList.size()) { // Playlist
+																	// finished
+					if (this.repeat == RepeatState.ALL) { // Replay all the
+															// playlist
+						this.play(0);
+					}
+				} else { // Play next track
+					this.play(this.curentTrack + 1);
+				}
+			}
 		}
 	}
 
@@ -170,6 +186,17 @@ public class Playlist {
 	 */
 	public void setRandom(boolean random) {
 		this.random = random;
+	}
+
+	/**
+	 * Set the repeat status
+	 * 
+	 * @param repeat
+	 *            The repeat state
+	 * @see RepeatState
+	 */
+	public void setRepeat(RepeatState repeat) {
+		this.repeat = repeat;
 	}
 
 	@Override
