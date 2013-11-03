@@ -179,6 +179,29 @@ public class MusicLibrary extends Thread {
 	 * 
 	 * @param artist
 	 *            The artist of the songs to retrieve
+	 * @return ArrayList of the songs
+	 */
+	public ArrayList<Song> getSongs(String artist) {
+		try {
+			ArrayList<Song> songs = new ArrayList<Song>();
+
+			// Get songs for each albums
+			Enumeration<String> e = this.getAlbums(artist);
+			while (e.hasMoreElements()) {
+				songs.addAll(this.getSongs(artist, e.nextElement()));
+			}
+
+			return songs;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	/**
+	 * Get the list of the songs
+	 * 
+	 * @param artist
+	 *            The artist of the songs to retrieve
 	 * @param album
 	 *            The album of the songs to retrieve
 	 * @return ArrayList of the songs
