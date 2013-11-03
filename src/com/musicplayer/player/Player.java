@@ -1,5 +1,9 @@
 package com.musicplayer.player;
 
+import java.io.File;
+import java.net.URI;
+import java.net.URLEncoder;
+
 import com.musicplayer.core.InvalidFileException;
 import com.musicplayer.core.Playlist;
 import com.musicplayer.core.Song;
@@ -61,8 +65,8 @@ public class Player extends Application {
 
 			try {
 				// Load file
-				String fileToLoad = "file:///"
-						+ Player.file.replace(" ", "%20");
+				File file = new File(Player.file);
+				String fileToLoad = file.toURI().toString();
 				Media m = new Media(fileToLoad);
 				Player.mediaPlayer = new MediaPlayer(m);
 
@@ -82,6 +86,7 @@ public class Player extends Application {
 					}
 				});
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
