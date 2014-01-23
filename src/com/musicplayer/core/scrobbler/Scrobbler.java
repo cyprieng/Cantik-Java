@@ -40,13 +40,17 @@ public class Scrobbler {
 		// Get the config
 		ConfigFileParser config = ConfigFileParser.getConfigFileParser();
 
-		if (!config.isLastfmStatus()) { // Scrobbling not enabled
+		if (config.getParams("lastfm_username") == null
+				|| config.getParams("lastfm_password") == null) { // Scrobbling
+																	// not
+																	// enabled
 			throw new ScrobblerException();
 		} else {
 			if (Scrobbler.session == null) { // Generate lastfm session
 				Scrobbler.session = Authenticator.getMobileSession(
-						config.getLastfmUsername(), config.getLastfmPassword(),
-						Scrobbler.KEY, Scrobbler.SECRET);
+						config.getParams("lastfm_username"),
+						config.getParams("lastfm_password"), Scrobbler.KEY,
+						Scrobbler.SECRET);
 
 				if (Scrobbler.session == null)
 					throw new ScrobblerException();

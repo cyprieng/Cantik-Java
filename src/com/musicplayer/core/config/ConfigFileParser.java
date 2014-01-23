@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 import com.musicplayer.core.Core;
 
@@ -19,24 +20,16 @@ public class ConfigFileParser {
 	 */
 	private static ConfigFileParser config;
 
-	/*
-	 * Define if we need to use lastfm or not
-	 */
-	private boolean lastfmStatus;
-
 	/**
-	 * Lastfm IDs
+	 * Store all the params and value of the config
 	 */
-	private String lastfmUsername, lastfmPassword;
+	private HashMap<String, String> params;
 
 	/**
 	 * Constructor: parse the file
 	 */
 	private ConfigFileParser() {
-		// Default value
-		this.lastfmStatus = false;
-		this.lastfmUsername = "";
-		this.lastfmPassword = "";
+		params = new HashMap<String, String>();
 
 		// Test file
 		File configFile = new File(Core.getUserPath() + "config");
@@ -48,31 +41,12 @@ public class ConfigFileParser {
 
 				String str;
 				while ((str = br.readLine()) != null) {
-					String temp[] = str.split("="); // Get right and left part
-													// of the line
+					String temp[] = str.split("=", 2); // Get right and left
+														// part
+														// of the line
 
-					// Enable info
-					if (temp[0].startsWith("enable")) {
-						if (temp[1] != null) {
-							this.lastfmStatus = (temp[1].replaceAll("\\s+", "")
-									.startsWith("true"));
-						}
-					}
-
-					// Username info
-					else if (temp[0].startsWith("username")) {
-						if (temp[1] != null) {
-							this.lastfmUsername = temp[1]
-									.replaceAll("\\s+", "");
-						}
-					}
-
-					// Password info
-					else if (temp[0].startsWith("password")) {
-						if (temp[1] != null) {
-							this.lastfmPassword = temp[1]
-									.replaceAll("\\s+", "");
-						}
+					if (temp.length == 2) { // Add param
+						params.put(temp[0].trim(), temp[1].trim());
 					}
 				}
 				br.close();
@@ -95,36 +69,13 @@ public class ConfigFileParser {
 	}
 
 	/**
-	 * Get the lastfm status
+	 * Retrieve the selected parameter
 	 * 
-	 * @return True if enabled
+	 * @param param
+	 *            The parameter to retrieve
+	 * @return The value of the parameter
 	 */
-	public boolean isLastfmStatus() {
-		return lastfmStatus;
-	}
-
-	/**
-	 * Get lastfm username
-	 * 
-	 * @return Lastfm username
-	 */
-	public String getLastfmUsername() {
-		return lastfmUsername;
-	}
-
-	/**
-	 * Get lastfm password
-	 * 
-	 * @return Lastfm password
-	 */
-	public String getLastfmPassword() {
-		return lastfmPassword;
-	}
-
-	@Override
-	public String toString() {
-		return "ConfigFileParser [lastfmStatus=" + lastfmStatus
-				+ ", lastfmUsername=" + lastfmUsername + ", lastfmPassword="
-				+ lastfmPassword + "]";
+	public String getParams(String param) {
+		return params.get(param);
 	}
 }
