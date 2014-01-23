@@ -1,4 +1,4 @@
-package com.musicplayer.core;
+package com.musicplayer.core.playlist;
 
 /**
  * Possible states for repeating

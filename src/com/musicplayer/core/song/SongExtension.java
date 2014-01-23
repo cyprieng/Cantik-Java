@@ -1,4 +1,4 @@
-package com.musicplayer.core;
+package com.musicplayer.core.song;
 
 /**
  * List of the supported song type

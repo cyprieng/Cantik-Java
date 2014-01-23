@@ -1,4 +1,4 @@
-package com.musicplayer.extra;
+package com.musicplayer.core.scrobbler;
 
 /**
  * Exception linked to a misconfig of Lastfm

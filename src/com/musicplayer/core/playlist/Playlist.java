@@ -1,11 +1,12 @@
-package com.musicplayer.core;
+package com.musicplayer.core.playlist;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-import com.musicplayer.player.Player;
+import com.musicplayer.core.player.Player;
+import com.musicplayer.core.song.Song;
 
 /**
  * Class to store and manage playlist. It uses singleton design pattern.

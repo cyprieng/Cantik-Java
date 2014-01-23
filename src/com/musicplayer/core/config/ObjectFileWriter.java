@@ -1,4 +1,4 @@
-package com.musicplayer.core;
+package com.musicplayer.core.config;
 
 import java.io.File;
 import java.io.FileInputStream;

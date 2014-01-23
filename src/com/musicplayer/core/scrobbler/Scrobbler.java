@@ -1,6 +1,7 @@
-package com.musicplayer.extra;
+package com.musicplayer.core.scrobbler;
 
-import com.musicplayer.core.Song;
+import com.musicplayer.core.config.ConfigFileParser;
+import com.musicplayer.core.song.Song;
 
 import de.umass.lastfm.Authenticator;
 import de.umass.lastfm.Session;

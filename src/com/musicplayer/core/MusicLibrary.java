@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+import com.musicplayer.core.config.ObjectFileWriter;
+import com.musicplayer.core.song.Song;
+
 /**
  * Manage the music library: retrieve and store it. It uses the singleton design
  * pattern.

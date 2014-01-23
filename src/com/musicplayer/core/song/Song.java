@@ -1,4 +1,4 @@
-package com.musicplayer.core;
+package com.musicplayer.core.song;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,6 +15,8 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
+
+import com.musicplayer.core.InvalidFileException;
 
 /**
  * Class which stores data about a song: path and ID3 tag

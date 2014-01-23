@@ -1,4 +1,4 @@
-package com.musicplayer.player;
+package com.musicplayer.core.player;
 
 /**
  * Thread for launching launcher method of Player

@@ -1,11 +1,11 @@
-package com.musicplayer.player;
+package com.musicplayer.core.player;
 
 import java.io.File;
 
 import com.musicplayer.core.InvalidFileException;
-import com.musicplayer.core.Playlist;
-import com.musicplayer.core.Song;
-import com.musicplayer.extra.Scrobbler;
+import com.musicplayer.core.playlist.Playlist;
+import com.musicplayer.core.scrobbler.Scrobbler;
+import com.musicplayer.core.song.Song;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

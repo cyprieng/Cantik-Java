@@ -1,4 +1,4 @@
-package com.musicplayer.extra;
+package com.musicplayer.core.config;
 
 import java.io.BufferedReader;
 import java.io.File;
