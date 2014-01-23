@@ -1,9 +1,9 @@
 package com.musicplayer.core;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.musicplayer.core.config.ObjectFileWriter;
 import com.musicplayer.core.song.Song;
@@ -29,7 +29,7 @@ public class MusicLibrary extends Thread {
 	/**
 	 * Structure storing the music library and the temporary one
 	 */
-	private Hashtable<String, Hashtable<String, ArrayList<Song>>> library,
+	private HashMap<String, HashMap<String, HashSet<Song>>> library,
 			libraryTemp;
 
 	/**
@@ -37,7 +37,7 @@ public class MusicLibrary extends Thread {
 	 */
 	private MusicLibrary() {
 		super("MusicLibrary");
-		this.library = new Hashtable<String, Hashtable<String, ArrayList<Song>>>();
+		this.library = new HashMap<String, HashMap<String, HashSet<Song>>>();
 	}
 
 	/**
@@ -59,12 +59,13 @@ public class MusicLibrary extends Thread {
 	 * @param path
 	 *            The path to load
 	 */
+	@SuppressWarnings("unchecked")
 	public void loadLibraryFolder(String path) {
 		this.libraryPath = path;
 
 		try {
 			// Get library from file
-			this.library = (Hashtable<String, Hashtable<String, ArrayList<Song>>>) ObjectFileWriter
+			this.library = (HashMap<String, HashMap<String, HashSet<Song>>>) ObjectFileWriter
 					.get(new File(Core.getUserPath() + "library"));
 		} catch (Exception e) {
 
@@ -85,23 +86,23 @@ public class MusicLibrary extends Thread {
 															// exist
 															// => create artist
 			libraryTemp.put(song.getArtist(),
-					new Hashtable<String, ArrayList<Song>>());
+					new HashMap<String, HashSet<Song>>());
 		}
-		if (!((Hashtable<String, ArrayList<Song>>) libraryTemp.get(song
-				.getArtist())).containsKey(song.getAlbum())) { // Album
-																// does
-																// not
-																// exist
-																// =>
-																// create
-																// album
-			((Hashtable<String, ArrayList<Song>>) libraryTemp.get(song
-					.getArtist())).put(song.getAlbum(), new ArrayList<Song>());
+		if (!((HashMap<String, HashSet<Song>>) libraryTemp
+				.get(song.getArtist())).containsKey(song.getAlbum())) { // Album
+																		// does
+																		// not
+																		// exist
+																		// =>
+																		// create
+																		// album
+			((HashMap<String, HashSet<Song>>) libraryTemp.get(song.getArtist()))
+					.put(song.getAlbum(), new HashSet<Song>());
 		}
 
 		// Create song
-		((ArrayList<Song>) ((Hashtable<String, ArrayList<Song>>) libraryTemp
-				.get(song.getArtist())).get(song.getAlbum())).add(song);
+		((HashSet<Song>) ((HashMap<String, HashSet<Song>>) libraryTemp.get(song
+				.getArtist())).get(song.getAlbum())).add(song);
 	}
 
 	/**
@@ -133,8 +134,8 @@ public class MusicLibrary extends Thread {
 	 * Thread run function => scan the folder and store it in a file
 	 */
 	public void run() {
-		this.libraryTemp = new Hashtable<String, Hashtable<String, ArrayList<Song>>>(); // Init
-																						// var
+		this.libraryTemp = new HashMap<String, HashMap<String, HashSet<Song>>>(); // Init
+																					// var
 		this.scanFolder(new File(this.libraryPath)); // Scan library
 		this.library = this.libraryTemp; // Set the library value to the
 											// temporary one
@@ -153,9 +154,9 @@ public class MusicLibrary extends Thread {
 	 * 
 	 * @return Enumeration of the artists
 	 */
-	public Enumeration<String> getArtists() {
+	public Set<String> getArtists() {
 		try {
-			return library.keys();
+			return library.keySet();
 		} catch (Exception e) {
 			return null;
 		}
@@ -168,10 +169,10 @@ public class MusicLibrary extends Thread {
 	 *            The artist of the albums to retrieve
 	 * @return Enumeration of the albums
 	 */
-	public Enumeration<String> getAlbums(String artist) {
+	public Set<String> getAlbums(String artist) {
 		try {
-			return ((Hashtable<String, ArrayList<Song>>) library.get(artist))
-					.keys();
+			return ((HashMap<String, HashSet<Song>>) library.get(artist))
+					.keySet();
 		} catch (Exception e) {
 			return null;
 		}
@@ -184,14 +185,14 @@ public class MusicLibrary extends Thread {
 	 *            The artist of the songs to retrieve
 	 * @return ArrayList of the songs
 	 */
-	public ArrayList<Song> getSongs(String artist) {
+	public Set<Song> getSongs(String artist) {
 		try {
-			ArrayList<Song> songs = new ArrayList<Song>();
+			Set<Song> songs = new HashSet<Song>();
 
 			// Get songs for each albums
-			Enumeration<String> e = this.getAlbums(artist);
-			while (e.hasMoreElements()) {
-				songs.addAll(this.getSongs(artist, e.nextElement()));
+			Set<String> albums = this.getAlbums(artist);
+			for (String album : albums) {
+				songs.addAll(this.getSongs(artist, album));
 			}
 
 			return songs;
@@ -209,9 +210,9 @@ public class MusicLibrary extends Thread {
 	 *            The album of the songs to retrieve
 	 * @return ArrayList of the songs
 	 */
-	public ArrayList<Song> getSongs(String artist, String album) {
+	public Set<Song> getSongs(String artist, String album) {
 		try {
-			return ((ArrayList<Song>) ((Hashtable<String, ArrayList<Song>>) library
+			return ((HashSet<Song>) ((HashMap<String, HashSet<Song>>) library
 					.get(artist)).get(album));
 		} catch (Exception e) {
 			return null;
