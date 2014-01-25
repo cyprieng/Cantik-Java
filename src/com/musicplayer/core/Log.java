@@ -29,4 +29,14 @@ public class Log {
 		} catch (IOException e) {
 		}
 	}
+
+	/**
+	 * Add an Exception in the log file
+	 * 
+	 * @param entry
+	 *            The Exception to write
+	 */
+	public static void addEntry(Exception entry) {
+		addEntry(entry.getMessage());
+	}
 }
