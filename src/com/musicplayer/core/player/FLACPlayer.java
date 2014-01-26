@@ -20,7 +20,7 @@ import org.kc7bfi.jflac.util.ByteData;
 import com.musicplayer.core.Log;
 
 /**
- * Class managin FLAC playback
+ * Class managing FLAC playback
  * 
  * @author cyprien
  * 
