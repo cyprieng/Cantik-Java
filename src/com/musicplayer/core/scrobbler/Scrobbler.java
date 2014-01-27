@@ -1,5 +1,6 @@
 package com.musicplayer.core.scrobbler;
 
+import com.musicplayer.core.Log;
 import com.musicplayer.core.config.ConfigFileParser;
 import com.musicplayer.core.song.Song;
 
@@ -64,17 +65,23 @@ public class Scrobbler {
 	 * @param song
 	 *            The song to scrobble
 	 */
-	public static void updateNowPlaying(Song song) {
-		try {
-			Scrobbler.init();
+	public static void updateNowPlaying(final Song song) {
+		Thread t = new Thread(new Runnable() {
+			public void run() {
+				try {
+					Scrobbler.init();
 
-			// Update the now playing status
-			ScrobbleData scrobbleData = new ScrobbleData(song.getArtist(),
-					song.getTitle(), -1, song.getDuration(), song.getAlbum(),
-					"", "", -1, "");
-			Track.updateNowPlaying(scrobbleData, Scrobbler.session);
-		} catch (ScrobblerException e) {
-		}
+					// Update the now playing status
+					ScrobbleData scrobbleData = new ScrobbleData(song
+							.getArtist(), song.getTitle(), -1, song
+							.getDuration(), song.getAlbum(), "", "", -1, "");
+					Track.updateNowPlaying(scrobbleData, Scrobbler.session);
+				} catch (ScrobblerException e) {
+					Log.addEntry(e);
+				}
+			}
+		});
+		t.start();
 	}
 
 	/**
@@ -83,15 +90,21 @@ public class Scrobbler {
 	 * @param song
 	 *            The song to scrobble
 	 */
-	public static void scrobble(Song song) {
-		try {
-			Scrobbler.init();
-			int now = (int) (System.currentTimeMillis() / 1000);
+	public static void scrobble(final Song song) {
+		Thread t = new Thread(new Runnable() {
+			public void run() {
+				try {
+					Scrobbler.init();
+					int now = (int) (System.currentTimeMillis() / 1000);
 
-			// Scrobble the song
-			Track.scrobble(song.getArtist(), song.getTitle(), now,
-					Scrobbler.session);
-		} catch (ScrobblerException e) {
-		}
+					// Scrobble the song
+					Track.scrobble(song.getArtist(), song.getTitle(), now,
+							Scrobbler.session);
+				} catch (ScrobblerException e) {
+					Log.addEntry(e);
+				}
+			}
+		});
+		t.start();
 	}
 }
