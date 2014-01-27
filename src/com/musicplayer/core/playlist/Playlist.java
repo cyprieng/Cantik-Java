@@ -1,6 +1,5 @@
 package com.musicplayer.core.playlist;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -11,6 +10,7 @@ import java.util.Set;
 import com.musicplayer.core.player.AdaptativePlayer;
 import com.musicplayer.core.player.Player;
 import com.musicplayer.core.player.PlayerState;
+import com.musicplayer.core.scrobbler.Scrobbler;
 import com.musicplayer.core.song.Song;
 
 /**
@@ -140,15 +140,19 @@ public class Playlist implements Observer {
 	 */
 	public void play(int index) {
 		if (this.getSong(index) != null) { // Song exists
-			// Play
+			// Stop last song
 			if (player != null)
 				player.stop();
 
+			// Play
 			AdaptativePlayer ap = new AdaptativePlayer(this.getSong(index)
 					.getPath());
 			ap.addObserver(this);
 			player = ap;
 			player.play();
+
+			// Scrobble
+			Scrobbler.updateNowPlaying(this.getSong(index));
 
 			this.curentTrack = index;
 		} else {
@@ -232,6 +236,8 @@ public class Playlist implements Observer {
 	public void update(Observable player, Object arg) {
 		// Go to next track at the end
 		if (((Player) player).getState() == PlayerState.FNISHED) {
+			// Scrobble
+			Scrobbler.scrobble(this.getSong(curentTrack));
 			this.next();
 		}
 	}
