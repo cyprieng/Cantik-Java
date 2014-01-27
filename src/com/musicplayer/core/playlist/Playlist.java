@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
 
 import com.musicplayer.core.player.AdaptativePlayer;
 import com.musicplayer.core.player.Player;
+import com.musicplayer.core.player.PlayerState;
 import com.musicplayer.core.song.Song;
 
 /**
@@ -16,7 +19,7 @@ import com.musicplayer.core.song.Song;
  * @author cyprien
  * 
  */
-public class Playlist {
+public class Playlist implements Observer {
 	/**
 	 * Unique Playlist instance
 	 */
@@ -140,8 +143,11 @@ public class Playlist {
 			// Play
 			if (player != null)
 				player.stop();
-			
-			player = new AdaptativePlayer(this.getSong(index).getPath());
+
+			AdaptativePlayer ap = new AdaptativePlayer(this.getSong(index)
+					.getPath());
+			ap.addObserver(this);
+			player = ap;
 			player.play();
 
 			this.curentTrack = index;
@@ -201,6 +207,16 @@ public class Playlist {
 		this.repeat = repeat;
 	}
 
+	/**
+	 * Get the actual player
+	 * 
+	 * @return The player
+	 * @see com.musicplayer.core.player.Player
+	 */
+	public Player getPlayer() {
+		return player;
+	}
+
 	@Override
 	public String toString() {
 		String out = "";
@@ -210,5 +226,13 @@ public class Playlist {
 			out += li.next() + "\n";
 
 		return "Playlist: \n" + out;
+	}
+
+	@Override
+	public void update(Observable player, Object arg) {
+		// Go to next track at the end
+		if (((Player) player).getState() == PlayerState.FNISHED) {
+			this.next();
+		}
 	}
 }

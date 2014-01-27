@@ -1,5 +1,7 @@
 package com.musicplayer.core.player;
 
+import java.util.Observable;
+
 import com.musicplayer.core.Log;
 
 /**
@@ -8,7 +10,7 @@ import com.musicplayer.core.Log;
  * @author cyprien
  * 
  */
-public class MP3Player implements Runnable, Player {
+public class MP3Player extends Observable implements Runnable, Player {
 	/**
 	 * Path of the song
 	 */
@@ -56,6 +58,8 @@ public class MP3Player implements Runnable, Player {
 	@Override
 	public void pause() {
 		state = PlayerState.PAUSED;
+		setChanged();
+		notifyObservers();
 	}
 
 	@Override
@@ -63,6 +67,8 @@ public class MP3Player implements Runnable, Player {
 		synchronized (this) {
 			state = PlayerState.STOPPED;
 			notifyAll();
+			setChanged();
+			notifyObservers();
 		}
 	}
 
@@ -76,6 +82,8 @@ public class MP3Player implements Runnable, Player {
 			synchronized (this) {
 				state = PlayerState.PLAYING;
 				notifyAll();
+				setChanged();
+				notifyObservers();
 			}
 		}
 	}
@@ -90,6 +98,8 @@ public class MP3Player implements Runnable, Player {
 				if (!player.play(1)) { // Play the song
 					// Song is finished
 					state = PlayerState.FNISHED;
+					setChanged();
+					notifyObservers();
 				}
 			} catch (Exception e) {
 				Log.addEntry(e);
@@ -112,5 +122,10 @@ public class MP3Player implements Runnable, Player {
 	@Override
 	public String getFile() {
 		return file;
+	}
+
+	@Override
+	public PlayerState getState() {
+		return state;
 	}
 }

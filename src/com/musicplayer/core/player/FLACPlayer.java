@@ -3,6 +3,7 @@ package com.musicplayer.core.player;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Observable;
 import java.util.Vector;
 
 import javax.sound.sampled.AudioFormat;
@@ -25,7 +26,8 @@ import com.musicplayer.core.Log;
  * @author cyprien
  * 
  */
-public class FLACPlayer implements Player, Runnable, PCMProcessor {
+public class FLACPlayer extends Observable implements Player, Runnable,
+		PCMProcessor {
 	/**
 	 * Path of the song
 	 */
@@ -180,6 +182,8 @@ public class FLACPlayer implements Player, Runnable, PCMProcessor {
 	@Override
 	public void pause() {
 		state = PlayerState.PAUSED;
+		setChanged();
+		notifyObservers();
 	}
 
 	@Override
@@ -187,6 +191,8 @@ public class FLACPlayer implements Player, Runnable, PCMProcessor {
 		synchronized (this) {
 			state = PlayerState.STOPPED;
 			notifyAll();
+			setChanged();
+			notifyObservers();
 		}
 	}
 
@@ -200,6 +206,8 @@ public class FLACPlayer implements Player, Runnable, PCMProcessor {
 			synchronized (this) {
 				state = PlayerState.PLAYING;
 				notifyAll();
+				setChanged();
+				notifyObservers();
 			}
 		}
 	}
@@ -209,6 +217,8 @@ public class FLACPlayer implements Player, Runnable, PCMProcessor {
 		try {
 			decode(file);
 			state = PlayerState.FNISHED;
+			setChanged();
+			notifyObservers();
 		} catch (IOException | LineUnavailableException e) {
 			Log.addEntry(e);
 		}
@@ -217,5 +227,10 @@ public class FLACPlayer implements Player, Runnable, PCMProcessor {
 	@Override
 	public String getFile() {
 		return file;
+	}
+
+	@Override
+	public PlayerState getState() {
+		return state;
 	}
 }

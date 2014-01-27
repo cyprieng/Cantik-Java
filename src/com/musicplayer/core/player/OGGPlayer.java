@@ -2,6 +2,7 @@ package com.musicplayer.core.player;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Observable;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -18,7 +19,7 @@ import com.musicplayer.core.Log;
  * @author cyprien
  * 
  */
-public class OGGPlayer implements Player, Runnable {
+public class OGGPlayer extends Observable implements Player, Runnable {
 	/**
 	 * Path of the song
 	 */
@@ -118,6 +119,8 @@ public class OGGPlayer implements Player, Runnable {
 	@Override
 	public void pause() {
 		state = PlayerState.PAUSED;
+		setChanged();
+		notifyObservers();
 	}
 
 	@Override
@@ -125,6 +128,8 @@ public class OGGPlayer implements Player, Runnable {
 		synchronized (this) {
 			state = PlayerState.STOPPED;
 			notifyAll();
+			setChanged();
+			notifyObservers();
 		}
 	}
 
@@ -138,6 +143,8 @@ public class OGGPlayer implements Player, Runnable {
 			synchronized (this) {
 				state = PlayerState.PLAYING;
 				notifyAll();
+				setChanged();
+				notifyObservers();
 			}
 		}
 	}
@@ -164,6 +171,8 @@ public class OGGPlayer implements Player, Runnable {
 				rawplay(decodedFormat, din);
 				in.close();
 				state = PlayerState.FNISHED;
+				setChanged();
+				notifyObservers();
 			}
 		} catch (Exception e) {
 			Log.addEntry(e);
@@ -173,5 +182,10 @@ public class OGGPlayer implements Player, Runnable {
 	@Override
 	public String getFile() {
 		return file;
+	}
+
+	@Override
+	public PlayerState getState() {
+		return state;
 	}
 }

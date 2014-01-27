@@ -1,12 +1,15 @@
 package com.musicplayer.core.player;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * Class managing all format playback
  * 
  * @author cyprien
  * 
  */
-public class AdaptativePlayer implements Player {
+public class AdaptativePlayer extends Observable implements Player, Observer {
 	/**
 	 * Store the player
 	 */
@@ -24,12 +27,19 @@ public class AdaptativePlayer implements Player {
 				.toUpperCase();
 
 		// Switch format
-		if (fileExt.equals("MP3"))
-			player = new MP3Player(str);
-		else if (fileExt.equals("FLAC"))
-			player = new FLACPlayer(str);
-		else if (fileExt.equals("OGG"))
-			player = new OGGPlayer(str);
+		if (fileExt.equals("MP3")) {
+			MP3Player p = new MP3Player(str);
+			p.addObserver(this);
+			player = p;
+		} else if (fileExt.equals("FLAC")) {
+			FLACPlayer p = new FLACPlayer(str);
+			p.addObserver(this);
+			player = p;
+		} else if (fileExt.equals("OGG")) {
+			OGGPlayer p = new OGGPlayer(str);
+			p.addObserver(this);
+			player = p;
+		}
 	}
 
 	@Override
@@ -52,4 +62,14 @@ public class AdaptativePlayer implements Player {
 		return player.getFile();
 	}
 
+	@Override
+	public PlayerState getState() {
+		return player.getState();
+	}
+
+	@Override
+	public void update(Observable player, Object arg) {
+		setChanged();
+		notifyObservers();
+	}
 }

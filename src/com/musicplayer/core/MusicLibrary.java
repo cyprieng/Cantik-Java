@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.musicplayer.core.config.ObjectFileWriter;
 import com.musicplayer.core.song.Song;

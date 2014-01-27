@@ -28,4 +28,12 @@ public interface Player {
 	 * @return the path of the file
 	 */
 	public String getFile();
+
+	/**
+	 * Get the state of the player
+	 * 
+	 * @return the state of the player
+	 * @see PlayerState
+	 */
+	public PlayerState getState();
 }
