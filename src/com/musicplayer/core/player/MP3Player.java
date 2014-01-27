@@ -60,7 +60,10 @@ public class MP3Player implements Runnable, Player {
 
 	@Override
 	public void stop() {
-		state = PlayerState.STOPPED;
+		synchronized (this) {
+			state = PlayerState.STOPPED;
+			notifyAll();
+		}
 	}
 
 	@Override
@@ -70,9 +73,9 @@ public class MP3Player implements Runnable, Player {
 			playerThread.start();
 		} else {
 			// Change player state
-			synchronized (player) {
+			synchronized (this) {
 				state = PlayerState.PLAYING;
-				player.notifyAll();
+				notifyAll();
 			}
 		}
 	}
@@ -94,10 +97,10 @@ public class MP3Player implements Runnable, Player {
 			}
 
 			// Check if the player has been paused
-			synchronized (player) {
+			synchronized (this) {
 				while (state == PlayerState.PAUSED) {
 					try {
-						player.wait();
+						wait();
 					} catch (Exception e) {
 						Log.addEntry(e);
 					}

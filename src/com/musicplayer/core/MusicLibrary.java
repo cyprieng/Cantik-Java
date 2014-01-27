@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.musicplayer.core.config.ObjectFileWriter;
 import com.musicplayer.core.song.Song;
@@ -68,7 +70,7 @@ public class MusicLibrary extends Thread {
 			this.library = (HashMap<String, HashMap<String, HashSet<Song>>>) ObjectFileWriter
 					.get(new File(Core.getUserPath() + "library"));
 		} catch (Exception e) {
-
+			Log.addEntry(e);
 		} finally {
 			// Start the thread => scan the library
 			this.start();
@@ -117,6 +119,7 @@ public class MusicLibrary extends Thread {
 				this.addSong(new Song(folder.getAbsolutePath())); // Add the
 																	// song
 			} catch (InvalidFileException e) {
+				Log.addEntry(e);
 			}
 
 		}
@@ -146,6 +149,7 @@ public class MusicLibrary extends Thread {
 			ObjectFileWriter.store(this.library, new File(Core.getUserPath()
 					+ "library"));
 		} catch (Exception e) {
+			Log.addEntry(e);
 		}
 	}
 
@@ -158,6 +162,7 @@ public class MusicLibrary extends Thread {
 		try {
 			return library.keySet();
 		} catch (Exception e) {
+			Log.addEntry(e);
 			return null;
 		}
 	}
@@ -174,6 +179,7 @@ public class MusicLibrary extends Thread {
 			return ((HashMap<String, HashSet<Song>>) library.get(artist))
 					.keySet();
 		} catch (Exception e) {
+			Log.addEntry(e);
 			return null;
 		}
 	}
@@ -197,6 +203,7 @@ public class MusicLibrary extends Thread {
 
 			return songs;
 		} catch (Exception e) {
+			Log.addEntry(e);
 			return null;
 		}
 	}
@@ -215,6 +222,7 @@ public class MusicLibrary extends Thread {
 			return ((HashSet<Song>) ((HashMap<String, HashSet<Song>>) library
 					.get(artist)).get(album));
 		} catch (Exception e) {
+			Log.addEntry(e);
 			return null;
 		}
 	}

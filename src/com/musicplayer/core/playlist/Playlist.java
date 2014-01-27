@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
+import com.musicplayer.core.player.AdaptativePlayer;
 import com.musicplayer.core.player.Player;
 import com.musicplayer.core.song.Song;
 
@@ -19,6 +21,11 @@ public class Playlist {
 	 * Unique Playlist instance
 	 */
 	private static Playlist playlist;
+
+	/**
+	 * Store the current player
+	 */
+	private Player player;
 
 	/**
 	 * List of Song
@@ -73,15 +80,14 @@ public class Playlist {
 	}
 
 	/**
-	 * Add an ArrayList of song to the playlist
+	 * Add a Set of song to the playlist
 	 * 
-	 * @param songArray
-	 *            The ArrayList of song to add
+	 * @param songSet
+	 *            The Set of song to add
 	 */
-	public void addSongArray(ArrayList<Song> songArray) {
-		for (int i = 0; i < songArray.size(); i++) {
-			this.addSong(songArray.get(i));
-		}
+	public void addSongSet(Set<Song> songSet) {
+		for (Song s : songSet)
+			this.addSong(s);
 	}
 
 	/**
@@ -120,15 +126,7 @@ public class Playlist {
 	 * Start playing the playlist
 	 */
 	public void play() {
-		if (this.getSong(0) != null) { // Song exists
-			// Play
-			Player.setFile(this.getSong(0).getPath());
-			Player.play();
-
-			this.curentTrack = 0;
-		} else {
-			Player.stopPlaying();
-		}
+		this.play(0);
 	}
 
 	/**
@@ -140,12 +138,15 @@ public class Playlist {
 	public void play(int index) {
 		if (this.getSong(index) != null) { // Song exists
 			// Play
-			Player.setFile(this.getSong(index).getPath());
-			Player.play();
+			if (player != null)
+				player.stop();
+			
+			player = new AdaptativePlayer(this.getSong(index).getPath());
+			player.play();
 
 			this.curentTrack = index;
 		} else {
-			Player.stopPlaying();
+			player.stop();
 		}
 	}
 

@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 
 import com.musicplayer.core.Core;
+import com.musicplayer.core.Log;
 
 /**
  * Parse config file. It uses singleton design pattern
@@ -51,6 +52,7 @@ public class ConfigFileParser {
 				}
 				br.close();
 			} catch (Exception e) {
+				Log.addEntry(e);
 			}
 		}
 	}

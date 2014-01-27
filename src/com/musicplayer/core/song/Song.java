@@ -205,7 +205,6 @@ public class Song implements Serializable {
 	@Override
 	public String toString() {
 		return "Song [path=" + path + ", title=" + title + ", album=" + album
-				+ ", artist=" + artist + ", year=" + year + ", lyric=" + lyric
-				+ ", duration=" + duration + "]";
+				+ ", artist=" + artist + ", year=" + year + ", duration=" + duration + "]";
 	}
 }

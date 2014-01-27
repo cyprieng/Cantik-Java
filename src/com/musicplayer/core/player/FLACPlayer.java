@@ -184,8 +184,10 @@ public class FLACPlayer implements Player, Runnable, PCMProcessor {
 
 	@Override
 	public void stop() {
-		state = PlayerState.STOPPED;
-		pause();
+		synchronized (this) {
+			state = PlayerState.STOPPED;
+			notifyAll();
+		}
 	}
 
 	@Override

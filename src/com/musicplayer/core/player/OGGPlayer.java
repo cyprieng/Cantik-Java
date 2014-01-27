@@ -67,7 +67,7 @@ public class OGGPlayer implements Player, Runnable {
 		if (line != null) {
 			// Start
 			line.start();
-			int nBytesRead = 0, nBytesWritten = 0;
+			int nBytesRead = 0;
 			while (nBytesRead != -1) {
 				synchronized (this) {
 					// Check if player is paused
@@ -86,7 +86,7 @@ public class OGGPlayer implements Player, Runnable {
 
 				nBytesRead = din.read(data, 0, data.length);
 				if (nBytesRead != -1)
-					nBytesWritten = line.write(data, 0, nBytesRead);
+					line.write(data, 0, nBytesRead);
 			}
 			// Stop
 			line.drain();
@@ -122,8 +122,10 @@ public class OGGPlayer implements Player, Runnable {
 
 	@Override
 	public void stop() {
-		state = PlayerState.STOPPED;
-		pause();
+		synchronized (this) {
+			state = PlayerState.STOPPED;
+			notifyAll();
+		}
 	}
 
 	@Override
