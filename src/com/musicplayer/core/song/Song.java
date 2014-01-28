@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
@@ -17,6 +19,7 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 
 import com.musicplayer.core.InvalidFileException;
+import com.musicplayer.core.Log;
 
 /**
  * Class which stores data about a song: path and ID3 tag
@@ -59,8 +62,8 @@ public class Song implements Serializable {
 
 			// Default value
 			this.title = new File(path).getName();
-			this.album = "";
-			this.artist = "";
+			this.album = "unknown";
+			this.artist = "unknown";
 			this.year = "1970";
 			this.lyric = "";
 			this.duration = 0;
@@ -74,10 +77,13 @@ public class Song implements Serializable {
 	/**
 	 * Update tags value
 	 * 
-	 * @see jaudiotagger
+	 * @see org.jaudiotagger
 	 */
 	public void updateTags() {
 		try {
+			// Disable log from jaudiotagger
+			Logger.getLogger("org.jaudiotagger").setLevel(Level.OFF);
+
 			// Read file
 			AudioFile f = AudioFileIO.read(new File(this.path));
 			Tag tag = f.getTag();
@@ -91,6 +97,7 @@ public class Song implements Serializable {
 			this.duration = f.getAudioHeader().getTrackLength();
 		} catch (CannotReadException | IOException | TagException
 				| ReadOnlyFileException | InvalidAudioFrameException e) {
+			Log.addEntry(e);
 		}
 	}
 
@@ -115,6 +122,7 @@ public class Song implements Serializable {
 				}
 				in.close();
 			} catch (IOException e) {
+				Log.addEntry(e);
 			}
 
 			this.lyric = lyric; // Store lyric for next time
@@ -205,6 +213,7 @@ public class Song implements Serializable {
 	@Override
 	public String toString() {
 		return "Song [path=" + path + ", title=" + title + ", album=" + album
-				+ ", artist=" + artist + ", year=" + year + ", duration=" + duration + "]";
+				+ ", artist=" + artist + ", year=" + year + ", duration="
+				+ duration + "]";
 	}
 }
