@@ -24,4 +24,9 @@ public class GUIParameters {
 	 * Background color of the left Bar
 	 */
 	public final static Color LEFTBAR_BACKGROUND = new Color(0x12171c);
+
+	/**
+	 * Separator color in left Bar
+	 */
+	public final static Color LEFTBAR_SEPARATOR = new Color(0x425366);
 }
