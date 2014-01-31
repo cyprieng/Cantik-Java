@@ -44,7 +44,7 @@ public class SearchField extends JTextField {
 		this.setMaximumSize(this.getPreferredSize());
 		this.setBackground(GUIParameters.LEFTBAR_BACKGROUND);
 		this.setForeground(Color.WHITE);
-		this.setFont(GUIParameters.FONT);
+		this.setFont(GUIParameters.getFont());
 		this.setOpaque(false);
 
 		// Repaint when focus change
@@ -65,8 +65,8 @@ public class SearchField extends JTextField {
 						"Border Title",
 						javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
 						javax.swing.border.TitledBorder.DEFAULT_POSITION,
-						GUIParameters.FONT), javax.swing.BorderFactory
-						.createEmptyBorder(-10, 25, 0, 0)));
+						GUIParameters.getFont()), javax.swing.BorderFactory
+						.createEmptyBorder(-15, 30, 0, 0)));
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class SearchField extends JTextField {
 
 		// Draw the search icon
 		try {
-			BufferedImage img = ImageIO.read(new File("img/search.png"));
+			BufferedImage img = ImageIO.read(new File("assets/img/search.png"));
 			g.drawImage(img, 5, 5, 20, 21, this);
 		} catch (IOException e) {
 			Log.addEntry(e);
