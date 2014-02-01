@@ -26,6 +26,11 @@ public class GUIParameters {
 	public final static Color LEFTBAR_BACKGROUND = new Color(0x12171c);
 
 	/**
+	 * Background color behind an active left Bar item
+	 */
+	public final static Color LEFTBAR_ACTIVE_BACKGROUND = new Color(0x0e1115);
+
+	/**
 	 * Separator color in left Bar
 	 */
 	public final static Color LEFTBAR_SEPARATOR = new Color(0x425366);
@@ -34,6 +39,11 @@ public class GUIParameters {
 	 * Category color in left Bar
 	 */
 	public final static Color LEFTBAR_CAT = new Color(0x626569);
+
+	/**
+	 * Color of the active indicator
+	 */
+	public final static Color LEFTBAR_ACTIVE = new Color(0xc198ed);
 
 	/**
 	 * Get the global font

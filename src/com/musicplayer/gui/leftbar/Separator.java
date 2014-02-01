@@ -16,6 +16,13 @@ import com.musicplayer.gui.GUIParameters;
 public class Separator extends JPanel {
 	private static final long serialVersionUID = 964341531448230546L;
 
+	public Separator(){
+		super();
+		setPreferredSize(new Dimension(250,60));
+		setMaximumSize(getPreferredSize());
+		setMinimumSize(getPreferredSize());
+	}
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		// Get the current size of this component
