@@ -43,7 +43,7 @@ public class GUIParameters {
 	/**
 	 * Color of the active indicator
 	 */
-	public final static Color LEFTBAR_ACTIVE = new Color(0xc198ed);
+	public final static Color LEFTBAR_ACTIVE = new Color(0xd34836);
 
 	/**
 	 * Get the global font

@@ -80,7 +80,7 @@ public class SearchField extends JTextField {
 		// Draw the search icon
 		try {
 			BufferedImage img = ImageIO.read(new File("assets/img/search.png"));
-			g.drawImage(img, 5, 5, 20, 21, this);
+			g.drawImage(img, 5, 3, 24, 24, this);
 		} catch (IOException e) {
 			Log.addEntry(e);
 		}
