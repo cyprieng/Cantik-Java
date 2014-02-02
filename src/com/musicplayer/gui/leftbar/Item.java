@@ -2,6 +2,7 @@ package com.musicplayer.gui.leftbar;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +32,12 @@ public class Item extends JPanel {
 	 */
 	private JPanel activeIndicator;
 
+	/**
+	 * Init the item with the given title
+	 * 
+	 * @param str
+	 *            The title of the item
+	 */
 	public Item(String str) {
 		super();
 		setPreferredSize(new Dimension(250, 40));
@@ -67,6 +74,20 @@ public class Item extends JPanel {
 		Border empty = new EmptyBorder(0, 10, 0, 0);
 		text.setBorder(empty);
 		this.add(text);
+
+		// Add mouse hover event
+		final Item label = this;
+		this.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				label.setActive();
+			}
+
+			@Override
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				label.unsetActive();
+			}
+		});
 	}
 
 	/**
@@ -78,5 +99,16 @@ public class Item extends JPanel {
 		activeIndicator.setBackground(GUIParameters.LEFTBAR_ACTIVE); // Show
 																		// active
 																		// indicator
+	}
+
+	/**
+	 * Set this item non active
+	 */
+	public void unsetActive() {
+		this.setBackground(GUIParameters.LEFTBAR_BACKGROUND); // Modify
+																// background
+		activeIndicator.setBackground(GUIParameters.LEFTBAR_BACKGROUND); // Hide
+																			// active
+																			// indicator
 	}
 }
