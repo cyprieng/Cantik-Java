@@ -1,6 +1,5 @@
 package com.musicplayer.gui.leftbar;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
@@ -16,6 +15,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import com.musicplayer.core.Log;
+import com.musicplayer.gui.CustomJLabel;
 import com.musicplayer.gui.GUIParameters;
 
 /**
@@ -68,9 +68,7 @@ public class Item extends JPanel {
 		}
 
 		// Add text
-		JLabel text = new JLabel(str);
-		text.setFont(GUIParameters.getFont());
-		text.setForeground(Color.WHITE);
+		CustomJLabel text = new CustomJLabel(str);
 		Border empty = new EmptyBorder(0, 10, 0, 0);
 		text.setBorder(empty);
 		this.add(text);

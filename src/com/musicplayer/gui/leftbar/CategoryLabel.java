@@ -2,10 +2,10 @@ package com.musicplayer.gui.leftbar;
 
 import java.awt.Component;
 
-import javax.swing.JLabel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import com.musicplayer.gui.CustomJLabel;
 import com.musicplayer.gui.GUIParameters;
 
 /**
@@ -14,7 +14,7 @@ import com.musicplayer.gui.GUIParameters;
  * @author cyprien
  * 
  */
-public class CategoryLabel extends JLabel {
+public class CategoryLabel extends CustomJLabel {
 	private static final long serialVersionUID = -5281324916113409236L;
 
 	/**
@@ -25,7 +25,6 @@ public class CategoryLabel extends JLabel {
 	 */
 	public CategoryLabel(String title) {
 		super(title.toUpperCase());
-		setFont(GUIParameters.getFont());
 		setForeground(GUIParameters.LEFTBAR_CAT);
 		setAlignmentX(Component.CENTER_ALIGNMENT);
 		Border empty = new EmptyBorder(0, 0, 20, 0);
