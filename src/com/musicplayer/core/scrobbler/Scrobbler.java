@@ -1,5 +1,8 @@
 package com.musicplayer.core.scrobbler;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.musicplayer.core.Log;
 import com.musicplayer.core.config.ConfigFileParser;
 import com.musicplayer.core.song.Song;
@@ -48,6 +51,8 @@ public class Scrobbler {
 			throw new ScrobblerException();
 		} else {
 			if (Scrobbler.session == null) { // Generate lastfm session
+				Logger.getLogger("de.umass.lastfm").setLevel(Level.OFF);
+
 				Scrobbler.session = Authenticator.getMobileSession(
 						config.getParams("lastfm_username"),
 						config.getParams("lastfm_password"), Scrobbler.KEY,
