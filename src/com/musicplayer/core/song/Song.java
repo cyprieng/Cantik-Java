@@ -100,7 +100,6 @@ public class Song implements Serializable {
 			this.artist = tag.getFirst(FieldKey.ARTIST);
 			this.year = tag.getFirst(FieldKey.YEAR);
 			this.lyric = tag.getFirst(FieldKey.LYRICS);
-
 			this.duration = f.getAudioHeader().getTrackLength();
 		} catch (CannotReadException | IOException | TagException
 				| ReadOnlyFileException | InvalidAudioFrameException e) {

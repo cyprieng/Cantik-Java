@@ -19,7 +19,7 @@ import com.musicplayer.core.song.Song;
  * @author cyprien
  * 
  */
-public class Playlist implements Observer {
+public class Playlist extends Observable implements Observer {
 	/**
 	 * Unique Playlist instance
 	 */
@@ -38,7 +38,7 @@ public class Playlist implements Observer {
 	/**
 	 * Current track index
 	 */
-	private int curentTrack;
+	private int currentTrack;
 
 	/**
 	 * Random status
@@ -55,7 +55,7 @@ public class Playlist implements Observer {
 	 */
 	private Playlist() {
 		this.songList = new LinkedList<Song>();
-		this.curentTrack = 0;
+		this.currentTrack = 0;
 		this.random = false;
 		this.repeat = RepeatState.OFF;
 	}
@@ -129,7 +129,15 @@ public class Playlist implements Observer {
 	 * Start playing the playlist
 	 */
 	public void play() {
-		this.play(0);
+		if (this.player != null && this.player.getState() == PlayerState.PAUSED)
+			// Player paused => resume
+			this.player.play();
+		else
+			// Start the current song
+			this.play(currentTrack);
+
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -154,10 +162,13 @@ public class Playlist implements Observer {
 			// Scrobble
 			Scrobbler.updateNowPlaying(this.getSong(index));
 
-			this.curentTrack = index;
+			this.currentTrack = index;
 		} else {
 			player.stop();
 		}
+
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -165,19 +176,19 @@ public class Playlist implements Observer {
 	 */
 	public void next() {
 		if (this.repeat == RepeatState.SONG) { // Repeat song
-			this.play(this.curentTrack);
+			this.play(this.currentTrack);
 		} else {
 			if (random) { // Random song
 				this.play((int) (Math.random() * (this.songList.size() + 1)));
 			} else {
-				if (this.curentTrack + 1 >= this.songList.size()) { // Playlist
-																	// finished
+				if (this.currentTrack + 1 >= this.songList.size()) { // Playlist
+																		// finished
 					if (this.repeat == RepeatState.ALL) { // Replay all the
 															// playlist
 						this.play(0);
 					}
 				} else { // Play next track
-					this.play(this.curentTrack + 1);
+					this.play(this.currentTrack + 1);
 				}
 			}
 		}
@@ -187,7 +198,7 @@ public class Playlist implements Observer {
 	 * Jump to last track
 	 */
 	public void back() {
-		this.play(this.curentTrack - 1);
+		this.play(this.currentTrack - 1);
 	}
 
 	/**
@@ -209,6 +220,16 @@ public class Playlist implements Observer {
 	 */
 	public void setRepeat(RepeatState repeat) {
 		this.repeat = repeat;
+	}
+
+	/**
+	 * Get the song which is playing
+	 * 
+	 * @return The current Song
+	 * @see com.musicplayer.song.Song
+	 */
+	public Song getCurrentSong() {
+		return this.getSong(currentTrack);
 	}
 
 	/**
@@ -237,7 +258,7 @@ public class Playlist implements Observer {
 		// Go to next track at the end
 		if (((Player) player).getState() == PlayerState.FNISHED) {
 			// Scrobble
-			Scrobbler.scrobble(this.getSong(curentTrack));
+			Scrobbler.scrobble(this.getSong(currentTrack));
 			this.next();
 		}
 	}
