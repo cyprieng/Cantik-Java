@@ -1,5 +1,6 @@
 package com.musicplayer.core.song;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -39,6 +40,11 @@ public class Song implements Serializable {
 	 * Tags values
 	 */
 	private String title, album, artist, year, lyric;
+
+	/**
+	 * Cover of the song
+	 */
+	private BufferedImage cover;
 
 	/**
 	 * Song duration in second
@@ -94,6 +100,7 @@ public class Song implements Serializable {
 			this.artist = tag.getFirst(FieldKey.ARTIST);
 			this.year = tag.getFirst(FieldKey.YEAR);
 			this.lyric = tag.getFirst(FieldKey.LYRICS);
+
 			this.duration = f.getAudioHeader().getTrackLength();
 		} catch (CannotReadException | IOException | TagException
 				| ReadOnlyFileException | InvalidAudioFrameException e) {
@@ -208,6 +215,36 @@ public class Song implements Serializable {
 	 */
 	public int getDuration() {
 		return duration;
+	}
+
+	/**
+	 * Get the cover of the Song from the Tag
+	 * 
+	 * @return BufferedImage of the cover
+	 * @see BufferedImage
+	 */
+	public BufferedImage getCover() {
+		if (cover == null) {
+			// Disable log from jaudiotagger
+			Logger.getLogger("org.jaudiotagger").setLevel(Level.OFF);
+
+			try {
+				// Read tags
+				AudioFile f = AudioFileIO.read(new File(this.path));
+				Tag tag = f.getTag();
+
+				// Get cover
+				if (tag.getFirstArtwork() != null)
+					this.cover = (BufferedImage) tag.getFirstArtwork()
+							.getImage();
+
+			} catch (CannotReadException | IOException | TagException
+					| ReadOnlyFileException | InvalidAudioFrameException e) {
+				Log.addEntry(e);
+			}
+		}
+
+		return cover;
 	}
 
 	@Override
