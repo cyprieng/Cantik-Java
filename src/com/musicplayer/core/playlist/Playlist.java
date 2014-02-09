@@ -168,7 +168,7 @@ public class Playlist extends Observable implements Observer {
 		}
 
 		setChanged();
-		notifyObservers();
+		notifyObservers("new track");
 	}
 
 	/**
@@ -261,5 +261,8 @@ public class Playlist extends Observable implements Observer {
 			Scrobbler.scrobble(this.getSong(currentTrack));
 			this.next();
 		}
+		
+		setChanged();
+		notifyObservers();
 	}
 }
