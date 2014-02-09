@@ -23,6 +23,14 @@ public interface Player {
 	public void stop();
 
 	/**
+	 * Skip n percent of the song
+	 * 
+	 * @param percent
+	 *            The percent to skip
+	 */
+	public void skip(int percent);
+
+	/**
 	 * Get the file which is playing
 	 * 
 	 * @return the path of the file

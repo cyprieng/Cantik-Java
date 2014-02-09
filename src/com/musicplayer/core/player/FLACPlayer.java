@@ -59,6 +59,11 @@ public class FLACPlayer extends Observable implements Player, Runnable,
 	private SourceDataLine line;
 
 	/**
+	 * The InputStream of the song
+	 */
+	private FileInputStream is;
+
+	/**
 	 * List of listeners
 	 */
 	private Vector<LineListener> listeners = new Vector<LineListener>();
@@ -89,7 +94,7 @@ public class FLACPlayer extends Observable implements Player, Runnable,
 	public void decode(String inFileName) throws IOException,
 			LineUnavailableException {
 		// Open file
-		FileInputStream is = new FileInputStream(inFileName);
+		is = new FileInputStream(inFileName);
 
 		// Decode file
 		FLACDecoder decoder = new FLACDecoder(is);
@@ -200,6 +205,7 @@ public class FLACPlayer extends Observable implements Player, Runnable,
 	public void play() {
 		if (playerThread != null && !playerThread.isAlive()) {
 			// Launch thread
+			this.playerThread = new Thread(this, "AudioPlayerThread");
 			playerThread.start();
 		} else {
 			// Change player state
@@ -232,5 +238,25 @@ public class FLACPlayer extends Observable implements Player, Runnable,
 	@Override
 	public PlayerState getState() {
 		return state;
+	}
+
+	@Override
+	public void skip(int percent) {
+		if (is != null) {
+			try {
+				is.close(); // Stop playing
+
+				// Restart play
+				playerThread = new Thread(this, "AudioPlayerThread");
+				playerThread.start();
+
+				// Skip
+				pause();
+				is.skip((long) (is.available() * (double) ((double) percent / 100.0)));
+				play();
+			} catch (Exception e) {
+				Log.addEntry(e);
+			}
+		}
 	}
 }

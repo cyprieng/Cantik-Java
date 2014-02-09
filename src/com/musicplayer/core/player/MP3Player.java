@@ -1,5 +1,6 @@
 package com.musicplayer.core.player;
 
+import java.io.InputStream;
 import java.util.Observable;
 
 import com.musicplayer.core.Log;
@@ -27,6 +28,11 @@ public class MP3Player extends Observable implements Runnable, Player {
 	private javazoom.jl.player.Player player;
 
 	/**
+	 * The InputStream of the song
+	 */
+	private InputStream song;
+
+	/**
 	 * The thread launching the player
 	 */
 	private Thread playerThread;
@@ -44,8 +50,9 @@ public class MP3Player extends Observable implements Runnable, Player {
 		try {
 			String urlAsString = "file:///" + this.file;
 
-			this.player = new javazoom.jl.player.Player(new java.net.URL(
-					urlAsString).openStream(),
+			song = new java.net.URL(urlAsString).openStream();
+
+			this.player = new javazoom.jl.player.Player(song,
 					javazoom.jl.player.FactoryRegistry.systemRegistry()
 							.createAudioDevice());
 
@@ -127,5 +134,24 @@ public class MP3Player extends Observable implements Runnable, Player {
 	@Override
 	public PlayerState getState() {
 		return state;
+	}
+
+	@Override
+	public void skip(int percent) {
+		try {
+			// Restart
+			String urlAsString = "file:///" + this.file;
+
+			song = new java.net.URL(urlAsString).openStream();
+
+			this.player = new javazoom.jl.player.Player(song,
+					javazoom.jl.player.FactoryRegistry.systemRegistry()
+							.createAudioDevice());
+
+			// Skip
+			song.skip((long) (song.available() * (double) ((double) percent / 100.0)));
+		} catch (Exception e) {
+			Log.addEntry(e);
+		}
 	}
 }

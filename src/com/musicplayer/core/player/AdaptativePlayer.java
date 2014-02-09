@@ -72,4 +72,9 @@ public class AdaptativePlayer extends Observable implements Player, Observer {
 		setChanged();
 		notifyObservers();
 	}
+
+	@Override
+	public void skip(int percent) {
+		player.skip(percent);
+	}
 }

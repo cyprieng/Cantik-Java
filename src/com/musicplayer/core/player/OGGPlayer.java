@@ -36,6 +36,11 @@ public class OGGPlayer extends Observable implements Player, Runnable {
 	private Thread playerThread;
 
 	/**
+	 * The InputStream of the song
+	 */
+	private AudioInputStream in;
+
+	/**
 	 * Constructor: initialize the player
 	 * 
 	 * @param str
@@ -69,7 +74,7 @@ public class OGGPlayer extends Observable implements Player, Runnable {
 			// Start
 			line.start();
 			int nBytesRead = 0;
-			while (nBytesRead != -1) {
+			while (nBytesRead != -1 && state != PlayerState.STOPPED) {
 				synchronized (this) {
 					// Check if player is paused
 					while (state == PlayerState.PAUSED) {
@@ -80,10 +85,6 @@ public class OGGPlayer extends Observable implements Player, Runnable {
 						}
 					}
 				}
-
-				// Check if the player is stopped
-				if (state == PlayerState.STOPPED)
-					break;
 
 				nBytesRead = din.read(data, 0, data.length);
 				if (nBytesRead != -1)
@@ -155,8 +156,8 @@ public class OGGPlayer extends Observable implements Player, Runnable {
 			File f = new File(file);
 
 			// Get AudioInputStream from given file.
-			AudioInputStream in = AudioSystem.getAudioInputStream(f);
-			AudioInputStream din = null;
+			in = AudioSystem.getAudioInputStream(f);
+			in.mark(Integer.MAX_VALUE); // Mark for rewind
 			if (in != null) {
 				AudioFormat baseFormat = in.getFormat();
 				AudioFormat decodedFormat = new AudioFormat(
@@ -166,7 +167,8 @@ public class OGGPlayer extends Observable implements Player, Runnable {
 						baseFormat.getSampleRate(), false);
 				// Get AudioInputStream that will be decoded by underlying
 				// VorbisSPI
-				din = AudioSystem.getAudioInputStream(decodedFormat, in);
+				AudioInputStream din = AudioSystem.getAudioInputStream(
+						decodedFormat, in);
 				// Play now !
 				rawplay(decodedFormat, din);
 				in.close();
@@ -187,5 +189,18 @@ public class OGGPlayer extends Observable implements Player, Runnable {
 	@Override
 	public PlayerState getState() {
 		return state;
+	}
+
+	@Override
+	public void skip(int percent) {
+		if (in != null) {
+			try {
+				// Skip
+				in.reset();
+				in.skip((long) (in.available() * (double) ((double) percent / 100.0)));
+			} catch (Exception e) {
+				Log.addEntry(e);
+			}
+		}
 	}
 }
