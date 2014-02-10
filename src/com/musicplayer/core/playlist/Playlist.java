@@ -242,6 +242,25 @@ public class Playlist extends Observable implements Observer {
 		return player;
 	}
 
+	/**
+	 * Get the repeat state
+	 * 
+	 * @return The repeat state
+	 * @see RepeatState
+	 */
+	public RepeatState getRepeat() {
+		return repeat;
+	}
+
+	/**
+	 * Return if the player is random
+	 * 
+	 * @return True if yes, false otherwise
+	 */
+	public boolean isRandom() {
+		return random;
+	}
+
 	@Override
 	public String toString() {
 		String out = "";
@@ -261,7 +280,7 @@ public class Playlist extends Observable implements Observer {
 			Scrobbler.scrobble(this.getSong(currentTrack));
 			this.next();
 		}
-		
+
 		setChanged();
 		notifyObservers();
 	}
