@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.gui.CustomJLabel;
+import com.musicplayer.gui.player.volumecontrol.VolumeButton;
 
 /**
  * Custom Jpanel showing all component of the player
@@ -70,6 +71,11 @@ public class Player extends JPanel implements Observer {
 
 		Playlist.getPlaylist().addObserver(this);
 
+		// Volume control
+		VolumeButton vb = new VolumeButton();
+		empty = new EmptyBorder(0, 20, 0, 0);
+		vb.setBorder(empty);
+
 		// Random
 		Random random = new Random();
 		empty = new EmptyBorder(0, 20, 0, 0);
@@ -88,6 +94,7 @@ public class Player extends JPanel implements Observer {
 		add(info);
 		add(bar);
 		add(duration);
+		add(vb);
 		add(random);
 		add(repeat);
 	}
