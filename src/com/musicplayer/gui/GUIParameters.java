@@ -3,6 +3,7 @@ package com.musicplayer.gui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 
@@ -55,6 +56,29 @@ public class GUIParameters {
 		try {
 			Font f = Font.createFont(Font.TRUETYPE_FONT, new File(
 					"assets/font/Fairview.ttf"));
+
+			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(f);
+
+			return f.deriveFont(20.0f);
+		} catch (FontFormatException | IOException e) {
+			Log.addEntry(e);
+			return null;
+		}
+	}
+
+	/**
+	 * Get the font of the central area
+	 * 
+	 * @return The central Font
+	 * @see Font
+	 */
+	public static Font getCentralFont() {
+		try {
+			Font f = Font.createFont(Font.TRUETYPE_FONT, new File(
+					"assets/font/PTSans.ttf"));
+
+			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(f);
+
 			return f.deriveFont(20.0f);
 		} catch (FontFormatException | IOException e) {
 			Log.addEntry(e);
