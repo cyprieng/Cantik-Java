@@ -2,7 +2,6 @@ package com.musicplayer.gui.centralarea;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,14 +18,14 @@ public class CentralArea extends JPanel {
 	/**
 	 * Content of the jpanel
 	 */
-	private JPanel content;
+	protected JPanel content;
 
 	/**
 	 * Init JPanel with scrollbars
 	 */
 	public CentralArea() {
 		super();
-		setLayout(new BorderLayout());
+		super.setLayout(new BorderLayout());
 
 		content = new JPanel();
 		content.setBackground(Color.WHITE);
@@ -40,12 +39,5 @@ public class CentralArea extends JPanel {
 		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
 		super.add(scrollPane);
-	}
-
-	@Override
-	public Component add(Component c) {
-		// Add component to the content
-		content.add(c);
-		return c;
 	}
 }

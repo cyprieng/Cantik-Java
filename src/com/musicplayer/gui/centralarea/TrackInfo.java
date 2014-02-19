@@ -35,7 +35,7 @@ public class TrackInfo extends CentralArea implements Observer {
 		lyric = new JLabel("");
 		lyric.setForeground(Color.BLACK);
 		lyric.setFont(GUIParameters.getCentralFont());
-		add(lyric);
+		content.add(lyric);
 	}
 
 	@Override

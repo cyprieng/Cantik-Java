@@ -80,6 +80,9 @@ public class Playlist extends Observable implements Observer {
 	 */
 	public void addSong(Song song) {
 		this.songList.add(song);
+
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -91,6 +94,9 @@ public class Playlist extends Observable implements Observer {
 	public void addSongSet(Set<Song> songSet) {
 		for (Song s : songSet)
 			this.addSong(s);
+
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -116,6 +122,14 @@ public class Playlist extends Observable implements Observer {
 	 */
 	public void removeSong(int index) {
 		this.songList.remove(index);
+
+		if (index < currentTrack)
+			currentTrack--;
+		else if (index == currentTrack)
+			next();
+
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -123,6 +137,9 @@ public class Playlist extends Observable implements Observer {
 	 */
 	public void reset() {
 		this.songList.removeAll(songList);
+
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -186,6 +203,8 @@ public class Playlist extends Observable implements Observer {
 					if (this.repeat == RepeatState.ALL) { // Replay all the
 															// playlist
 						this.play(0);
+					} else {
+						this.player.stop();
 					}
 				} else { // Play next track
 					this.play(this.currentTrack + 1);
@@ -199,6 +218,38 @@ public class Playlist extends Observable implements Observer {
 	 */
 	public void back() {
 		this.play(this.currentTrack - 1);
+	}
+
+	/**
+	 * Reorder the playlist. Move song at fromIndex to toIndex.
+	 * 
+	 * @param fromIndex
+	 *            The index of the song to move
+	 * @param toIndex
+	 *            The index where the song will be after
+	 */
+	public void reorder(int fromIndex, int toIndex) {
+		// Get the song and delete it from the list
+		Song s = songList.get(fromIndex);
+		songList.remove(fromIndex);
+
+		// Update currentTrack index
+		if (fromIndex > currentTrack && toIndex < currentTrack)
+			currentTrack++;
+		else if (fromIndex < currentTrack && toIndex > currentTrack)
+			currentTrack--;
+		else if (fromIndex == currentTrack)
+			currentTrack = toIndex;
+
+		// Add the song to the right place
+		if (toIndex > songList.size() - 1) {
+			songList.add(s);
+			currentTrack = songList.size() - 1;
+		} else
+			songList.add(toIndex, s);
+
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -259,6 +310,24 @@ public class Playlist extends Observable implements Observer {
 	 */
 	public boolean isRandom() {
 		return random;
+	}
+
+	/**
+	 * Get the list of the songs in the playlist
+	 * 
+	 * @return a List of the songs
+	 */
+	public List<Song> getSongList() {
+		return songList;
+	}
+
+	/**
+	 * Get current track index
+	 * 
+	 * @return the index of the current track
+	 */
+	public int getCurrentTrack() {
+		return currentTrack;
 	}
 
 	@Override

@@ -47,6 +47,11 @@ public class GUIParameters {
 	public final static Color LEFTBAR_ACTIVE = new Color(0xd34836);
 
 	/**
+	 * Color of the even row of the playlist table
+	 */
+	public final static Color TABLE_EVEN_ROW = new Color(0xf1f1f1);
+
+	/**
 	 * Get the global font
 	 * 
 	 * @return The global Font
