@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.musicplayer.core.MusicLibrary;
-import com.musicplayer.core.playlist.Playlist;
+import com.musicplayer.core.config.ConfigFileParser;
 import com.musicplayer.gui.centralarea.TrackInfo;
 import com.musicplayer.gui.centralarea.playlistview.PlaylistView;
 import com.musicplayer.gui.leftbar.LeftBar;
@@ -80,11 +80,7 @@ public class MainWindow {
 
 	public static void main(String[] args) {
 		MusicLibrary.getMusicLibrary().loadLibraryFolder(
-				"C:\\Users\\cyprien.cyprien-desktop\\Music\\");
-		Playlist.getPlaylist()
-				.addSongSet(
-						MusicLibrary.getMusicLibrary().getSongs("Sabaton",
-								"Metalizer"));
+				ConfigFileParser.getConfigFileParser().getParams("library"));
 		getMainWindow();
 	}
 
