@@ -2,6 +2,8 @@ package com.musicplayer.gui.leftbar;
 
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 import com.musicplayer.core.Log;
 import com.musicplayer.gui.CustomJLabel;
 import com.musicplayer.gui.GUIParameters;
+import com.musicplayer.gui.MainWindow;
 
 /**
  * Create a JPanel containing an item entry
@@ -38,7 +41,7 @@ public class Item extends JPanel {
 	 * @param str
 	 *            The title of the item
 	 */
-	public Item(String str) {
+	public Item(final String str) {
 		super();
 		setPreferredSize(new Dimension(250, 40));
 		setMaximumSize(getPreferredSize());
@@ -84,6 +87,30 @@ public class Item extends JPanel {
 			@Override
 			public void mouseExited(java.awt.event.MouseEvent evt) {
 				label.unsetActive();
+			}
+		});
+
+		// Add event when clicking
+		this.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MainWindow.setCentralArea(str); // Change central area
 			}
 		});
 	}
