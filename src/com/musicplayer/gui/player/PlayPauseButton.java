@@ -120,8 +120,8 @@ public class PlayPauseButton extends JButton implements Observer {
 			this.removeActionListener(al);
 		}
 
-		if (Playlist.getPlaylist().getPlayer().getState() == PlayerState.INITIALIZING
-				|| Playlist.getPlaylist().getPlayer().getState() == PlayerState.PLAYING) {
+		if (Playlist.getPlaylist().getPlayerState() == PlayerState.INITIALIZING
+				|| Playlist.getPlaylist().getPlayerState() == PlayerState.PLAYING) {
 			// Player is playing
 			this.setIcon("assets/img/pause.png");
 			this.addActionListener(new PauseClick());

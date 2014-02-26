@@ -330,6 +330,20 @@ public class Playlist extends Observable implements Observer {
 		return currentTrack;
 	}
 
+	/**
+	 * Get the status of the player
+	 * 
+	 * @return The status of the player
+	 * @see PlayerState
+	 */
+	public PlayerState getPlayerState() {
+		if (player != null) {
+			return player.getState();
+		}
+
+		return PlayerState.STOPPED; // Default answer
+	}
+
 	@Override
 	public String toString() {
 		String out = "";

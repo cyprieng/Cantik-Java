@@ -94,8 +94,8 @@ public class ProgressBar extends JSlider implements Observer {
 			setValue(0);
 		}
 
-		if (Playlist.getPlaylist().getPlayer().getState() == PlayerState.PLAYING
-				|| Playlist.getPlaylist().getPlayer().getState() == PlayerState.INITIALIZING) {
+		if (Playlist.getPlaylist().getPlayerState() == PlayerState.PLAYING
+				|| Playlist.getPlaylist().getPlayerState() == PlayerState.INITIALIZING) {
 			// Start progressbar
 			if (playing)
 				return;
@@ -111,7 +111,7 @@ public class ProgressBar extends JSlider implements Observer {
 					bar.setValue(bar.getValue() + 1); // Increment value
 				}
 			}, 1000, 1000);
-		} else if (Playlist.getPlaylist().getPlayer().getState() == PlayerState.PAUSED) {
+		} else if (Playlist.getPlaylist().getPlayerState() == PlayerState.PAUSED) {
 			// Stop progressbar
 			if (timer != null) {
 				try {
