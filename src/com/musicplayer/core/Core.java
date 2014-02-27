@@ -24,4 +24,23 @@ public class Core {
 		// Else use the project folder
 		return "." + File.separator;
 	}
+
+	/**
+	 * Return a string representing the duration in a human-friendly format
+	 * 
+	 * @param duration
+	 *            The number of second
+	 * @return the duration in a human-friendly format
+	 */
+	public static String stringifyDuration(int duration) {
+		// Calc duration
+		int min = duration / 60;
+		int second = duration - min * 60;
+
+		// Add lead 0 if necessary
+		if (second < 10)
+			return min + ":0" + second;
+		else
+			return min + ":" + second;
+	}
 }

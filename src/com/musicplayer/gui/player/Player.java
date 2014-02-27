@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import com.musicplayer.core.Core;
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.gui.CustomJLabel;
 import com.musicplayer.gui.player.volumecontrol.VolumeButton;
@@ -101,15 +102,8 @@ public class Player extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable playlist, Object arg) {
-		// Calc duration
-		int duration = Playlist.getPlaylist().getCurrentSong().getDuration();
-		int min = duration / 60;
-		int second = duration - min * 60;
-
 		// Update duration
-		if (second < 10)
-			this.duration.setText(min + ":0" + second);
-		else
-			this.duration.setText(min + ":" + second);
+		this.duration.setText(Core.stringifyDuration(Playlist.getPlaylist()
+				.getCurrentSong().getDuration()));
 	}
 }

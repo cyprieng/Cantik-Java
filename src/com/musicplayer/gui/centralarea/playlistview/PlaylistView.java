@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import com.musicplayer.core.Core;
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.core.song.Song;
 import com.musicplayer.gui.GUIParameters;
@@ -178,21 +179,9 @@ public class PlaylistView extends CentralArea implements Observer {
 
 		// Add every song of the playlist
 		for (Song s : Playlist.getPlaylist().getSongList()) {
-			// Calc duration
-			int duration = s.getDuration();
-			int min = duration / 60;
-			int second = duration - min * 60;
-
-			String strDuration;
-
-			if (second < 10)
-				strDuration = min + ":0" + second;
-			else
-				strDuration = min + ":" + second;
-
 			// Add row
 			tableModel.addRow(new Object[] { s.getTitle(), s.getArtist(),
-					s.getAlbum(), strDuration });
+					s.getAlbum(), Core.stringifyDuration(s.getDuration()) });
 		}
 	}
 

@@ -9,6 +9,7 @@ import java.awt.RenderingHints;
 import javax.swing.JSlider;
 import javax.swing.plaf.basic.BasicSliderUI;
 
+import com.musicplayer.core.Core;
 import com.musicplayer.gui.GUIParameters;
 
 /**
@@ -54,20 +55,10 @@ public class CustomSliderUI extends BasicSliderUI {
 		g2d.setColor(Color.WHITE);
 		g2d.fillRect(t.x, t.y, 30, t.height);
 
-		// Define string
-		String str;
-		int duration = this.slider.getValue();
-		int min = duration / 60;
-		int second = duration - min * 60;
-
-		if (second < 10)
-			str = min + ":0" + second;
-		else
-			str = min + ":" + second;
-
 		// Draw string
 		g2d.setColor(Color.BLACK);
-		g2d.drawString(str, t.x + 2, t.y + 13);
+		g2d.drawString(Core.stringifyDuration(this.slider.getValue()), t.x + 2,
+				t.y + 13);
 
 		// Modify thumb size
 		this.thumbRect.width = 30;
