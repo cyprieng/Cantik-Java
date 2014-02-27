@@ -18,28 +18,8 @@ public class SoundVolume {
 	/**
 	 * Source
 	 */
-	Info source = Port.Info.SPEAKER;
-
-	/**
-	 * Volume controller
-	 */
-	FloatControl volumeControl;
-
-	/**
-	 * Init the controller
-	 */
-	public SoundVolume() {
-		if (AudioSystem.isLineSupported(source)) {
-			try {
-				Port outline = (Port) AudioSystem.getLine(source);
-				outline.open();
-				volumeControl = (FloatControl) outline
-						.getControl(FloatControl.Type.VOLUME);
-			} catch (LineUnavailableException e) {
-				Log.addEntry(e);
-			}
-		}
-	}
+	private final static Info[] SOURCE = { Port.Info.SPEAKER,
+			Port.Info.LINE_OUT, Port.Info.HEADPHONE };
 
 	/**
 	 * Modify volume
@@ -47,8 +27,21 @@ public class SoundVolume {
 	 * @param newVolume
 	 *            The new volume from 0.0 to 1.0
 	 */
-	public void setVolume(float newVolume) {
-		volumeControl.setValue(newVolume);
+	public static void setVolume(float newVolume) {
+		for (Info s : SOURCE) {
+			if (AudioSystem.isLineSupported(s)) { // Check if line is supported
+				try {
+					// Set volume
+					Port outline = (Port) AudioSystem.getLine(s);
+					outline.open();
+					((FloatControl) outline
+							.getControl(FloatControl.Type.VOLUME))
+							.setValue(newVolume);
+				} catch (LineUnavailableException e) {
+					Log.addEntry(e);
+				}
+			}
+		}
 	}
 
 }
