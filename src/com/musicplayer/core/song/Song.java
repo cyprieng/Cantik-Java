@@ -67,7 +67,8 @@ public class Song implements Serializable {
 			this.path = path;
 
 			// Default value
-			this.title = new File(path).getName();
+			this.title = (new File(path).getName()).replaceFirst("[.][^.]+$",
+					"");
 			this.album = "unknown";
 			this.artist = "unknown";
 			this.year = "1970";
@@ -95,11 +96,17 @@ public class Song implements Serializable {
 			Tag tag = f.getTag();
 
 			// Read tags
-			this.title = tag.getFirst(FieldKey.TITLE);
-			this.album = tag.getFirst(FieldKey.ALBUM);
-			this.artist = tag.getFirst(FieldKey.ARTIST);
-			this.year = tag.getFirst(FieldKey.YEAR);
-			this.lyric = tag.getFirst(FieldKey.LYRICS);
+			if (tag.getFirst(FieldKey.TITLE) != "")
+				this.title = tag.getFirst(FieldKey.TITLE);
+			if (tag.getFirst(FieldKey.ALBUM) != "")
+				this.album = tag.getFirst(FieldKey.ALBUM);
+			if (tag.getFirst(FieldKey.ARTIST) != "")
+				this.artist = tag.getFirst(FieldKey.ARTIST);
+			if (tag.getFirst(FieldKey.YEAR) != "")
+				this.year = tag.getFirst(FieldKey.YEAR);
+			if (tag.getFirst(FieldKey.LYRICS) != "")
+				this.lyric = tag.getFirst(FieldKey.LYRICS);
+
 			this.duration = f.getAudioHeader().getTrackLength();
 		} catch (CannotReadException | IOException | TagException
 				| ReadOnlyFileException | InvalidAudioFrameException e) {
