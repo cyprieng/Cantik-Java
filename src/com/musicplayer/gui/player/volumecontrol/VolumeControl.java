@@ -36,8 +36,7 @@ public class VolumeControl extends JSlider {
 			@Override
 			public void stateChanged(ChangeEvent arg) {
 				// Set volume
-				SoundVolume sv = new SoundVolume();
-				sv.setVolume((float) getValue() / 100.0f);
+				SoundVolume.setVolume((float) getValue() / 100.0f);
 			}
 		});
 	}
