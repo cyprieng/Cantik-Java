@@ -8,21 +8,19 @@ import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.BorderFactory;
 import javax.swing.DropMode;
-import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
 
 import com.musicplayer.core.Core;
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.core.song.Song;
 import com.musicplayer.gui.GUIParameters;
 import com.musicplayer.gui.centralarea.CentralArea;
+import com.musicplayer.gui.centralarea.CustomTableHeader;
 
 /**
  * View of the playlist
@@ -100,12 +98,7 @@ public class PlaylistView extends CentralArea implements Observer {
 		};
 
 		// Table header style
-		table.getTableHeader().setBackground(GUIParameters.LEFTBAR_BACKGROUND);
-		for (int i = 0; i < columnNames.length; i++) {
-			// Set renderer
-			TableColumn column = table.getColumnModel().getColumn(i);
-			column.setHeaderRenderer(new HeaderRenderer());
-		}
+		CustomTableHeader.customizeHeader(table.getTableHeader());
 
 		// Settings of table
 		table.setFont(GUIParameters.getCentralFont().deriveFont(15.0f));
@@ -182,29 +175,6 @@ public class PlaylistView extends CentralArea implements Observer {
 			// Add row
 			tableModel.addRow(new Object[] { s.getTitle(), s.getArtist(),
 					s.getAlbum(), Core.stringifyDuration(s.getDuration()) });
-		}
-	}
-
-	/**
-	 * Renderer of the header of the table
-	 * 
-	 * @author cyprien
-	 * 
-	 */
-	public class HeaderRenderer extends JLabel implements TableCellRenderer {
-		private static final long serialVersionUID = -3824354933152657068L;
-
-		/**
-		 * Renderer of the header of the table
-		 */
-		public Component getTableCellRendererComponent(JTable table,
-				Object value, boolean hasFocus, boolean isSelected, int row,
-				int col) {
-			// Set style
-			setText(value.toString());
-			setForeground(Color.WHITE);
-			setBorder(BorderFactory.createEmptyBorder(10, 2, 10, 2));
-			return this;
 		}
 	}
 }

@@ -1,10 +1,13 @@
-package com.musicplayer.core;
+package com.musicplayer.core.musiclibrary;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.musicplayer.core.Core;
+import com.musicplayer.core.InvalidFileException;
+import com.musicplayer.core.Log;
 import com.musicplayer.core.config.ObjectFileWriter;
 import com.musicplayer.core.song.Song;
 

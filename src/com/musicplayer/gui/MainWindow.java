@@ -7,9 +7,10 @@ import java.awt.Container;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.musicplayer.core.MusicLibrary;
 import com.musicplayer.core.config.ConfigFileParser;
+import com.musicplayer.core.musiclibrary.MusicLibrary;
 import com.musicplayer.gui.centralarea.TrackInfo;
+import com.musicplayer.gui.centralarea.musiclibrary.MusicLibraryView;
 import com.musicplayer.gui.centralarea.playlistview.PlaylistView;
 import com.musicplayer.gui.leftbar.LeftBar;
 import com.musicplayer.gui.player.Player;
@@ -41,6 +42,7 @@ public class MainWindow {
 
 		// Central area
 		centralArea = new JPanel(new CardLayout());
+		centralArea.add(new MusicLibraryView(), "Library");
 		centralArea.add(new PlaylistView(), "Playlist");
 		centralArea.add(new TrackInfo(), "Info");
 
