@@ -120,7 +120,6 @@ public class MusicLibrary extends Thread {
 				this.addSong(new Song(folder.getAbsolutePath())); // Add the
 																	// song
 			} catch (InvalidFileException e) {
-				Log.addEntry(e);
 			}
 
 		}

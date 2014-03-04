@@ -6,7 +6,7 @@ package com.musicplayer.core;
  * @author cyprien
  * 
  */
-public class InvalidFileException extends CustomException {
+public class InvalidFileException extends Exception {
 	private static final long serialVersionUID = 15083144311040175L;
 
 	/**
