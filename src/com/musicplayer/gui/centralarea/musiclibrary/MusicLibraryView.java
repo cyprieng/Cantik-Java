@@ -122,20 +122,6 @@ public class MusicLibraryView extends CentralArea {
 			}
 		});
 
-		// Icon
-		tree.setOpenIcon(new ImageIcon(ArtistInfo.getArtistImage()));
-		tree.setClosedIcon(new ImageIcon(ArtistInfo.getArtistImage()));
-		tree.setLeafIcon(null);
-
-		try {
-			tree.setCollapsedIcon(new ImageIcon(ImageIO.read(new File(
-					"assets/img/collapsed.png"))));
-			tree.setExpandedIcon(new ImageIcon(ImageIO.read(new File(
-					"assets/img/expanded.png"))));
-		} catch (IOException e) {
-			Log.addEntry(e);
-		}
-
 		// Style
 		tree.setTreeCellRenderer(new CustomTreeCellRenderer());
 		tree.setRowHeight(50);
@@ -157,6 +143,20 @@ public class MusicLibraryView extends CentralArea {
 		// Selection color
 		tree.setSelectionBackground(GUIParameters.LEFTBAR_BACKGROUND);
 		tree.setSelectionForeground(Color.WHITE);
+
+		// Icon
+		tree.setOpenIcon(new ImageIcon(ArtistInfo.getArtistImage()));
+		tree.setClosedIcon(new ImageIcon(ArtistInfo.getArtistImage()));
+		tree.setLeafIcon(null);
+
+		try {
+			tree.setCollapsedIcon(new ImageIcon(ImageIO.read(new File(
+					"assets/img/collapsed.png"))));
+			tree.setExpandedIcon(new ImageIcon(ImageIO.read(new File(
+					"assets/img/expanded.png"))));
+		} catch (IOException e) {
+			Log.addEntry(e);
+		}
 
 		add(new JScrollPane(tree));
 	}
