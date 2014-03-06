@@ -2,6 +2,7 @@ package com.musicplayer.gui.centralarea.musiclibrary;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -18,10 +19,12 @@ import org.jdesktop.swingx.decorator.ComponentAdapter;
 import org.jdesktop.swingx.decorator.HighlightPredicate;
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
+import org.jdesktop.swingx.treetable.MutableTreeTableNode;
 
 import com.musicplayer.core.Log;
 import com.musicplayer.core.musiclibrary.ArtistInfo;
 import com.musicplayer.core.musiclibrary.MusicLibrary;
+import com.musicplayer.core.musiclibrary.SearchMusicLibrary;
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.core.song.Song;
 import com.musicplayer.gui.GUIParameters;
@@ -38,33 +41,42 @@ public class MusicLibraryView extends CentralArea {
 	private static final long serialVersionUID = -617334771645897532L;
 
 	/**
+	 * Model of the tree table
+	 */
+	private DefaultTreeTableModel model;
+
+	/**
+	 * The tree table
+	 */
+	private JXTreeTable tree;
+
+	/**
+	 * Store the view
+	 */
+	private static MusicLibraryView mlv;
+
+	/**
+	 * Get the music library view
+	 * 
+	 * @return The view
+	 */
+	public static MusicLibraryView getMusiLibraryView() {
+		if (mlv == null) {
+			mlv = new MusicLibraryView();
+		}
+
+		return mlv;
+	}
+
+	/**
 	 * Create the tree table
 	 */
-	public MusicLibraryView() {
+	private MusicLibraryView() {
 		// Create JXTreeTable
 		DefaultMutableTreeTableNode root = new DefaultMutableTreeTableNode(
 				"Library");
-		DefaultTreeTableModel model = new CustomTreeTableModel(root);
-		JXTreeTable tree = new JXTreeTable(model);
-
-		// Add nodes
-		MusicLibrary library = MusicLibrary.getMusicLibrary();
-		for (String s : library.getArtists()) { // Artists
-			DefaultMutableTreeTableNode artist = new DefaultMutableTreeTableNode(
-					s);
-			model.insertNodeInto(artist, root, root.getChildCount());
-
-			for (String al : library.getAlbums(s)) { // Albums
-				DefaultMutableTreeTableNode album = new DefaultMutableTreeTableNode(
-						al);
-				model.insertNodeInto(album, artist, artist.getChildCount());
-
-				for (Song song : library.getSongs(s, al)) { // Songs
-					model.insertNodeInto(new DefaultMutableTreeTableNode(song),
-							album, album.getChildCount());
-				}
-			}
-		}
+		model = new CustomTreeTableModel(root);
+		tree = new JXTreeTable(model);
 
 		// Click event
 		final JXTreeTable copy = tree;
@@ -159,5 +171,73 @@ public class MusicLibraryView extends CentralArea {
 		}
 
 		add(new JScrollPane(tree));
+
+		showLibrary(null);
+	}
+
+	/**
+	 * Show the library for the given query
+	 * 
+	 * @param query
+	 *            The query to search in the library
+	 */
+	public void showLibrary(final String query) {
+		Thread t = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// Reset tree table
+				DefaultMutableTreeTableNode root = new DefaultMutableTreeTableNode(
+						"Library");
+				model.setRoot(root);
+				tree.repaint();
+				CustomTableHeader.customizeHeader(tree.getTableHeader());
+
+				tree.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR)); // Load
+																				// cursor
+
+				// Get library
+				MusicLibrary library;
+				if (query == null)
+					library = MusicLibrary.getMusicLibrary();
+				else
+					library = new SearchMusicLibrary(query);
+
+				// Wait library
+				synchronized (library) {
+					while (!library.isReady()) {
+						try {
+							library.wait();
+						} catch (InterruptedException e) {
+							Log.addEntry(e);
+						}
+					}
+				}
+
+				// Add nodes
+				for (String s : library.getArtists()) { // Artists
+					DefaultMutableTreeTableNode artist = new DefaultMutableTreeTableNode(
+							s);
+					model.insertNodeInto(artist, (MutableTreeTableNode) root,
+							root.getChildCount());
+
+					for (String al : library.getAlbums(s)) { // Albums
+						DefaultMutableTreeTableNode album = new DefaultMutableTreeTableNode(
+								al);
+						model.insertNodeInto(album, artist,
+								artist.getChildCount());
+
+						for (Song song : library.getSongs(s, al)) { // Songs
+							model.insertNodeInto(
+									new DefaultMutableTreeTableNode(song),
+									album, album.getChildCount());
+						}
+					}
+				}
+
+				tree.setCursor(Cursor.getDefaultCursor()); // Reset cursor
+			}
+		});
+
+		t.start();
 	}
 }

@@ -9,6 +9,8 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -20,6 +22,7 @@ import javax.swing.JTextField;
 
 import com.musicplayer.core.Log;
 import com.musicplayer.gui.GUIParameters;
+import com.musicplayer.gui.centralarea.musiclibrary.MusicLibraryView;
 
 /**
  * Create a custom JTextField for the search bar
@@ -56,6 +59,30 @@ public class SearchField extends JTextField {
 
 			public void focusLost(FocusEvent e) {
 				search.repaint();
+			}
+		});
+
+		// Add event: enter => search in music library
+		this.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (e.getKeyChar() == KeyEvent.VK_ENTER) { // Enter pressed
+					if (!search.getText().equals(""))
+						// Search query
+						MusicLibraryView.getMusiLibraryView().showLibrary(
+								search.getText());
+					else
+						// No query => all library
+						MusicLibraryView.getMusiLibraryView().showLibrary(null);
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
 			}
 		});
 

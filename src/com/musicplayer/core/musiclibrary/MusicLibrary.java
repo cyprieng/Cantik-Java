@@ -32,15 +32,21 @@ public class MusicLibrary extends Thread {
 	/**
 	 * Structure storing the music library and the temporary one
 	 */
-	private HashMap<String, HashMap<String, HashSet<Song>>> library,
+	protected HashMap<String, HashMap<String, HashSet<Song>>> library,
 			libraryTemp;
+
+	/**
+	 * Mark if the music library is ready
+	 */
+	protected boolean ready;
 
 	/**
 	 * Constructor which only init library var
 	 */
-	private MusicLibrary() {
+	protected MusicLibrary() {
 		super("MusicLibrary");
 		this.library = new HashMap<String, HashMap<String, HashSet<Song>>>();
+		this.ready = false;
 	}
 
 	/**
@@ -70,6 +76,12 @@ public class MusicLibrary extends Thread {
 			// Get library from file
 			this.library = (HashMap<String, HashMap<String, HashSet<Song>>>) ObjectFileWriter
 					.get(new File(Core.getUserPath() + "library"));
+
+			// Library is ready
+			synchronized (this) {
+				ready = true;
+				this.notifyAll();
+			}
 		} catch (Exception e) {
 			Log.addEntry(e);
 		} finally {
@@ -143,6 +155,12 @@ public class MusicLibrary extends Thread {
 		this.library = this.libraryTemp; // Set the library value to the
 											// temporary one
 		this.libraryTemp = null; // Destroy the temporary library
+
+		// Library is ready
+		synchronized (this) {
+			ready = true;
+			this.notifyAll();
+		}
 
 		try {
 			// Store library in file
@@ -225,5 +243,14 @@ public class MusicLibrary extends Thread {
 			Log.addEntry(e);
 			return null;
 		}
+	}
+
+	/**
+	 * Check if the music library is ready
+	 * 
+	 * @return True if it is ready
+	 */
+	public boolean isReady() {
+		return ready;
 	}
 }

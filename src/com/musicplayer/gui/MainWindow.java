@@ -42,7 +42,7 @@ public class MainWindow {
 
 		// Central area
 		centralArea = new JPanel(new CardLayout());
-		centralArea.add(new MusicLibraryView(), "Library");
+		centralArea.add(MusicLibraryView.getMusiLibraryView(), "Library");
 		centralArea.add(new PlaylistView(), "Playlist");
 		centralArea.add(new TrackInfo(), "Info");
 

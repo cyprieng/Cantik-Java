@@ -35,7 +35,8 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 		Object nodeInfo = node.getUserObject();
 
 		if (nodeInfo instanceof String) {
-			if (node.getParent() != tree.getModel().getRoot()) {
+			if (node.getParent() != tree.getModel().getRoot()
+					&& node.getParent() != null) {
 				// Album cover
 				setIcon(new ImageIcon(ArtistInfo.getAlbumImage((String) node
 						.getParent().getUserObject(), (String) nodeInfo)));
