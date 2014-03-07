@@ -3,6 +3,7 @@ package com.musicplayer.gui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -50,6 +51,8 @@ public class MainWindow {
 		container.add(new LeftBar(), BorderLayout.WEST);
 		container.add(new Player(), BorderLayout.SOUTH);
 		container.add(centralArea, BorderLayout.CENTER);
+
+		window.setPreferredSize(new Dimension(1024, 768));
 
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.pack();

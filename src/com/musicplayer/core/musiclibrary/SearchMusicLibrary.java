@@ -61,7 +61,7 @@ public class SearchMusicLibrary extends MusicLibrary {
 	public void run() {
 		this.libraryTemp = new HashMap<String, HashMap<String, HashSet<Song>>>(); // Init
 																					// var
-		//
+
 		this.scanFolder(new File(ConfigFileParser.getConfigFileParser()
 				.getParams("library"))); // Scan library
 		this.library = this.libraryTemp; // Set the library value to the
