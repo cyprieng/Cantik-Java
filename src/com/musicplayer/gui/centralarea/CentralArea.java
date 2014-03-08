@@ -4,7 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+
+import com.musicplayer.gui.CustomScrollBar;
 
 /**
  * Custom JPanel with scrollbar
@@ -30,14 +31,6 @@ public class CentralArea extends JPanel {
 		content = new JPanel();
 		content.setBackground(Color.WHITE);
 
-		// Add scrollbars
-		JScrollPane scrollPane = new JScrollPane(content);
-		scrollPane
-				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-
-		super.add(scrollPane);
+		super.add(CustomScrollBar.getCustomJScrollPane(content));
 	}
 }

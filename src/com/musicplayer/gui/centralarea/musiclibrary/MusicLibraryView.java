@@ -10,7 +10,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JScrollPane;
 import javax.swing.tree.TreePath;
 
 import org.jdesktop.swingx.JXTreeTable;
@@ -27,6 +26,7 @@ import com.musicplayer.core.musiclibrary.MusicLibrary;
 import com.musicplayer.core.musiclibrary.SearchMusicLibrary;
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.core.song.Song;
+import com.musicplayer.gui.CustomScrollBar;
 import com.musicplayer.gui.GUIParameters;
 import com.musicplayer.gui.centralarea.CentralArea;
 import com.musicplayer.gui.centralarea.CustomTableHeader;
@@ -170,7 +170,7 @@ public class MusicLibraryView extends CentralArea {
 			Log.addEntry(e);
 		}
 
-		add(new JScrollPane(tree));
+		add(CustomScrollBar.getCustomJScrollPane(tree));
 
 		showLibrary(null);
 	}

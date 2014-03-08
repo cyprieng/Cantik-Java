@@ -9,7 +9,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.DropMode;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -18,6 +17,7 @@ import javax.swing.table.TableCellRenderer;
 import com.musicplayer.core.Core;
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.core.song.Song;
+import com.musicplayer.gui.CustomScrollBar;
 import com.musicplayer.gui.GUIParameters;
 import com.musicplayer.gui.centralarea.CentralArea;
 import com.musicplayer.gui.centralarea.CustomTableHeader;
@@ -106,7 +106,7 @@ public class PlaylistView extends CentralArea implements Observer {
 		table.setDragEnabled(true);
 		table.setDropMode(DropMode.INSERT_ROWS);
 		table.setTransferHandler(new TableRowTransferHandler(table));
-		add(new JScrollPane(table));
+		add(CustomScrollBar.getCustomJScrollPane(table));
 
 		// Mouse listener for the popup menu
 		table.addMouseListener(new MouseListener() {
