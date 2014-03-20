@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import com.musicplayer.core.config.ConfigFileParser;
 import com.musicplayer.core.musiclibrary.MusicLibrary;
+import com.musicplayer.gui.centralarea.LocalFileView;
 import com.musicplayer.gui.centralarea.TrackInfo;
 import com.musicplayer.gui.centralarea.musiclibrary.MusicLibraryView;
 import com.musicplayer.gui.centralarea.playlistview.PlaylistView;
@@ -44,6 +45,7 @@ public class MainWindow {
 		// Central area
 		centralArea = new JPanel(new CardLayout());
 		centralArea.add(MusicLibraryView.getMusiLibraryView(), "Library");
+		centralArea.add(new LocalFileView(), "Local File");
 		centralArea.add(new PlaylistView(), "Playlist");
 		centralArea.add(new TrackInfo(), "Info");
 
