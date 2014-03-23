@@ -1,9 +1,10 @@
 package com.musicplayer.core.musiclibrary;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import com.musicplayer.core.Core;
 import com.musicplayer.core.InvalidFileException;
@@ -32,8 +33,7 @@ public class MusicLibrary extends Thread {
 	/**
 	 * Structure storing the music library and the temporary one
 	 */
-	protected HashMap<String, HashMap<String, HashSet<Song>>> library,
-			libraryTemp;
+	protected Map<String, Map<String, Set<Song>>> library, libraryTemp;
 
 	/**
 	 * Mark if the music library is ready
@@ -45,7 +45,7 @@ public class MusicLibrary extends Thread {
 	 */
 	protected MusicLibrary() {
 		super("MusicLibrary");
-		this.library = new HashMap<String, HashMap<String, HashSet<Song>>>();
+		this.library = new TreeMap<String, Map<String, Set<Song>>>();
 		this.ready = false;
 	}
 
@@ -74,7 +74,7 @@ public class MusicLibrary extends Thread {
 
 		try {
 			// Get library from file
-			this.library = (HashMap<String, HashMap<String, HashSet<Song>>>) ObjectFileWriter
+			this.library = (Map<String, Map<String, Set<Song>>>) ObjectFileWriter
 					.get(new File(Core.getUserPath() + "library"));
 
 			// Library is ready
@@ -100,24 +100,23 @@ public class MusicLibrary extends Thread {
 		if (!libraryTemp.containsKey(song.getArtist())) { // Artist does not
 															// exist
 															// => create artist
-			libraryTemp.put(song.getArtist(),
-					new HashMap<String, HashSet<Song>>());
+			libraryTemp.put(song.getArtist(), new TreeMap<String, Set<Song>>());
 		}
-		if (!((HashMap<String, HashSet<Song>>) libraryTemp
-				.get(song.getArtist())).containsKey(song.getAlbum())) { // Album
-																		// does
-																		// not
-																		// exist
-																		// =>
-																		// create
-																		// album
-			((HashMap<String, HashSet<Song>>) libraryTemp.get(song.getArtist()))
-					.put(song.getAlbum(), new HashSet<Song>());
+		if (!((Map<String, Set<Song>>) libraryTemp.get(song.getArtist()))
+				.containsKey(song.getAlbum())) { // Album
+													// does
+													// not
+													// exist
+													// =>
+													// create
+													// album
+			((Map<String, Set<Song>>) libraryTemp.get(song.getArtist())).put(
+					song.getAlbum(), new HashSet<Song>());
 		}
 
 		// Create song
-		((HashSet<Song>) ((HashMap<String, HashSet<Song>>) libraryTemp.get(song
-				.getArtist())).get(song.getAlbum())).add(song);
+		((Set<Song>) ((Map<String, Set<Song>>) libraryTemp
+				.get(song.getArtist())).get(song.getAlbum())).add(song);
 	}
 
 	/**
@@ -149,8 +148,8 @@ public class MusicLibrary extends Thread {
 	 * Thread run function => scan the folder and store it in a file
 	 */
 	public void run() {
-		this.libraryTemp = new HashMap<String, HashMap<String, HashSet<Song>>>(); // Init
-																					// var
+		this.libraryTemp = new TreeMap<String, Map<String, Set<Song>>>(); // Init
+																			// var
 		this.scanFolder(new File(this.libraryPath)); // Scan library
 		this.library = this.libraryTemp; // Set the library value to the
 											// temporary one
@@ -194,8 +193,7 @@ public class MusicLibrary extends Thread {
 	 */
 	public Set<String> getAlbums(String artist) {
 		try {
-			return ((HashMap<String, HashSet<Song>>) library.get(artist))
-					.keySet();
+			return ((Map<String, Set<Song>>) library.get(artist)).keySet();
 		} catch (Exception e) {
 			Log.addEntry(e);
 			return null;
@@ -237,8 +235,8 @@ public class MusicLibrary extends Thread {
 	 */
 	public Set<Song> getSongs(String artist, String album) {
 		try {
-			return ((HashSet<Song>) ((HashMap<String, HashSet<Song>>) library
-					.get(artist)).get(album));
+			return ((Set<Song>) ((Map<String, Set<Song>>) library.get(artist))
+					.get(album));
 		} catch (Exception e) {
 			Log.addEntry(e);
 			return null;

@@ -1,8 +1,9 @@
 package com.musicplayer.core.musiclibrary;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import com.musicplayer.core.InvalidFileException;
 import com.musicplayer.core.config.ConfigFileParser;
@@ -59,8 +60,8 @@ public class SearchMusicLibrary extends MusicLibrary {
 
 	@Override
 	public void run() {
-		this.libraryTemp = new HashMap<String, HashMap<String, HashSet<Song>>>(); // Init
-																					// var
+		this.libraryTemp = new TreeMap<String, Map<String, Set<Song>>>(); // Init
+																			// var
 
 		this.scanFolder(new File(ConfigFileParser.getConfigFileParser()
 				.getParams("library"))); // Scan library
