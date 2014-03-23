@@ -7,6 +7,8 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -31,9 +33,19 @@ public class Item extends JPanel {
 	private static final long serialVersionUID = -2428032016539504254L;
 
 	/**
+	 * List of all items
+	 */
+	private static Set<Item> instance = new HashSet<Item>();
+
+	/**
 	 * JPanel of the active indicator
 	 */
 	private JPanel activeIndicator;
+
+	/**
+	 * Indicate if the item must be always active
+	 */
+	private boolean keepActive = false;
 
 	/**
 	 * Init the item with the given title
@@ -43,6 +55,8 @@ public class Item extends JPanel {
 	 */
 	public Item(final String str) {
 		super();
+		instance.add(this);
+
 		setPreferredSize(new Dimension(250, 40));
 		setMaximumSize(getPreferredSize());
 		setMinimumSize(getPreferredSize());
@@ -81,12 +95,12 @@ public class Item extends JPanel {
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
-				label.setActive();
+				label.setActive(false);
 			}
 
 			@Override
 			public void mouseExited(java.awt.event.MouseEvent evt) {
-				label.unsetActive();
+				label.unsetActive(false);
 			}
 		});
 
@@ -111,29 +125,47 @@ public class Item extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				MainWindow.setCentralArea(str); // Change central area
+				// Unset active all other items
+				for (Item i : instance) {
+					if (i != null)
+						i.unsetActive(true);
+				}
+				label.setActive(true); // Active this item
 			}
 		});
 	}
 
 	/**
 	 * Set this item active
+	 * 
+	 * @param keepActive
+	 *            Indicate if this item must stay always active
 	 */
-	public void setActive() {
+	public void setActive(boolean keepActive) {
 		this.setBackground(GUIParameters.LEFTBAR_ACTIVE_BACKGROUND); // Modify
 																		// background
 		activeIndicator.setBackground(GUIParameters.LEFTBAR_ACTIVE); // Show
 																		// active
 																		// indicator
+		// Change keepActive if it is false
+		if (!this.keepActive)
+			this.keepActive = keepActive;
 	}
 
 	/**
 	 * Set this item non active
+	 * 
+	 * @param forceUnset
+	 *            Unset active even if keepActive is set to true
 	 */
-	public void unsetActive() {
-		this.setBackground(GUIParameters.LEFTBAR_BACKGROUND); // Modify
-																// background
-		activeIndicator.setBackground(GUIParameters.LEFTBAR_BACKGROUND); // Hide
-																			// active
-																			// indicator
+	public void unsetActive(boolean forceUnset) {
+		if (!keepActive || forceUnset) {
+			this.setBackground(GUIParameters.LEFTBAR_BACKGROUND); // Modify
+																	// background
+			activeIndicator.setBackground(GUIParameters.LEFTBAR_BACKGROUND); // Hide
+																				// active
+																				// indicator
+			keepActive = false; // Disable always active
+		}
 	}
 }
