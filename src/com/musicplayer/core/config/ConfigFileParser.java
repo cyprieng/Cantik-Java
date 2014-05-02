@@ -80,4 +80,25 @@ public class ConfigFileParser {
 	public String getParams(String param) {
 		return params.get(param);
 	}
+
+	/**
+	 * Update a value of the config
+	 * 
+	 * @param param
+	 *            The parameter to change
+	 * @param value
+	 *            The value to set
+	 */
+	public void setParam(String param, String value) {
+		params.put(param, value);
+	}
+
+	/**
+	 * Get the hashmap
+	 * 
+	 * @return The hashmap
+	 */
+	public HashMap<String, String> getHashMap() {
+		return params;
+	}
 }

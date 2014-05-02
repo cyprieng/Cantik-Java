@@ -51,5 +51,8 @@ public class LeftBar extends JPanel {
 		this.add(new Item("Playlist"));
 		this.add(new Item("Info"));
 		this.add(new Separator());
+		
+		this.add(new Item("Settings"));
+		this.add(new Separator());
 	}
 }
