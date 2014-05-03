@@ -103,7 +103,9 @@ public class Player extends JPanel implements Observer {
 	@Override
 	public void update(Observable playlist, Object arg) {
 		// Update duration
-		this.duration.setText(Core.stringifyDuration(Playlist.getPlaylist()
-				.getCurrentSong().getDuration()));
+		if (Playlist.getPlaylist().getCurrentSong() != null) {
+			this.duration.setText(Core.stringifyDuration(Playlist.getPlaylist()
+					.getCurrentSong().getDuration()));
+		}
 	}
 }

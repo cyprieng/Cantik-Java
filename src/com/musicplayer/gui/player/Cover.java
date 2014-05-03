@@ -40,7 +40,8 @@ public class Cover extends JLabel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (Playlist.getPlaylist().getCurrentSong().getCover() == null)
+		if (Playlist.getPlaylist().getCurrentSong() == null
+				|| Playlist.getPlaylist().getCurrentSong().getCover() == null)
 			// Default cover
 			try {
 				this.setIcon(new ImageIcon(ImageIO.read(new File(
@@ -53,4 +54,5 @@ public class Cover extends JLabel implements Observer {
 			this.setIcon(new ImageIcon(Playlist.getPlaylist().getCurrentSong()
 					.getCover().getScaledInstance(86, 86, Image.SCALE_SMOOTH)));
 	}
+
 }

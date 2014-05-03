@@ -204,7 +204,8 @@ public class Playlist extends Observable implements Observer {
 															// playlist
 						this.play(0);
 					} else {
-						this.player.stop();
+						if (this.player != null)
+							this.player.stop();
 					}
 				} else { // Play next track
 					this.play(this.currentTrack + 1);

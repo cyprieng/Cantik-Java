@@ -40,12 +40,14 @@ public class TrackInfo extends CentralArea implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		Font f = GUIParameters.getCentralFont();
+		if (Playlist.getPlaylist().getCurrentSong() != null) {
+			Font f = GUIParameters.getCentralFont();
 
-		lyric.setText("<html><style type='text/css'>html { font-family: '"
-				+ f.getFamily()
-				+ "'; font-size:20px;} </style><h1>Lyric</h1>"
-				+ Playlist.getPlaylist().getCurrentSong().getLyric()
-						.replaceAll("\n", "<br>") + "<html>");
+			lyric.setText("<html><style type='text/css'>html { font-family: '"
+					+ f.getFamily()
+					+ "'; font-size:20px;} </style><h1>Lyric</h1>"
+					+ Playlist.getPlaylist().getCurrentSong().getLyric()
+							.replaceAll("\n", "<br>") + "<html>");
+		}
 	}
 }

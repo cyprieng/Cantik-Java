@@ -48,8 +48,14 @@ public class TrackInfo extends JPanel implements Observer {
 		// Get song and info
 		Song s = Playlist.getPlaylist().getCurrentSong();
 
-		title.setText(s.getTitle());
-		album.setText(s.getAlbum());
-		artist.setText(s.getArtist());
+		if (s != null) {
+			title.setText(s.getTitle());
+			album.setText(s.getAlbum());
+			artist.setText(s.getArtist());
+		} else {
+			title.setText("");
+			album.setText("");
+			artist.setText("");
+		}
 	}
 }
