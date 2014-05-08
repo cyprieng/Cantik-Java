@@ -5,9 +5,8 @@ import java.util.Observer;
 
 /**
  * Class managing all format playback
- * 
+ *
  * @author cyprien
- * 
  */
 public class AdaptativePlayer extends Observable implements Player, Observer {
 	/**
@@ -17,9 +16,9 @@ public class AdaptativePlayer extends Observable implements Player, Observer {
 
 	/**
 	 * Constructor: detect file type, and create the appropriate player
-	 * 
+	 *
 	 * @param str
-	 *            The path of the file
+	 * 		The path of the file
 	 */
 	public AdaptativePlayer(String str) {
 		// Get format

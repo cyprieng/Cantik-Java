@@ -2,9 +2,8 @@ package com.musicplayer.core;
 
 /**
  * Exception linked to an invalid file
- * 
+ *
  * @author cyprien
- * 
  */
 public class InvalidFileException extends Exception {
 	private static final long serialVersionUID = 15083144311040175L;

@@ -2,9 +2,8 @@ package com.musicplayer.core.player;
 
 /**
  * Interface of a player
- * 
+ *
  * @author cyprien
- * 
  */
 public interface Player {
 	/**
@@ -24,22 +23,22 @@ public interface Player {
 
 	/**
 	 * Skip n percent of the song
-	 * 
+	 *
 	 * @param percent
-	 *            The percent to skip
+	 * 		The percent to skip
 	 */
 	public void skip(int percent);
 
 	/**
 	 * Get the file which is playing
-	 * 
+	 *
 	 * @return the path of the file
 	 */
 	public String getFile();
 
 	/**
 	 * Get the state of the player
-	 * 
+	 *
 	 * @return the state of the player
 	 * @see PlayerState
 	 */

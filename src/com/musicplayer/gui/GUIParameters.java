@@ -1,19 +1,15 @@
 package com.musicplayer.gui;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
+import com.musicplayer.core.Log;
+
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-import com.musicplayer.core.Log;
-
 /**
  * Parameters of the UI (Color, font...)
- * 
+ *
  * @author cyprien
- * 
  */
 public class GUIParameters {
 	/**
@@ -53,7 +49,7 @@ public class GUIParameters {
 
 	/**
 	 * Get the global font
-	 * 
+	 *
 	 * @return The global Font
 	 * @see Font
 	 */
@@ -73,7 +69,7 @@ public class GUIParameters {
 
 	/**
 	 * Get the font of the central area
-	 * 
+	 *
 	 * @return The central Font
 	 * @see Font
 	 */

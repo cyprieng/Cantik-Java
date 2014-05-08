@@ -1,28 +1,26 @@
 package com.musicplayer.gui.centralarea.musiclibrary;
 
+import com.musicplayer.core.Core;
+import com.musicplayer.core.song.Song;
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
 
-import com.musicplayer.core.Core;
-import com.musicplayer.core.song.Song;
-
 /**
  * Model for the music library view
- * 
+ *
  * @author cyprien
- * 
  */
 public class CustomTreeTableModel extends DefaultTreeTableModel {
 	/**
 	 * Name of columns
 	 */
-	private final static String[] COLUMN_NAMES = { "Title", "Year", "Length" };
+	private final static String[] COLUMN_NAMES = {"Title", "Year", "Length"};
 
 	/**
 	 * Call super constructor
-	 * 
+	 *
 	 * @param root
-	 *            The root node
+	 * 		The root node
 	 */
 	public CustomTreeTableModel(DefaultMutableTreeTableNode root) {
 		super(root);
@@ -50,12 +48,12 @@ public class CustomTreeTableModel extends DefaultTreeTableModel {
 		// Get column value
 		if (o instanceof Song) {
 			switch (column) {
-			case 0:
-				return ((Song) o).getTitle();
-			case 1:
-				return ((Song) o).getYear();
-			case 2:
-				return Core.stringifyDuration(((Song) o).getDuration());
+				case 0:
+					return ((Song) o).getTitle();
+				case 1:
+					return ((Song) o).getYear();
+				case 2:
+					return Core.stringifyDuration(((Song) o).getDuration());
 			}
 		}
 

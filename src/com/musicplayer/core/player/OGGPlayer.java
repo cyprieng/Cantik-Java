@@ -1,23 +1,16 @@
 package com.musicplayer.core.player;
 
+import com.musicplayer.core.Log;
+
+import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.SourceDataLine;
-
-import com.musicplayer.core.Log;
-
 /**
  * Class managing OGG playback
- * 
+ *
  * @author cyprien
- * 
  */
 public class OGGPlayer extends Observable implements Player, Runnable {
 	/**
@@ -42,9 +35,9 @@ public class OGGPlayer extends Observable implements Player, Runnable {
 
 	/**
 	 * Constructor: initialize the player
-	 * 
+	 *
 	 * @param str
-	 *            The path of the file to play
+	 * 		The path of the file to play
 	 */
 	public OGGPlayer(String str) {
 		file = str;
@@ -55,16 +48,15 @@ public class OGGPlayer extends Observable implements Player, Runnable {
 
 	/**
 	 * Read the ogg file
-	 * 
+	 *
 	 * @param targetFormat
-	 *            Output format
+	 * 		Output format
 	 * @param din
-	 *            Source
+	 * 		Source
 	 * @throws IOException
-	 *             Thrown if error reading file
+	 * 		Thrown if error reading file
 	 * @throws LineUnavailableException
-	 *             Thrown if error playing file
-	 * 
+	 * 		Thrown if error playing file
 	 */
 	private void rawplay(AudioFormat targetFormat, AudioInputStream din)
 			throws IOException, LineUnavailableException {
@@ -100,12 +92,12 @@ public class OGGPlayer extends Observable implements Player, Runnable {
 
 	/**
 	 * Get line to play audio
-	 * 
+	 *
 	 * @param audioFormat
-	 *            The ouput format
+	 * 		The ouput format
 	 * @return The line
 	 * @throws LineUnavailableException
-	 *             Thrown if error playing file
+	 * 		Thrown if error playing file
 	 */
 	private SourceDataLine getLine(AudioFormat audioFormat)
 			throws LineUnavailableException {

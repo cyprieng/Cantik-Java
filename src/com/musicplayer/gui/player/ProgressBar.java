@@ -1,27 +1,24 @@
 package com.musicplayer.gui.player;
 
-import java.awt.Color;
+import com.musicplayer.core.player.PlayerState;
+import com.musicplayer.core.playlist.Playlist;
+import com.musicplayer.core.song.Song;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.BorderFactory;
-import javax.swing.JSlider;
-import javax.swing.border.Border;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import com.musicplayer.core.player.PlayerState;
-import com.musicplayer.core.playlist.Playlist;
-import com.musicplayer.core.song.Song;
-
 /**
  * Custom JSlider. Show song progression, and allow user to fast
  * forward/backward
- * 
+ *
  * @author cyprien
- * 
  */
 public class ProgressBar extends JSlider implements Observer {
 	private static final long serialVersionUID = 8825926361843351174L;
@@ -69,7 +66,7 @@ public class ProgressBar extends JSlider implements Observer {
 					int percent = (int) ((double) (((ProgressBar) arg
 							.getSource()).getValue())
 							/ (double) (((ProgressBar) arg.getSource())
-									.getMaximum()) * 100);
+							.getMaximum()) * 100);
 
 					Playlist.getPlaylist().getPlayer().skip(percent);
 				}

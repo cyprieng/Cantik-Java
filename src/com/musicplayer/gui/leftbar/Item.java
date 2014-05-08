@@ -1,6 +1,15 @@
 package com.musicplayer.gui.leftbar;
 
-import java.awt.Dimension;
+import com.musicplayer.core.Log;
+import com.musicplayer.gui.CustomJLabel;
+import com.musicplayer.gui.GUIParameters;
+import com.musicplayer.gui.MainWindow;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -10,24 +19,10 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-
-import com.musicplayer.core.Log;
-import com.musicplayer.gui.CustomJLabel;
-import com.musicplayer.gui.GUIParameters;
-import com.musicplayer.gui.MainWindow;
-
 /**
  * Create a JPanel containing an item entry
- * 
+ *
  * @author cyprien
- * 
  */
 public class Item extends JPanel {
 	private static final long serialVersionUID = -2428032016539504254L;
@@ -49,9 +44,9 @@ public class Item extends JPanel {
 
 	/**
 	 * Init the item with the given title
-	 * 
+	 *
 	 * @param str
-	 *            The title of the item
+	 * 		The title of the item
 	 */
 	public Item(final String str) {
 		super();
@@ -137,16 +132,16 @@ public class Item extends JPanel {
 
 	/**
 	 * Set this item active
-	 * 
+	 *
 	 * @param keepActive
-	 *            Indicate if this item must stay always active
+	 * 		Indicate if this item must stay always active
 	 */
 	public void setActive(boolean keepActive) {
 		this.setBackground(GUIParameters.LEFTBAR_ACTIVE_BACKGROUND); // Modify
-																		// background
+		// background
 		activeIndicator.setBackground(GUIParameters.LEFTBAR_ACTIVE); // Show
-																		// active
-																		// indicator
+		// active
+		// indicator
 		// Change keepActive if it is false
 		if (!this.keepActive)
 			this.keepActive = keepActive;
@@ -154,17 +149,17 @@ public class Item extends JPanel {
 
 	/**
 	 * Set this item non active
-	 * 
+	 *
 	 * @param forceUnset
-	 *            Unset active even if keepActive is set to true
+	 * 		Unset active even if keepActive is set to true
 	 */
 	public void unsetActive(boolean forceUnset) {
 		if (!keepActive || forceUnset) {
 			this.setBackground(GUIParameters.LEFTBAR_BACKGROUND); // Modify
-																	// background
+			// background
 			activeIndicator.setBackground(GUIParameters.LEFTBAR_BACKGROUND); // Hide
-																				// active
-																				// indicator
+			// active
+			// indicator
 			keepActive = false; // Disable always active
 		}
 	}

@@ -1,15 +1,14 @@
 package com.musicplayer.core.player;
 
+import com.musicplayer.core.Log;
+
 import java.io.InputStream;
 import java.util.Observable;
 
-import com.musicplayer.core.Log;
-
 /**
  * Class managing MP3 playback
- * 
+ *
  * @author cyprien
- * 
  */
 public class MP3Player extends Observable implements Runnable, Player {
 	/**
@@ -39,9 +38,9 @@ public class MP3Player extends Observable implements Runnable, Player {
 
 	/**
 	 * Constructor: initialize the player
-	 * 
+	 *
 	 * @param str
-	 *            The path of the file to play
+	 * 		The path of the file to play
 	 */
 	public MP3Player(String str) {
 		file = str;
@@ -54,7 +53,8 @@ public class MP3Player extends Observable implements Runnable, Player {
 
 			this.player = new javazoom.jl.player.Player(song,
 					javazoom.jl.player.FactoryRegistry.systemRegistry()
-							.createAudioDevice());
+							.createAudioDevice()
+			);
 
 			this.playerThread = new Thread(this, "AudioPlayerThread");
 		} catch (Exception e) {
@@ -98,9 +98,9 @@ public class MP3Player extends Observable implements Runnable, Player {
 	@Override
 	public void run() {
 		while (state != PlayerState.FNISHED && state != PlayerState.STOPPED) { // Not
-																				// stopped
-																				// or
-																				// finished
+			// stopped
+			// or
+			// finished
 			try {
 				if (!player.play(1)) { // Play the song
 					// Song is finished
@@ -146,7 +146,8 @@ public class MP3Player extends Observable implements Runnable, Player {
 
 			this.player = new javazoom.jl.player.Player(song,
 					javazoom.jl.player.FactoryRegistry.systemRegistry()
-							.createAudioDevice());
+							.createAudioDevice()
+			);
 
 			// Skip
 			song.skip((long) (song.available() * (double) ((double) percent / 100.0)));

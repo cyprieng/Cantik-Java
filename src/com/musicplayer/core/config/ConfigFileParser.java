@@ -1,19 +1,18 @@
 package com.musicplayer.core.config;
 
+import com.musicplayer.core.Core;
+import com.musicplayer.core.Log;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
-import com.musicplayer.core.Core;
-import com.musicplayer.core.Log;
-
 /**
  * Parse config file. It uses singleton design pattern
- * 
+ *
  * @author cyprien
- * 
  */
 public class ConfigFileParser {
 	/**
@@ -43,8 +42,8 @@ public class ConfigFileParser {
 				String str;
 				while ((str = br.readLine()) != null) {
 					String temp[] = str.split("=", 2); // Get right and left
-														// part
-														// of the line
+					// part
+					// of the line
 
 					if (temp.length == 2) { // Add param
 						params.put(temp[0].trim(), temp[1].trim());
@@ -59,7 +58,7 @@ public class ConfigFileParser {
 
 	/**
 	 * Get the unique ConfigFileParser instance
-	 * 
+	 *
 	 * @return the unique ConfigFileParser instance
 	 */
 	public static ConfigFileParser getConfigFileParser() {
@@ -72,9 +71,9 @@ public class ConfigFileParser {
 
 	/**
 	 * Retrieve the selected parameter
-	 * 
+	 *
 	 * @param param
-	 *            The parameter to retrieve
+	 * 		The parameter to retrieve
 	 * @return The value of the parameter
 	 */
 	public String getParams(String param) {
@@ -83,11 +82,11 @@ public class ConfigFileParser {
 
 	/**
 	 * Update a value of the config
-	 * 
+	 *
 	 * @param param
-	 *            The parameter to change
+	 * 		The parameter to change
 	 * @param value
-	 *            The value to set
+	 * 		The value to set
 	 */
 	public void setParam(String param, String value) {
 		params.put(param, value);
@@ -95,7 +94,7 @@ public class ConfigFileParser {
 
 	/**
 	 * Get the hashmap
-	 * 
+	 *
 	 * @return The hashmap
 	 */
 	public HashMap<String, String> getHashMap() {

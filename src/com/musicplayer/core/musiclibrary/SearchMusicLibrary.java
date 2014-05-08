@@ -1,19 +1,18 @@
 package com.musicplayer.core.musiclibrary;
 
+import com.musicplayer.core.InvalidFileException;
+import com.musicplayer.core.config.ConfigFileParser;
+import com.musicplayer.core.song.Song;
+
 import java.io.File;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import com.musicplayer.core.InvalidFileException;
-import com.musicplayer.core.config.ConfigFileParser;
-import com.musicplayer.core.song.Song;
-
 /**
  * Music library with a filter
- * 
+ *
  * @author cyprien
- * 
  */
 public class SearchMusicLibrary extends MusicLibrary {
 	/**
@@ -23,9 +22,9 @@ public class SearchMusicLibrary extends MusicLibrary {
 
 	/**
 	 * Init music library
-	 * 
+	 *
 	 * @param query
-	 *            The query to find in the songs
+	 * 		The query to find in the songs
 	 */
 	public SearchMusicLibrary(String query) {
 		super();
@@ -41,7 +40,7 @@ public class SearchMusicLibrary extends MusicLibrary {
 				if (s.getAlbum().toLowerCase().contains(query)
 						|| s.getArtist().toLowerCase().contains(query)
 						|| s.getTitle().toLowerCase().contains(query)) { // Check
-																			// query
+					// query
 					this.addSong(s); // Add the song
 				}
 			} catch (InvalidFileException e) {
@@ -61,12 +60,12 @@ public class SearchMusicLibrary extends MusicLibrary {
 	@Override
 	public void run() {
 		this.libraryTemp = new TreeMap<String, Map<String, Set<Song>>>(); // Init
-																			// var
+		// var
 
 		this.scanFolder(new File(ConfigFileParser.getConfigFileParser()
 				.getParams("library"))); // Scan library
 		this.library = this.libraryTemp; // Set the library value to the
-											// temporary one
+		// temporary one
 
 		this.libraryTemp = null; // Destroy the temporary library
 

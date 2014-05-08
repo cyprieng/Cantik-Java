@@ -1,24 +1,21 @@
 package com.musicplayer.gui.player;
 
-import java.awt.Image;
+import com.musicplayer.core.Log;
+import com.musicplayer.core.playlist.Playlist;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-
-import com.musicplayer.core.Log;
-import com.musicplayer.core.playlist.Playlist;
-
 /**
  * Custom JLabel showing the cover of the current song
- * 
+ *
  * @author cyprien
- * 
  */
 public class Cover extends JLabel implements Observer {
 	private static final long serialVersionUID = -4531448604982404154L;

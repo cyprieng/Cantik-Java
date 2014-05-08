@@ -1,45 +1,30 @@
 package com.musicplayer.gui;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Insets;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
+import com.musicplayer.core.Log;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.border.Border;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.plaf.basic.BasicScrollBarUI;
-
-import com.musicplayer.core.Log;
-
 /**
  * Custom UI for scrollbar
- * 
+ *
  * @author cyprien
- * 
  */
 public class CustomScrollBar extends BasicScrollBarUI {
 	/**
 	 * Get a {@link JScrollPane} with the custom scrollbar ui
-	 * 
+	 *
 	 * @param view
-	 *            The view to pass to the scrollpane constructor
+	 * 		The view to pass to the scrollpane constructor
 	 * @return The custom {@link JScrollPane}
 	 */
 	public static JScrollPane getCustomJScrollPane(Component view) {

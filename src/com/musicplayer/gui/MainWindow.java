@@ -1,13 +1,5 @@
 package com.musicplayer.gui;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Container;
-import java.awt.Dimension;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import com.musicplayer.core.config.ConfigFileParser;
 import com.musicplayer.core.musiclibrary.MusicLibrary;
 import com.musicplayer.gui.centralarea.LocalFileView;
@@ -18,11 +10,13 @@ import com.musicplayer.gui.centralarea.playlistview.PlaylistView;
 import com.musicplayer.gui.leftbar.LeftBar;
 import com.musicplayer.gui.player.Player;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * Main window
- * 
+ *
  * @author cyprien
- * 
  */
 public class MainWindow {
 	/**
@@ -65,7 +59,7 @@ public class MainWindow {
 
 	/**
 	 * Get the MainWindow
-	 * 
+	 *
 	 * @return Return the main window and create it if necessary
 	 */
 	public static JFrame getMainWindow() {
@@ -78,9 +72,9 @@ public class MainWindow {
 
 	/**
 	 * Change the central area
-	 * 
+	 *
 	 * @param toShow
-	 *            The name of the panel to show
+	 * 		The name of the panel to show
 	 */
 	public static void setCentralArea(String toShow) {
 		CardLayout cl = (CardLayout) (centralArea.getLayout());

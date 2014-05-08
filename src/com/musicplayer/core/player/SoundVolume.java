@@ -1,31 +1,30 @@
 package com.musicplayer.core.player;
 
+import com.musicplayer.core.Log;
+
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.Line.Info;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Port;
 
-import com.musicplayer.core.Log;
-
 /**
  * Manage the sound volume
- * 
+ *
  * @author cyprien
- * 
  */
 public class SoundVolume {
 	/**
 	 * Source
 	 */
-	private final static Info[] SOURCE = { Port.Info.SPEAKER,
-			Port.Info.LINE_OUT, Port.Info.HEADPHONE };
+	private final static Info[] SOURCE = {Port.Info.SPEAKER,
+			Port.Info.LINE_OUT, Port.Info.HEADPHONE};
 
 	/**
 	 * Modify volume
-	 * 
+	 *
 	 * @param newVolume
-	 *            The new volume from 0.0 to 1.0
+	 * 		The new volume from 0.0 to 1.0
 	 */
 	public static void setVolume(float newVolume) {
 		for (Info s : SOURCE) {

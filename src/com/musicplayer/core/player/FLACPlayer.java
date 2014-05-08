@@ -1,30 +1,22 @@
 package com.musicplayer.core.player;
 
+import com.musicplayer.core.Log;
+import org.kc7bfi.jflac.FLACDecoder;
+import org.kc7bfi.jflac.PCMProcessor;
+import org.kc7bfi.jflac.metadata.StreamInfo;
+import org.kc7bfi.jflac.util.ByteData;
+
+import javax.sound.sampled.*;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Vector;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineListener;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.SourceDataLine;
-
-import org.kc7bfi.jflac.FLACDecoder;
-import org.kc7bfi.jflac.PCMProcessor;
-import org.kc7bfi.jflac.metadata.StreamInfo;
-import org.kc7bfi.jflac.util.ByteData;
-
-import com.musicplayer.core.Log;
-
 /**
  * Class managing FLAC playback
- * 
+ *
  * @author cyprien
- * 
  */
 public class FLACPlayer extends Observable implements Player, Runnable,
 		PCMProcessor {
@@ -70,9 +62,9 @@ public class FLACPlayer extends Observable implements Player, Runnable,
 
 	/**
 	 * Constructor: initialize the player
-	 * 
+	 *
 	 * @param str
-	 *            The path of the file to play
+	 * 		The path of the file to play
 	 */
 	public FLACPlayer(String str) {
 		file = str;
@@ -83,13 +75,13 @@ public class FLACPlayer extends Observable implements Player, Runnable,
 
 	/**
 	 * Decode and play an input FLAC file.
-	 * 
+	 *
 	 * @param inFileName
-	 *            The input FLAC file name
+	 * 		The input FLAC file name
 	 * @throws IOException
-	 *             Thrown if error reading file
+	 * 		Thrown if error reading file
 	 * @throws LineUnavailableException
-	 *             Thrown if error playing file
+	 * 		Thrown if error playing file
 	 */
 	public void decode(String inFileName) throws IOException,
 			LineUnavailableException {
@@ -116,9 +108,9 @@ public class FLACPlayer extends Observable implements Player, Runnable,
 
 	/**
 	 * Process the StreamInfo block.
-	 * 
+	 *
 	 * @param streamInfo
-	 *            the StreamInfo block
+	 * 		the StreamInfo block
 	 * @see org.kc7bfi.jflac.PCMProcessor#processStreamInfo(org.kc7bfi.jflac.metadata.StreamInfo)
 	 */
 	public void processStreamInfo(StreamInfo streamInfo) {
@@ -143,9 +135,9 @@ public class FLACPlayer extends Observable implements Player, Runnable,
 
 	/**
 	 * Process the decoded PCM bytes.
-	 * 
+	 *
 	 * @param pcm
-	 *            The decoded PCM data
+	 * 		The decoded PCM data
 	 * @see org.kc7bfi.jflac.PCMProcessor#processPCM(org.kc7bfi.jflac.util.ByteSpace)
 	 */
 	public void processPCM(ByteData pcm) {
@@ -166,9 +158,9 @@ public class FLACPlayer extends Observable implements Player, Runnable,
 
 	/**
 	 * Add listener
-	 * 
+	 *
 	 * @param listener
-	 *            The listener to add
+	 * 		The listener to add
 	 */
 	public void addListener(LineListener listener) {
 		listeners.add(listener);
@@ -176,9 +168,9 @@ public class FLACPlayer extends Observable implements Player, Runnable,
 
 	/**
 	 * Remove listener
-	 * 
+	 *
 	 * @param listener
-	 *            The listener to remove
+	 * 		The listener to remove
 	 */
 	public void removeListener(LineListener listener) {
 		listeners.removeElement(listener);

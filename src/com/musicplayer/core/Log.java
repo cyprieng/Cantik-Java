@@ -9,16 +9,15 @@ import java.util.Calendar;
 
 /**
  * Log all error in a file
- * 
+ *
  * @author cyprien
- * 
  */
 public class Log {
 	/**
 	 * Add an entry in the log file
-	 * 
+	 *
 	 * @param entry
-	 *            The string to write
+	 * 		The string to write
 	 */
 	public static void addEntry(String entry) {
 		try (PrintWriter out = new PrintWriter(new BufferedWriter(
@@ -32,9 +31,9 @@ public class Log {
 
 	/**
 	 * Add an Exception in the log file
-	 * 
+	 *
 	 * @param entry
-	 *            The Exception to write
+	 * 		The Exception to write
 	 */
 	public static void addEntry(Exception entry) {
 		addEntry(entry.getMessage());

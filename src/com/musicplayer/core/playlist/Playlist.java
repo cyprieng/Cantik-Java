@@ -1,23 +1,17 @@
 package com.musicplayer.core.playlist;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Set;
-
 import com.musicplayer.core.player.AdaptativePlayer;
 import com.musicplayer.core.player.Player;
 import com.musicplayer.core.player.PlayerState;
 import com.musicplayer.core.scrobbler.Scrobbler;
 import com.musicplayer.core.song.Song;
 
+import java.util.*;
+
 /**
  * Class to store and manage playlist. It uses singleton design pattern.
- * 
+ *
  * @author cyprien
- * 
  */
 public class Playlist extends Observable implements Observer {
 	/**
@@ -62,7 +56,7 @@ public class Playlist extends Observable implements Observer {
 
 	/**
 	 * Get the unique Playlist instance
-	 * 
+	 *
 	 * @return the unique Playlist instance
 	 */
 	public static Playlist getPlaylist() {
@@ -74,9 +68,9 @@ public class Playlist extends Observable implements Observer {
 
 	/**
 	 * Add a song to the playlist
-	 * 
+	 *
 	 * @param song
-	 *            The Song to add to the list
+	 * 		The Song to add to the list
 	 */
 	public void addSong(Song song) {
 		this.songList.add(song);
@@ -87,9 +81,9 @@ public class Playlist extends Observable implements Observer {
 
 	/**
 	 * Add a Set of song to the playlist
-	 * 
+	 *
 	 * @param songSet
-	 *            The Set of song to add
+	 * 		The Set of song to add
 	 */
 	public void addSongSet(Set<Song> songSet) {
 		for (Song s : songSet)
@@ -101,9 +95,9 @@ public class Playlist extends Observable implements Observer {
 
 	/**
 	 * Get the Song at the given index
-	 * 
+	 *
 	 * @param index
-	 *            Index of the song to retrieve
+	 * 		Index of the song to retrieve
 	 * @return the selected song or null if it not exists
 	 */
 	public Song getSong(int index) {
@@ -116,9 +110,9 @@ public class Playlist extends Observable implements Observer {
 
 	/**
 	 * Remove the song at the given index
-	 * 
+	 *
 	 * @param index
-	 *            Index of the song to remove
+	 * 		Index of the song to remove
 	 */
 	public void removeSong(int index) {
 		this.songList.remove(index);
@@ -159,9 +153,9 @@ public class Playlist extends Observable implements Observer {
 
 	/**
 	 * Start playing the playlist from the selected song
-	 * 
+	 *
 	 * @param index
-	 *            Index of the first song to play
+	 * 		Index of the first song to play
 	 */
 	public void play(int index) {
 		if (this.getSong(index) != null) { // Song exists
@@ -199,9 +193,9 @@ public class Playlist extends Observable implements Observer {
 				this.play((int) (Math.random() * (this.songList.size() + 1)));
 			} else {
 				if (this.currentTrack + 1 >= this.songList.size()) { // Playlist
-																		// finished
+					// finished
 					if (this.repeat == RepeatState.ALL) { // Replay all the
-															// playlist
+						// playlist
 						this.play(0);
 					} else {
 						if (this.player != null)
@@ -223,11 +217,11 @@ public class Playlist extends Observable implements Observer {
 
 	/**
 	 * Reorder the playlist. Move song at fromIndex to toIndex.
-	 * 
+	 *
 	 * @param fromIndex
-	 *            The index of the song to move
+	 * 		The index of the song to move
 	 * @param toIndex
-	 *            The index where the song will be after
+	 * 		The index where the song will be after
 	 */
 	public void reorder(int fromIndex, int toIndex) {
 		// Get the song and delete it from the list
@@ -255,9 +249,9 @@ public class Playlist extends Observable implements Observer {
 
 	/**
 	 * Set the random status
-	 * 
+	 *
 	 * @param random
-	 *            True to enable random, false to disable
+	 * 		True to enable random, false to disable
 	 */
 	public void setRandom(boolean random) {
 		this.random = random;
@@ -265,9 +259,9 @@ public class Playlist extends Observable implements Observer {
 
 	/**
 	 * Set the repeat status
-	 * 
+	 *
 	 * @param repeat
-	 *            The repeat state
+	 * 		The repeat state
 	 * @see RepeatState
 	 */
 	public void setRepeat(RepeatState repeat) {
@@ -276,7 +270,7 @@ public class Playlist extends Observable implements Observer {
 
 	/**
 	 * Get the song which is playing
-	 * 
+	 *
 	 * @return The current Song
 	 * @see com.musicplayer.song.Song
 	 */
@@ -286,7 +280,7 @@ public class Playlist extends Observable implements Observer {
 
 	/**
 	 * Get the actual player
-	 * 
+	 *
 	 * @return The player
 	 * @see com.musicplayer.core.player.Player
 	 */
@@ -296,7 +290,7 @@ public class Playlist extends Observable implements Observer {
 
 	/**
 	 * Get the repeat state
-	 * 
+	 *
 	 * @return The repeat state
 	 * @see RepeatState
 	 */
@@ -306,7 +300,7 @@ public class Playlist extends Observable implements Observer {
 
 	/**
 	 * Return if the player is random
-	 * 
+	 *
 	 * @return True if yes, false otherwise
 	 */
 	public boolean isRandom() {
@@ -315,7 +309,7 @@ public class Playlist extends Observable implements Observer {
 
 	/**
 	 * Get the list of the songs in the playlist
-	 * 
+	 *
 	 * @return a List of the songs
 	 */
 	public List<Song> getSongList() {
@@ -324,7 +318,7 @@ public class Playlist extends Observable implements Observer {
 
 	/**
 	 * Get current track index
-	 * 
+	 *
 	 * @return the index of the current track
 	 */
 	public int getCurrentTrack() {
@@ -333,7 +327,7 @@ public class Playlist extends Observable implements Observer {
 
 	/**
 	 * Get the status of the player
-	 * 
+	 *
 	 * @return The status of the player
 	 * @see PlayerState
 	 */

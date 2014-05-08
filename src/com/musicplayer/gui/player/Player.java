@@ -1,24 +1,21 @@
 package com.musicplayer.gui.player;
 
-import java.awt.Color;
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-
 import com.musicplayer.core.Core;
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.gui.CustomJLabel;
 import com.musicplayer.gui.player.volumecontrol.VolumeButton;
 
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * Custom Jpanel showing all component of the player
- * 
+ *
  * @author cyprien
- * 
  */
 public class Player extends JPanel implements Observer {
 	private static final long serialVersionUID = 8685108070111620141L;

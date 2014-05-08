@@ -1,37 +1,25 @@
 package com.musicplayer.gui;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.GridLayout;
+import com.musicplayer.core.Log;
+import com.musicplayer.core.config.ConfigFileParser;
+import com.musicplayer.core.config.ConfigFileWriter;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
-
-import com.musicplayer.core.Log;
-import com.musicplayer.core.config.ConfigFileParser;
-import com.musicplayer.core.config.ConfigFileWriter;
-
 /**
  * Window for configuration
- * 
+ *
  * @author cyprien
- * 
  */
 public class ParametersWindow extends JFrame {
 	private static final long serialVersionUID = -2776375961877258278L;

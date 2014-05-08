@@ -1,18 +1,15 @@
 package com.musicplayer.gui.player.volumecontrol;
 
-import java.awt.Graphics;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
 import com.musicplayer.core.Log;
 import com.musicplayer.gui.MainWindow;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * Floating JPanel showing VolumeControl
- * 
+ *
  * @author cyprien
- * 
  */
 public class VolumePanel extends JPanel {
 	private static final long serialVersionUID = 8107614292050804904L;
@@ -29,10 +26,10 @@ public class VolumePanel extends JPanel {
 
 	/**
 	 * Init button
-	 * 
+	 *
 	 * @param vb
-	 *            The calling button. This JPanel will be placed next to this
-	 *            button.
+	 * 		The calling button. This JPanel will be placed next to this
+	 * 		button.
 	 */
 	public VolumePanel(JButton vb) {
 		// Init
@@ -56,10 +53,11 @@ public class VolumePanel extends JPanel {
 
 		// Slider position
 		vc.setBounds(button.getParent().getX() + button.getX() + 20, button
-				.getParent().getY()
-				+ button.getY()
-				- vc.getPreferredSize().height - 20,
-				vc.getPreferredSize().width, vc.getPreferredSize().height);
+						.getParent().getY()
+						+ button.getY()
+						- vc.getPreferredSize().height - 20,
+				vc.getPreferredSize().width, vc.getPreferredSize().height
+		);
 		try {
 			finalize();
 		} catch (Throwable e) {

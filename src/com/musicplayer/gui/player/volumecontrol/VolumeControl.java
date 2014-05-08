@@ -1,19 +1,16 @@
 package com.musicplayer.gui.player.volumecontrol;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import com.musicplayer.core.player.SoundVolume;
 
-import javax.swing.JSlider;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import com.musicplayer.core.player.SoundVolume;
+import java.awt.*;
 
 /**
  * JSlider managing the sound volume
- * 
+ *
  * @author cyprien
- * 
  */
 public class VolumeControl extends JSlider {
 	private static final long serialVersionUID = -8931165783249348524L;

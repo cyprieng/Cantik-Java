@@ -1,12 +1,13 @@
 package com.musicplayer.gui.leftbar;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.Shape;
+import com.musicplayer.core.Log;
+import com.musicplayer.gui.GUIParameters;
+import com.musicplayer.gui.centralarea.musiclibrary.MusicLibraryView;
+
+import javax.imageio.ImageIO;
+import javax.swing.FocusManager;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
@@ -16,19 +17,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.FocusManager;
-import javax.swing.JTextField;
-
-import com.musicplayer.core.Log;
-import com.musicplayer.gui.GUIParameters;
-import com.musicplayer.gui.centralarea.musiclibrary.MusicLibraryView;
-
 /**
  * Create a custom JTextField for the search bar
- * 
+ *
  * @author cyprien
- * 
  */
 public class SearchField extends JTextField {
 	private static final long serialVersionUID = -1258623083307335060L;
@@ -93,7 +85,8 @@ public class SearchField extends JTextField {
 						javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
 						javax.swing.border.TitledBorder.DEFAULT_POSITION,
 						GUIParameters.getFont()), javax.swing.BorderFactory
-						.createEmptyBorder(-15, 30, 0, 0)));
+						.createEmptyBorder(-15, 30, 0, 0)
+		));
 	}
 
 	@Override
@@ -117,7 +110,7 @@ public class SearchField extends JTextField {
 		// Placeholder
 		if (getText().isEmpty()
 				&& !(FocusManager.getCurrentKeyboardFocusManager()
-						.getFocusOwner() == this)) {
+				.getFocusOwner() == this)) {
 			Graphics2D g2 = (Graphics2D) g.create();
 			g2.setColor(GUIParameters.BORDER);
 			g2.setFont(getFont().deriveFont(Font.ITALIC));

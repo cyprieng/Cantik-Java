@@ -1,23 +1,21 @@
 package com.musicplayer.core.scrobbler;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.musicplayer.core.Log;
 import com.musicplayer.core.config.ConfigFileParser;
 import com.musicplayer.core.song.Song;
-
 import de.umass.lastfm.Authenticator;
 import de.umass.lastfm.Session;
 import de.umass.lastfm.Track;
 import de.umass.lastfm.scrobble.ScrobbleData;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Class which manage scrobbling on Lastfm
- * 
- * @see Lastfm API
+ *
  * @author cyprien
- * 
+ * @see Lastfm API
  */
 public class Scrobbler {
 	/**
@@ -37,7 +35,7 @@ public class Scrobbler {
 
 	/**
 	 * Init the lastfm scrobbler
-	 * 
+	 *
 	 * @throws ScrobblerException
 	 */
 	public static void init() throws ScrobblerException {
@@ -46,8 +44,8 @@ public class Scrobbler {
 
 		if (config.getParams("lastfm_username") == null
 				|| config.getParams("lastfm_password") == null) { // Scrobbling
-																	// not
-																	// enabled
+			// not
+			// enabled
 			throw new ScrobblerException();
 		} else {
 			if (Scrobbler.session == null) { // Generate lastfm session
@@ -66,9 +64,9 @@ public class Scrobbler {
 
 	/**
 	 * Update the Now Playing status on Lastfm
-	 * 
+	 *
 	 * @param song
-	 *            The song to scrobble
+	 * 		The song to scrobble
 	 */
 	public static void updateNowPlaying(final Song song) {
 		Thread t = new Thread(new Runnable() {
@@ -91,9 +89,9 @@ public class Scrobbler {
 
 	/**
 	 * Scrobble a song on Lastfm
-	 * 
+	 *
 	 * @param song
-	 *            The song to scrobble
+	 * 		The song to scrobble
 	 */
 	public static void scrobble(final Song song) {
 		Thread t = new Thread(new Runnable() {

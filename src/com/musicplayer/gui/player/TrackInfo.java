@@ -1,21 +1,18 @@
 package com.musicplayer.gui.player;
 
-import java.awt.Color;
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.core.song.Song;
 import com.musicplayer.gui.CustomJLabel;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * Custom JPanel showing track info
- * 
+ *
  * @author cyprien
- * 
  */
 public class TrackInfo extends JPanel implements Observer {
 	private static final long serialVersionUID = -8229966239396964776L;

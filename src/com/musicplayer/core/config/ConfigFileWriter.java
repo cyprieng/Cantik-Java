@@ -1,5 +1,7 @@
 package com.musicplayer.core.config;
 
+import com.musicplayer.core.Core;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -7,18 +9,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-import com.musicplayer.core.Core;
-
 /**
  * Write config in a file
- * 
+ *
  * @author cyprien
- * 
  */
 public class ConfigFileWriter {
 	/**
 	 * Wirte the ConfigFileParser in the config file
-	 * 
+	 *
 	 * @throws Exception
 	 * @see ConfigFileParser
 	 */

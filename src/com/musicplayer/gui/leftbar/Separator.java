@@ -1,17 +1,14 @@
 package com.musicplayer.gui.leftbar;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-
-import javax.swing.JPanel;
-
 import com.musicplayer.gui.GUIParameters;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Draw a line in a JPanel
- * 
+ *
  * @author cyprien
- * 
  */
 public class Separator extends JPanel {
 	private static final long serialVersionUID = 964341531448230546L;

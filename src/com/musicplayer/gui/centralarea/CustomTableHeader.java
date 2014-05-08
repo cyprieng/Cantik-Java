@@ -1,29 +1,24 @@
 package com.musicplayer.gui.centralarea;
 
-import java.awt.Color;
-import java.awt.Component;
+import com.musicplayer.gui.GUIParameters;
 
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-
-import com.musicplayer.gui.GUIParameters;
+import java.awt.*;
 
 /**
  * Customize the header of a JTable
- * 
+ *
  * @author cyprien
- * 
  */
 public class CustomTableHeader {
 	/**
 	 * Customize the given header
-	 * 
+	 *
 	 * @param header
-	 *            The header to customize
+	 * 		The header to customize
 	 */
 	public static void customizeHeader(JTableHeader header) {
 		header.setBackground(GUIParameters.LEFTBAR_BACKGROUND);
@@ -37,9 +32,8 @@ public class CustomTableHeader {
 
 	/**
 	 * Renderer of the header of the table
-	 * 
+	 *
 	 * @author cyprien
-	 * 
 	 */
 	public static class HeaderRenderer extends JLabel implements
 			TableCellRenderer {
@@ -49,8 +43,8 @@ public class CustomTableHeader {
 		 * Renderer of the header of the table
 		 */
 		public Component getTableCellRendererComponent(JTable table,
-				Object value, boolean hasFocus, boolean isSelected, int row,
-				int col) {
+													   Object value, boolean hasFocus, boolean isSelected, int row,
+													   int col) {
 			// Set style
 			setText(value.toString());
 			setForeground(Color.WHITE);

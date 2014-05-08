@@ -1,23 +1,22 @@
 package com.musicplayer.core.musiclibrary;
 
-import java.io.File;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-
 import com.musicplayer.core.Core;
 import com.musicplayer.core.InvalidFileException;
 import com.musicplayer.core.Log;
 import com.musicplayer.core.config.ObjectFileWriter;
 import com.musicplayer.core.song.Song;
 
+import java.io.File;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
 /**
  * Manage the music library: retrieve and store it. It uses the singleton design
  * pattern.
- * 
+ *
  * @author cyprien
- * 
  */
 public class MusicLibrary extends Thread {
 	/**
@@ -51,7 +50,7 @@ public class MusicLibrary extends Thread {
 
 	/**
 	 * Get the unique instance of MusicLibrary
-	 * 
+	 *
 	 * @return the unique instance of MusicLibrary
 	 */
 	public static MusicLibrary getMusicLibrary() {
@@ -64,9 +63,9 @@ public class MusicLibrary extends Thread {
 
 	/**
 	 * Load the path in the library
-	 * 
+	 *
 	 * @param path
-	 *            The path to load
+	 * 		The path to load
 	 */
 	@SuppressWarnings("unchecked")
 	public void loadLibraryFolder(String path) {
@@ -92,24 +91,24 @@ public class MusicLibrary extends Thread {
 
 	/**
 	 * Add song to the library
-	 * 
+	 *
 	 * @param song
-	 *            Song to add to the library
+	 * 		Song to add to the library
 	 */
 	public void addSong(Song song) {
 		if (!libraryTemp.containsKey(song.getArtist())) { // Artist does not
-															// exist
-															// => create artist
+			// exist
+			// => create artist
 			libraryTemp.put(song.getArtist(), new TreeMap<String, Set<Song>>());
 		}
 		if (!((Map<String, Set<Song>>) libraryTemp.get(song.getArtist()))
 				.containsKey(song.getAlbum())) { // Album
-													// does
-													// not
-													// exist
-													// =>
-													// create
-													// album
+			// does
+			// not
+			// exist
+			// =>
+			// create
+			// album
 			((Map<String, Set<Song>>) libraryTemp.get(song.getArtist())).put(
 					song.getAlbum(), new HashSet<Song>());
 		}
@@ -121,15 +120,15 @@ public class MusicLibrary extends Thread {
 
 	/**
 	 * Scan folder to add them to the library
-	 * 
+	 *
 	 * @param folder
-	 *            Folder to scan
+	 * 		Folder to scan
 	 */
 	public void scanFolder(File folder) {
 		if (folder.isFile()) { // It is a file
 			try {
 				this.addSong(new Song(folder.getAbsolutePath())); // Add the
-																	// song
+				// song
 			} catch (InvalidFileException e) {
 			}
 
@@ -149,10 +148,10 @@ public class MusicLibrary extends Thread {
 	 */
 	public void run() {
 		this.libraryTemp = new TreeMap<String, Map<String, Set<Song>>>(); // Init
-																			// var
+		// var
 		this.scanFolder(new File(this.libraryPath)); // Scan library
 		this.library = this.libraryTemp; // Set the library value to the
-											// temporary one
+		// temporary one
 		this.libraryTemp = null; // Destroy the temporary library
 
 		// Library is ready
@@ -172,7 +171,7 @@ public class MusicLibrary extends Thread {
 
 	/**
 	 * Get the list of artists
-	 * 
+	 *
 	 * @return Enumeration of the artists
 	 */
 	public Set<String> getArtists() {
@@ -186,9 +185,9 @@ public class MusicLibrary extends Thread {
 
 	/**
 	 * Get the list of albums
-	 * 
+	 *
 	 * @param artist
-	 *            The artist of the albums to retrieve
+	 * 		The artist of the albums to retrieve
 	 * @return Enumeration of the albums
 	 */
 	public Set<String> getAlbums(String artist) {
@@ -202,9 +201,9 @@ public class MusicLibrary extends Thread {
 
 	/**
 	 * Get the list of the songs
-	 * 
+	 *
 	 * @param artist
-	 *            The artist of the songs to retrieve
+	 * 		The artist of the songs to retrieve
 	 * @return ArrayList of the songs
 	 */
 	public Set<Song> getSongs(String artist) {
@@ -226,11 +225,11 @@ public class MusicLibrary extends Thread {
 
 	/**
 	 * Get the list of the songs
-	 * 
+	 *
 	 * @param artist
-	 *            The artist of the songs to retrieve
+	 * 		The artist of the songs to retrieve
 	 * @param album
-	 *            The album of the songs to retrieve
+	 * 		The album of the songs to retrieve
 	 * @return ArrayList of the songs
 	 */
 	public Set<Song> getSongs(String artist, String album) {
@@ -245,7 +244,7 @@ public class MusicLibrary extends Thread {
 
 	/**
 	 * Check if the music library is ready
-	 * 
+	 *
 	 * @return True if it is ready
 	 */
 	public boolean isReady() {

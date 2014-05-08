@@ -4,14 +4,13 @@ import java.io.File;
 
 /**
  * Class where are the core methods
- * 
+ *
  * @author cyprien
- * 
  */
 public class Core {
 	/**
 	 * Get the path of the user's home directory
-	 * 
+	 *
 	 * @return The user's home directory
 	 */
 	public static String getUserPath() {
@@ -27,9 +26,9 @@ public class Core {
 
 	/**
 	 * Return a string representing the duration in a human-friendly format
-	 * 
+	 *
 	 * @param duration
-	 *            The number of second
+	 * 		The number of second
 	 * @return the duration in a human-friendly format
 	 */
 	public static String stringifyDuration(int duration) {

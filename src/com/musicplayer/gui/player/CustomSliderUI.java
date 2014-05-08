@@ -1,29 +1,23 @@
 package com.musicplayer.gui.player;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-
-import javax.swing.JSlider;
-import javax.swing.plaf.basic.BasicSliderUI;
-
 import com.musicplayer.core.Core;
 import com.musicplayer.gui.GUIParameters;
 
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicSliderUI;
+import java.awt.*;
+
 /**
  * Custom UI for JSlider
- * 
+ *
  * @author cyprien
- * 
  */
 public class CustomSliderUI extends BasicSliderUI {
 	/**
 	 * Constructor: call super()
-	 * 
+	 *
 	 * @param slider
-	 *            Apply the UI to this slider
+	 * 		Apply the UI to this slider
 	 */
 	public CustomSliderUI(JSlider slider) {
 		super(slider);

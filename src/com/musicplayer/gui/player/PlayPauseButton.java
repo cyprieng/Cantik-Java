@@ -1,6 +1,13 @@
 package com.musicplayer.gui.player;
 
-import java.awt.Color;
+import com.musicplayer.core.Log;
+import com.musicplayer.core.player.PlayerState;
+import com.musicplayer.core.playlist.Playlist;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -9,21 +16,10 @@ import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.border.Border;
-
-import com.musicplayer.core.Log;
-import com.musicplayer.core.player.PlayerState;
-import com.musicplayer.core.playlist.Playlist;
-
 /**
  * Custom JButton playing or pausing the current track
- * 
+ *
  * @author cyprien
- * 
  */
 public class PlayPauseButton extends JButton implements Observer {
 	private static final long serialVersionUID = -6417580002540736687L;
@@ -48,9 +44,9 @@ public class PlayPauseButton extends JButton implements Observer {
 
 	/**
 	 * Change the icon of the button
-	 * 
+	 *
 	 * @param imgPath
-	 *            The new icon to set
+	 * 		The new icon to set
 	 */
 	public void setIcon(String imgPath) {
 		try {
@@ -63,9 +59,8 @@ public class PlayPauseButton extends JButton implements Observer {
 
 	/**
 	 * Action when clicking on play
-	 * 
+	 *
 	 * @author cyprien
-	 * 
 	 */
 	private static class PlayClick implements ActionListener {
 		@Override
@@ -79,19 +74,18 @@ public class PlayPauseButton extends JButton implements Observer {
 			}
 
 			((JButton) e.getSource()).addActionListener(new PauseClick()); // Change
-																			// event
+			// event
 
 			((PlayPauseButton) e.getSource()).setIcon("assets/img/pause.png"); // Change
-																				// icon
+			// icon
 		}
 
 	}
 
 	/**
 	 * Action when clicking on pause
-	 * 
+	 *
 	 * @author cyprien
-	 * 
 	 */
 	private static class PauseClick implements ActionListener {
 		@Override
@@ -105,10 +99,10 @@ public class PlayPauseButton extends JButton implements Observer {
 			}
 
 			((JButton) e.getSource()).addActionListener(new PlayClick()); // Change
-																			// event
+			// event
 
 			((PlayPauseButton) e.getSource()).setIcon("assets/img/play.png"); // Change
-																				// icon
+			// icon
 		}
 
 	}

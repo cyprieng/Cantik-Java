@@ -1,23 +1,20 @@
 package com.musicplayer.gui.player.volumecontrol;
 
-import java.awt.Color;
+import com.musicplayer.core.Log;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.border.Border;
-
-import com.musicplayer.core.Log;
-
 /**
  * JButton showing the VolumePanel
- * 
+ *
  * @author cyprien
  * @see VolumePanel
  */
@@ -26,7 +23,7 @@ public class VolumeButton extends JButton {
 
 	/**
 	 * Store the volume panel
-	 * 
+	 *
 	 * @see VolumePanel
 	 */
 	private VolumePanel vp;
@@ -66,7 +63,7 @@ public class VolumeButton extends JButton {
 
 	/**
 	 * Get a VolumePanel
-	 * 
+	 *
 	 * @return A VolumePanel
 	 * @see VolumePanel
 	 */

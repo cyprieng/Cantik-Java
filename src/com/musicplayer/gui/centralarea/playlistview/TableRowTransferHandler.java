@@ -1,21 +1,17 @@
 package com.musicplayer.gui.centralarea.playlistview;
 
-import java.awt.Cursor;
+import javax.activation.ActivationDataFlavor;
+import javax.activation.DataHandler;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DragSource;
 
-import javax.activation.ActivationDataFlavor;
-import javax.activation.DataHandler;
-import javax.swing.JComponent;
-import javax.swing.JTable;
-import javax.swing.TransferHandler;
-
 /**
  * Class allowing the reorganization of a table
- * 
+ *
  * @author cyprien
- * 
  */
 public class TableRowTransferHandler extends TransferHandler {
 	private static final long serialVersionUID = -7098914640033896958L;
@@ -31,9 +27,9 @@ public class TableRowTransferHandler extends TransferHandler {
 
 	/**
 	 * Init table
-	 * 
+	 *
 	 * @param table
-	 *            The table to manage
+	 * 		The table to manage
 	 */
 	public TableRowTransferHandler(JTable table) {
 		this.table = table;

@@ -1,15 +1,7 @@
 package com.musicplayer.core.song;
 
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Serializable;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import com.musicplayer.core.InvalidFileException;
+import com.musicplayer.core.Log;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
@@ -19,14 +11,16 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 
-import com.musicplayer.core.InvalidFileException;
-import com.musicplayer.core.Log;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class which stores data about a song: path and ID3 tag
- * 
+ *
  * @author cyprien
- * 
  */
 public class Song implements Serializable {
 	private static final long serialVersionUID = -2359300133101740540L;
@@ -53,10 +47,9 @@ public class Song implements Serializable {
 
 	/**
 	 * Song constructor
-	 * 
+	 *
 	 * @param path
-	 *            path of the song
-	 * 
+	 * 		path of the song
 	 */
 	public Song(String path) throws InvalidFileException {
 		// Test file
@@ -83,7 +76,7 @@ public class Song implements Serializable {
 
 	/**
 	 * Update tags value
-	 * 
+	 *
 	 * @see org.jaudiotagger
 	 */
 	public void updateTags() {
@@ -116,9 +109,9 @@ public class Song implements Serializable {
 
 	/**
 	 * Retrieve lyric from web API if no lyric defined in ID3 tags
-	 * 
-	 * @see http://api.ntag.fr/lyrics/doc.php
+	 *
 	 * @return lyric in a String
+	 * @see http://api.ntag.fr/lyrics/doc.php
 	 */
 	public String getLyric() {
 		if (this.lyric == "") { // No ID3 tag value
@@ -148,10 +141,9 @@ public class Song implements Serializable {
 
 	/**
 	 * Check if the song has a correct extension
-	 * 
+	 *
 	 * @param filename
-	 *            The path of the file
-	 * 
+	 * 		The path of the file
 	 * @return true if it is a correct extension
 	 */
 	public static boolean checkExtension(String fileName) {
@@ -171,7 +163,7 @@ public class Song implements Serializable {
 
 	/**
 	 * Retrieve the song's path
-	 * 
+	 *
 	 * @return the path of the song
 	 */
 	public String getPath() {
@@ -180,7 +172,7 @@ public class Song implements Serializable {
 
 	/**
 	 * Get the song title
-	 * 
+	 *
 	 * @return Title of the song
 	 */
 	public String getTitle() {
@@ -189,7 +181,7 @@ public class Song implements Serializable {
 
 	/**
 	 * Get the album title
-	 * 
+	 *
 	 * @return Album title
 	 */
 	public String getAlbum() {
@@ -198,7 +190,7 @@ public class Song implements Serializable {
 
 	/**
 	 * Get the Artist name
-	 * 
+	 *
 	 * @return Artist name
 	 */
 	public String getArtist() {
@@ -207,7 +199,7 @@ public class Song implements Serializable {
 
 	/**
 	 * Get the year of the song
-	 * 
+	 *
 	 * @return Year of the song
 	 */
 	public String getYear() {
@@ -216,7 +208,7 @@ public class Song implements Serializable {
 
 	/**
 	 * Get the duration of the song
-	 * 
+	 *
 	 * @return Duration in second
 	 */
 	public int getDuration() {
@@ -225,7 +217,7 @@ public class Song implements Serializable {
 
 	/**
 	 * Get the cover of the Song from the Tag
-	 * 
+	 *
 	 * @return BufferedImage of the cover
 	 * @see BufferedImage
 	 */

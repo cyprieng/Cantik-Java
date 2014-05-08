@@ -1,20 +1,18 @@
 package com.musicplayer.core.musiclibrary;
 
-import java.awt.Image;
+import com.musicplayer.core.Log;
+import com.musicplayer.core.song.Song;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-import javax.imageio.ImageIO;
-
-import com.musicplayer.core.Log;
-import com.musicplayer.core.song.Song;
-
 /**
  * Get info of an Artist
- * 
+ *
  * @author cyprien
- * 
  */
 public class ArtistInfo {
 	/**
@@ -29,7 +27,7 @@ public class ArtistInfo {
 
 	/**
 	 * Get the image for an artist
-	 * 
+	 *
 	 * @return the Image
 	 */
 	public static Image getArtistImage() {
@@ -48,11 +46,11 @@ public class ArtistInfo {
 
 	/**
 	 * Get the album cover
-	 * 
+	 *
 	 * @param artist
-	 *            Artist of the album
+	 * 		Artist of the album
 	 * @param album
-	 *            Album name
+	 * 		Album name
 	 * @return The cover of the album
 	 */
 	public static Image getAlbumImage(String artist, String album) {
@@ -67,9 +65,9 @@ public class ArtistInfo {
 		if (s.getCover() != null) {
 			albumCover.put(artist + album,
 					s.getCover().getScaledInstance(50, 50, Image.SCALE_SMOOTH)); // Store
-																					// for
-																					// next
-																					// time
+			// for
+			// next
+			// time
 			return s.getCover().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		}
 
@@ -77,10 +75,11 @@ public class ArtistInfo {
 		try {
 			albumCover.put(artist + album,
 					ImageIO.read(new File("assets/img/cover.png"))
-							.getScaledInstance(50, 50, Image.SCALE_SMOOTH)); // Store
-																				// for
-																				// next
-																				// time
+							.getScaledInstance(50, 50, Image.SCALE_SMOOTH)
+			); // Store
+			// for
+			// next
+			// time
 			return ImageIO.read(new File("assets/img/cover.png"))
 					.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		} catch (IOException e) {

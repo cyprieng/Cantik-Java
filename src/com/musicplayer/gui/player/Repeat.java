@@ -1,27 +1,23 @@
 package com.musicplayer.gui.player;
 
-import java.awt.Color;
+import com.musicplayer.core.Log;
+import com.musicplayer.core.playlist.Playlist;
+import com.musicplayer.core.playlist.RepeatState;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.border.Border;
-
-import com.musicplayer.core.Log;
-import com.musicplayer.core.playlist.Playlist;
-import com.musicplayer.core.playlist.RepeatState;
-
 /**
  * Custom JButton switching repeat state
- * 
+ *
  * @author cyprien
- * 
  */
 public class Repeat extends JButton {
 	private static final long serialVersionUID = 4971170300022461995L;
@@ -44,9 +40,9 @@ public class Repeat extends JButton {
 
 	/**
 	 * Change the icon of the button
-	 * 
+	 *
 	 * @param imgPath
-	 *            The new icon to set
+	 * 		The new icon to set
 	 */
 	public void setIcon(String imgPath) {
 		try {
@@ -59,27 +55,26 @@ public class Repeat extends JButton {
 
 	/**
 	 * Action when clicking on the button
-	 * 
+	 *
 	 * @author cyprien
-	 * 
 	 */
 	private static class SwitchRepeat implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// Change state and img
 			switch (Playlist.getPlaylist().getRepeat()) {
-			case OFF:
-				Playlist.getPlaylist().setRepeat(RepeatState.SONG);
-				((Repeat) e.getSource()).setIcon("assets/img/repeat_song.png");
-				break;
-			case SONG:
-				Playlist.getPlaylist().setRepeat(RepeatState.ALL);
-				((Repeat) e.getSource()).setIcon("assets/img/repeat_all.png");
-				break;
-			case ALL:
-				Playlist.getPlaylist().setRepeat(RepeatState.OFF);
-				((Repeat) e.getSource()).setIcon("assets/img/repeat.png");
-				break;
+				case OFF:
+					Playlist.getPlaylist().setRepeat(RepeatState.SONG);
+					((Repeat) e.getSource()).setIcon("assets/img/repeat_song.png");
+					break;
+				case SONG:
+					Playlist.getPlaylist().setRepeat(RepeatState.ALL);
+					((Repeat) e.getSource()).setIcon("assets/img/repeat_all.png");
+					break;
+				case ALL:
+					Playlist.getPlaylist().setRepeat(RepeatState.OFF);
+					((Repeat) e.getSource()).setIcon("assets/img/repeat.png");
+					break;
 			}
 		}
 	}

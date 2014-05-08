@@ -1,28 +1,23 @@
 package com.musicplayer.gui.centralarea;
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.io.File;
-
-import javax.swing.JFileChooser;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.filechooser.FileFilter;
-
-import org.jaudiotagger.audio.generic.Utils;
-
 import com.musicplayer.core.InvalidFileException;
 import com.musicplayer.core.Log;
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.core.song.Song;
 import com.musicplayer.core.song.SongExtension;
 import com.musicplayer.gui.MainWindow;
+import org.jaudiotagger.audio.generic.Utils;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.io.File;
 
 /**
  * Class showing a File Chooser for adding song in the playlist
- * 
+ *
  * @author cyprien
- * 
  */
 public class LocalFileView extends CentralArea {
 	private static final long serialVersionUID = -4136316670805228071L;

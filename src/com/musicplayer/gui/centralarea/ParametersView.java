@@ -1,16 +1,15 @@
 package com.musicplayer.gui.centralarea;
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-
 import com.musicplayer.gui.MainWindow;
 import com.musicplayer.gui.ParametersWindow;
 
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 /**
  * Show the Parameters window
- * 
+ *
  * @author cyprien
- * 
  */
 public class ParametersView extends CentralArea {
 	private static final long serialVersionUID = 8490343603154453550L;
