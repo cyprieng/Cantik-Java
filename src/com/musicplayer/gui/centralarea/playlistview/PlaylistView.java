@@ -1,19 +1,5 @@
 package com.musicplayer.gui.centralarea.playlistview;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.swing.DropMode;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-
 import com.musicplayer.core.Core;
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.core.song.Song;
@@ -22,11 +8,19 @@ import com.musicplayer.gui.GUIParameters;
 import com.musicplayer.gui.centralarea.CentralArea;
 import com.musicplayer.gui.centralarea.CustomTableHeader;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * View of the playlist
- * 
+ *
  * @author cyprien
- * 
  */
 public class PlaylistView extends CentralArea implements Observer {
 	private static final long serialVersionUID = -7003326588092613641L;
@@ -47,10 +41,9 @@ public class PlaylistView extends CentralArea implements Observer {
 	public PlaylistView() {
 		super();
 		Playlist.getPlaylist().addObserver(this);
-		content.setLayout(new BorderLayout());
 
 		// Create table model
-		String[] columnNames = { "Title", "Artist", "Album", "Length" };
+		String[] columnNames = {"Title", "Artist", "Album", "Length"};
 		tableModel = new CustomTableModel(columnNames, 0);
 
 		// Create custom Table
@@ -59,7 +52,7 @@ public class PlaylistView extends CentralArea implements Observer {
 
 			@Override
 			public Component prepareRenderer(TableCellRenderer renderer,
-					int rowIndex, int vColIndex) {
+											 int rowIndex, int vColIndex) {
 				Component c = super.prepareRenderer(renderer, rowIndex,
 						vColIndex);
 
@@ -84,7 +77,7 @@ public class PlaylistView extends CentralArea implements Observer {
 
 			/**
 			 * Get the color of the row
-			 * 
+			 *
 			 * @param row
 			 *            The row which we want the color
 			 * @return The color of the row
@@ -152,7 +145,7 @@ public class PlaylistView extends CentralArea implements Observer {
 
 			/**
 			 * Show the popup menu
-			 * 
+			 *
 			 * @param e
 			 *            The MouseEvent calling the menu
 			 */
@@ -163,18 +156,24 @@ public class PlaylistView extends CentralArea implements Observer {
 			}
 		});
 
+		info.setText("Empty playlist");
 		update(null, null); // Update to initialize the table
 	}
 
 	@Override
 	public void update(Observable playlist, Object arg) {
 		tableModel.setRowCount(0); // Reset table
+		hideInfo();
 
 		// Add every song of the playlist
 		for (Song s : Playlist.getPlaylist().getSongList()) {
 			// Add row
-			tableModel.addRow(new Object[] { s.getTitle(), s.getArtist(),
-					s.getAlbum(), Core.stringifyDuration(s.getDuration()) });
+			tableModel.addRow(new Object[]{s.getTitle(), s.getArtist(),
+					s.getAlbum(), Core.stringifyDuration(s.getDuration())});
+		}
+
+		if (tableModel.getRowCount() == 0) { // Show text for empty playlist
+			showInfo();
 		}
 	}
 }

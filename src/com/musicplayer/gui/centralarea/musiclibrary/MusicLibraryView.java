@@ -1,25 +1,5 @@
 package com.musicplayer.gui.centralarea.musiclibrary;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.tree.TreePath;
-
-import org.jdesktop.swingx.JXTreeTable;
-import org.jdesktop.swingx.decorator.ColorHighlighter;
-import org.jdesktop.swingx.decorator.ComponentAdapter;
-import org.jdesktop.swingx.decorator.HighlightPredicate;
-import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
-import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
-import org.jdesktop.swingx.treetable.MutableTreeTableNode;
-
 import com.musicplayer.core.Log;
 import com.musicplayer.core.musiclibrary.ArtistInfo;
 import com.musicplayer.core.musiclibrary.MusicLibrary;
@@ -30,43 +10,42 @@ import com.musicplayer.gui.CustomScrollBar;
 import com.musicplayer.gui.GUIParameters;
 import com.musicplayer.gui.centralarea.CentralArea;
 import com.musicplayer.gui.centralarea.CustomTableHeader;
+import org.jdesktop.swingx.JXTreeTable;
+import org.jdesktop.swingx.decorator.ColorHighlighter;
+import org.jdesktop.swingx.decorator.ComponentAdapter;
+import org.jdesktop.swingx.decorator.HighlightPredicate;
+import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
+import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
+import org.jdesktop.swingx.treetable.MutableTreeTableNode;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.tree.TreePath;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * View of the music library
- * 
+ *
  * @author cyprien
- * 
  */
 public class MusicLibraryView extends CentralArea {
 	private static final long serialVersionUID = -617334771645897532L;
-
-	/**
-	 * Model of the tree table
-	 */
-	private DefaultTreeTableModel model;
-
-	/**
-	 * The tree table
-	 */
-	private JXTreeTable tree;
-
 	/**
 	 * Store the view
 	 */
 	private static MusicLibraryView mlv;
-
 	/**
-	 * Get the music library view
-	 * 
-	 * @return The view
+	 * Model of the tree table
 	 */
-	public static MusicLibraryView getMusiLibraryView() {
-		if (mlv == null) {
-			mlv = new MusicLibraryView();
-		}
-
-		return mlv;
-	}
+	private DefaultTreeTableModel model;
+	/**
+	 * The tree table
+	 */
+	private JXTreeTable tree;
 
 	/**
 	 * Create the tree table
@@ -117,7 +96,8 @@ public class MusicLibraryView extends CentralArea {
 								.getRoot()) { // Add an artist
 							Playlist.getPlaylist().addSongSet(
 									MusicLibrary.getMusicLibrary().getSongs(
-											(String) o));
+											(String) o)
+							);
 						} else { // Add an album
 							Playlist.getPlaylist()
 									.addSongSet(
@@ -127,7 +107,9 @@ public class MusicLibraryView extends CentralArea {
 															(String) ((DefaultMutableTreeTableNode) node)
 																	.getParent()
 																	.getUserObject(),
-															(String) o));
+															(String) o
+													)
+									);
 						}
 					}
 				}
@@ -144,7 +126,7 @@ public class MusicLibraryView extends CentralArea {
 		HighlightPredicate hp = new HighlightPredicate() {
 			@Override
 			public boolean isHighlighted(Component renderer,
-					ComponentAdapter adapter) {
+										 ComponentAdapter adapter) {
 				return adapter.row % 2 == 0;
 			}
 		};
@@ -171,15 +153,30 @@ public class MusicLibraryView extends CentralArea {
 		}
 
 		add(CustomScrollBar.getCustomJScrollPane(tree));
+		info.setText("Loading library...");
+		hideScrollbar();
 
 		showLibrary(null);
 	}
 
 	/**
+	 * Get the music library view
+	 *
+	 * @return The view
+	 */
+	public static MusicLibraryView getMusiLibraryView() {
+		if (mlv == null) {
+			mlv = new MusicLibraryView();
+		}
+
+		return mlv;
+	}
+
+	/**
 	 * Show the library for the given query
-	 * 
+	 *
 	 * @param query
-	 *            The query to search in the library
+	 * 		The query to search in the library
 	 */
 	public void showLibrary(final String query) {
 		Thread t = new Thread(new Runnable() {
@@ -192,8 +189,10 @@ public class MusicLibraryView extends CentralArea {
 				tree.repaint();
 				CustomTableHeader.customizeHeader(tree.getTableHeader());
 
-				tree.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR)); // Load
-																				// cursor
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR)); // Load
+				// cursor
+
+				showInfo(); // Show wait msg
 
 				// Get library
 				MusicLibrary library;
@@ -234,7 +233,8 @@ public class MusicLibraryView extends CentralArea {
 					}
 				}
 
-				tree.setCursor(Cursor.getDefaultCursor()); // Reset cursor
+				setCursor(Cursor.getDefaultCursor()); // Reset cursor
+				hideInfo(); // Hide wait msg
 			}
 		});
 
