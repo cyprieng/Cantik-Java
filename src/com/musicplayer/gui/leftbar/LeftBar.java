@@ -34,12 +34,16 @@ public class LeftBar extends JPanel {
 		Border empty = new EmptyBorder(20, 0, 0, 0);
 		searchWrap.setBorder(empty);
 
+		// Item active by default
+		Item defaultItem = new Item("Library");
+		defaultItem.setActive(true);
+
 		// Add items
 		this.add(searchWrap);
 		this.add(new Separator());
 
 		this.add(new CategoryLabel("collection"));
-		this.add(new Item("Library"));
+		this.add(defaultItem);
 		this.add(new Item("Local File"));
 		this.add(new Separator());
 
