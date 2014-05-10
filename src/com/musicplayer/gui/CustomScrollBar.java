@@ -40,7 +40,7 @@ public class CustomScrollBar extends BasicScrollBarUI {
 			}
 		});
 		sbv.setUI(new CustomScrollBar());
-		sbv.setUnitIncrement(16);
+		sbv.setUnitIncrement(30);
 		jsp.setVerticalScrollBar(sbv);
 
 		// Horizontal scrollbar
@@ -53,7 +53,7 @@ public class CustomScrollBar extends BasicScrollBarUI {
 			}
 		});
 		sbh.setUI(new CustomScrollBar());
-		sbh.setUnitIncrement(16);
+		sbh.setUnitIncrement(30);
 		jsp.setHorizontalScrollBar(sbh);
 
 		return jsp;
