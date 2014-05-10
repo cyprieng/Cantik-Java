@@ -64,10 +64,7 @@ public class ArtistInfo {
 		Song s = ml.getSongs(artist, album).iterator().next();
 		if (s.getCover() != null) {
 			albumCover.put(artist + album,
-					s.getCover().getScaledInstance(50, 50, Image.SCALE_SMOOTH)); // Store
-			// for
-			// next
-			// time
+					s.getCover().getScaledInstance(50, 50, Image.SCALE_SMOOTH)); // Store for next time
 			return s.getCover().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		}
 
@@ -76,10 +73,22 @@ public class ArtistInfo {
 			albumCover.put(artist + album,
 					ImageIO.read(new File("assets/img/cover.png"))
 							.getScaledInstance(50, 50, Image.SCALE_SMOOTH)
-			); // Store
-			// for
-			// next
-			// time
+			); // Store for next time
+			return ImageIO.read(new File("assets/img/cover.png"))
+					.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		} catch (IOException e) {
+			Log.addEntry(e);
+			return null;
+		}
+	}
+
+	/**
+	 * Get the default album cover
+	 *
+	 * @return an Image with the default album cover
+	 */
+	public static Image getDefaultAlbumImage() {
+		try {
 			return ImageIO.read(new File("assets/img/cover.png"))
 					.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		} catch (IOException e) {

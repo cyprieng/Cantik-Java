@@ -27,15 +27,24 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 				row, hasFocus);
 
 		// Get node
-		DefaultMutableTreeTableNode node = (DefaultMutableTreeTableNode) value;
-		Object nodeInfo = node.getUserObject();
+		final DefaultMutableTreeTableNode node = (DefaultMutableTreeTableNode) value;
+		final Object nodeInfo = node.getUserObject();
 
 		if (nodeInfo instanceof String) {
 			if (node.getParent() != tree.getModel().getRoot()
 					&& node.getParent() != null) {
 				// Album cover
-				setIcon(new ImageIcon(ArtistInfo.getAlbumImage((String) node
-						.getParent().getUserObject(), (String) nodeInfo)));
+				setIcon(new ImageIcon(ArtistInfo.getDefaultAlbumImage())); // Set to default
+
+				// Start a thread to get the real cover
+				Thread t = new Thread(new Runnable() {
+					@Override
+					public void run() {
+						setIcon(new ImageIcon(ArtistInfo.getAlbumImage((String) node
+								.getParent().getUserObject(), (String) nodeInfo)));
+					}
+				});
+				t.start();
 			}
 		} else if (nodeInfo instanceof Song) {
 			// Song text
