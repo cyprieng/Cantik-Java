@@ -135,7 +135,7 @@ public class MusicLibraryView extends CentralArea {
 		tree.addHighlighter(h);
 
 		// Selection color
-		tree.setSelectionBackground(GUIParameters.LEFTBAR_BACKGROUND);
+		tree.setSelectionBackground(GUIParameters.LEFTBAR_ACTIVE);
 		tree.setSelectionForeground(Color.WHITE);
 
 		// Icon
