@@ -50,7 +50,9 @@ public class MainWindow {
 		container.add(new Player(), BorderLayout.SOUTH);
 		container.add(centralArea, BorderLayout.CENTER);
 
+		// Size and maximized
 		window.setPreferredSize(new Dimension(1024, 768));
+		window.setExtendedState(window.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.pack();
