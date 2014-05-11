@@ -52,8 +52,6 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 					.getValueAt(node, 0));
 		}
 
-		setFont(GUIParameters.getCentralFont().deriveFont(15.0f));
-
 		return this;
 	}
 }

@@ -119,7 +119,6 @@ public class MusicLibraryView extends CentralArea {
 		// Style
 		tree.setTreeCellRenderer(new CustomTreeCellRenderer());
 		tree.setRowHeight(50);
-		tree.setFont(GUIParameters.getCentralFont().deriveFont(15.0f));
 		CustomTableHeader.customizeHeader(tree.getTableHeader());
 
 		// Stripes

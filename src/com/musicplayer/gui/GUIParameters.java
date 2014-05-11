@@ -53,7 +53,7 @@ public class GUIParameters {
 	 * @return The global Font
 	 * @see Font
 	 */
-	public static Font getFont() {
+	public static Font getLeftFont() {
 		try {
 			Font f = Font.createFont(Font.TRUETYPE_FONT, new File(
 					"assets/font/Fairview.ttf"));
@@ -73,14 +73,14 @@ public class GUIParameters {
 	 * @return The central Font
 	 * @see Font
 	 */
-	public static Font getCentralFont() {
+	public static Font getFont() {
 		try {
 			Font f = Font.createFont(Font.TRUETYPE_FONT, new File(
 					"assets/font/PTSans.ttf"));
 
 			GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(f);
 
-			return f.deriveFont(20.0f);
+			return f.deriveFont(15.0f);
 		} catch (FontFormatException | IOException e) {
 			Log.addEntry(e);
 			return null;

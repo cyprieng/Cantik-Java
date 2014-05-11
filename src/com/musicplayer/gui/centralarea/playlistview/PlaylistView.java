@@ -94,7 +94,6 @@ public class PlaylistView extends CentralArea implements Observer {
 		CustomTableHeader.customizeHeader(table.getTableHeader());
 
 		// Settings of table
-		table.setFont(GUIParameters.getCentralFont().deriveFont(15.0f));
 		table.setGridColor(GUIParameters.TABLE_EVEN_ROW);
 		table.setDragEnabled(true);
 		table.setDropMode(DropMode.INSERT_ROWS);

@@ -39,7 +39,7 @@ public class SearchField extends JTextField {
 		this.setMaximumSize(this.getPreferredSize());
 		this.setBackground(GUIParameters.LEFTBAR_BACKGROUND);
 		this.setForeground(Color.WHITE);
-		this.setFont(GUIParameters.getFont());
+		this.setFont(GUIParameters.getLeftFont());
 		this.setOpaque(false);
 
 		// Repaint when focus change
@@ -84,7 +84,7 @@ public class SearchField extends JTextField {
 						"Border Title",
 						javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
 						javax.swing.border.TitledBorder.DEFAULT_POSITION,
-						GUIParameters.getFont()), javax.swing.BorderFactory
+						GUIParameters.getLeftFont()), javax.swing.BorderFactory
 						.createEmptyBorder(-15, 30, 0, 0)
 		));
 	}

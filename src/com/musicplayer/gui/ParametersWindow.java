@@ -3,6 +3,7 @@ package com.musicplayer.gui;
 import com.musicplayer.core.Log;
 import com.musicplayer.core.config.ConfigFileParser;
 import com.musicplayer.core.config.ConfigFileWriter;
+import com.musicplayer.gui.leftbar.LeftbarJLabel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -54,10 +55,10 @@ public class ParametersWindow extends JFrame {
 		musicPath.setBackground(GUIParameters.LEFTBAR_BACKGROUND);
 		musicPath.setBorder(BorderFactory.createTitledBorder(null,
 				"Music Path", TitledBorder.LEFT, TitledBorder.TOP,
-				GUIParameters.getFont(), Color.white));
+				GUIParameters.getLeftFont(), Color.white));
 		{
 			// Label for the path
-			JLabel pathLabel = new CustomJLabel("Music path: ");
+			JLabel pathLabel = new LeftbarJLabel("Music path: ");
 			pathLabel.setBorder(new EmptyBorder(10, 10, 10, 0));
 			musicPath.add(pathLabel);
 
@@ -75,11 +76,11 @@ public class ParametersWindow extends JFrame {
 		lastfm.setBackground(GUIParameters.LEFTBAR_BACKGROUND);
 		lastfm.setLayout(new GridLayout(2, 2));
 		lastfm.setBorder(BorderFactory.createTitledBorder(null, "Lastfm",
-				TitledBorder.LEFT, TitledBorder.TOP, GUIParameters.getFont(),
+				TitledBorder.LEFT, TitledBorder.TOP, GUIParameters.getLeftFont(),
 				Color.white));
 		{
 			// Label for username
-			JLabel userLabel = new CustomJLabel("Lastfm username: ");
+			JLabel userLabel = new LeftbarJLabel("Lastfm username: ");
 			userLabel.setBorder(new EmptyBorder(10, 10, 10, 0));
 			lastfm.add(userLabel);
 
@@ -92,7 +93,7 @@ public class ParametersWindow extends JFrame {
 		}
 		{
 			// Label for password
-			JLabel passLabel = new CustomJLabel("Lastfm password: ");
+			JLabel passLabel = new LeftbarJLabel("Lastfm password: ");
 			passLabel.setBorder(new EmptyBorder(10, 10, 10, 0));
 			lastfm.add(passLabel);
 

@@ -2,7 +2,7 @@ package com.musicplayer.gui.player;
 
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.core.song.Song;
-import com.musicplayer.gui.CustomJLabel;
+import com.musicplayer.gui.leftbar.LeftbarJLabel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +20,7 @@ public class TrackInfo extends JPanel implements Observer {
 	/**
 	 * JLabel showing info
 	 */
-	CustomJLabel title, album, artist;
+	LeftbarJLabel title, album, artist;
 
 	/*
 	 * Init JLabel
@@ -28,9 +28,9 @@ public class TrackInfo extends JPanel implements Observer {
 	public TrackInfo() {
 		Playlist.getPlaylist().addObserver(this);
 
-		title = new CustomJLabel("");
-		album = new CustomJLabel("");
-		artist = new CustomJLabel("");
+		title = new LeftbarJLabel("");
+		album = new LeftbarJLabel("");
+		artist = new LeftbarJLabel("");
 
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBackground(Color.BLACK);

@@ -1,6 +1,5 @@
 package com.musicplayer.gui.leftbar;
 
-import com.musicplayer.gui.CustomJLabel;
 import com.musicplayer.gui.GUIParameters;
 
 import javax.swing.border.Border;
@@ -12,7 +11,7 @@ import java.awt.*;
  *
  * @author cyprien
  */
-public class CategoryLabel extends CustomJLabel {
+public class CategoryLabel extends LeftbarJLabel {
 	private static final long serialVersionUID = -5281324916113409236L;
 
 	/**

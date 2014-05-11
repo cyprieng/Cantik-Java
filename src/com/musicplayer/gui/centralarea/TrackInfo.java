@@ -31,7 +31,7 @@ public class TrackInfo extends CentralArea implements Observer {
 		// Init jlabel
 		lyric = new JLabel("");
 		lyric.setForeground(Color.BLACK);
-		lyric.setFont(GUIParameters.getCentralFont());
+		lyric.setFont(lyric.getFont().deriveFont(20.0f));
 		add(lyric, true, false);
 
 		// Show info msg
@@ -42,7 +42,7 @@ public class TrackInfo extends CentralArea implements Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		if (Playlist.getPlaylist().getCurrentSong() != null) {
-			Font f = GUIParameters.getCentralFont();
+			Font f = GUIParameters.getFont();
 
 			hideInfo();
 			lyric.setText("<html><style type='text/css'>html { font-family: '"

@@ -2,7 +2,7 @@ package com.musicplayer.gui.player;
 
 import com.musicplayer.core.Core;
 import com.musicplayer.core.playlist.Playlist;
-import com.musicplayer.gui.CustomJLabel;
+import com.musicplayer.gui.leftbar.LeftbarJLabel;
 import com.musicplayer.gui.player.volumecontrol.VolumeButton;
 
 import javax.swing.*;
@@ -23,7 +23,7 @@ public class Player extends JPanel implements Observer {
 	/**
 	 * JLabel showing the duration of the song
 	 */
-	CustomJLabel duration;
+	LeftbarJLabel duration;
 
 	/**
 	 * Constructor: init all component
@@ -63,7 +63,7 @@ public class Player extends JPanel implements Observer {
 		ProgressBar bar = new ProgressBar();
 
 		// Duration
-		duration = new CustomJLabel("0:00");
+		duration = new LeftbarJLabel("0:00");
 		empty = new EmptyBorder(0, 20, 0, 0);
 		duration.setBorder(empty);
 

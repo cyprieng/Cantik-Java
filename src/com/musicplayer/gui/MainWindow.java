@@ -84,6 +84,7 @@ public class MainWindow {
 	}
 
 	public static void main(String[] args) {
+		UIManager.getLookAndFeelDefaults().put("defaultFont", GUIParameters.getFont());
 		MusicLibrary.getMusicLibrary().loadLibraryFolder(
 				ConfigFileParser.getConfigFileParser().getParams("library"));
 		getMainWindow();

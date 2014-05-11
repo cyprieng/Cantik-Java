@@ -1,7 +1,7 @@
 package com.musicplayer.gui.centralarea;
 
 import com.musicplayer.core.Log;
-import com.musicplayer.gui.CustomJLabel;
+import com.musicplayer.gui.leftbar.LeftbarJLabel;
 
 import java.awt.*;
 
@@ -10,7 +10,7 @@ import java.awt.*;
  *
  * @author cyprien
  */
-public class CenterJLabel extends CustomJLabel {
+public class CenterJLabel extends LeftbarJLabel {
 	private static final long serialVersionUID = 3849599444981028032L;
 
 	/**

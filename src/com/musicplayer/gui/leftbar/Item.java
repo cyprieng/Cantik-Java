@@ -1,7 +1,6 @@
 package com.musicplayer.gui.leftbar;
 
 import com.musicplayer.core.Log;
-import com.musicplayer.gui.CustomJLabel;
 import com.musicplayer.gui.GUIParameters;
 import com.musicplayer.gui.MainWindow;
 
@@ -80,7 +79,7 @@ public class Item extends JPanel {
 		}
 
 		// Add text
-		CustomJLabel text = new CustomJLabel(str);
+		LeftbarJLabel text = new LeftbarJLabel(str);
 		Border empty = new EmptyBorder(0, 10, 0, 0);
 		text.setBorder(empty);
 		this.add(text);

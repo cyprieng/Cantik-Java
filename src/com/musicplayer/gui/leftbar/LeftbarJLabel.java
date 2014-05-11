@@ -1,4 +1,6 @@
-package com.musicplayer.gui;
+package com.musicplayer.gui.leftbar;
+
+import com.musicplayer.gui.GUIParameters;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +10,7 @@ import java.awt.*;
  *
  * @author cyprien
  */
-public class CustomJLabel extends JLabel {
+public class LeftbarJLabel extends JLabel {
 	private static final long serialVersionUID = -2832851741292905228L;
 
 	/**
@@ -16,9 +18,9 @@ public class CustomJLabel extends JLabel {
 	 *
 	 * @param str
 	 */
-	public CustomJLabel(String str) {
+	public LeftbarJLabel(String str) {
 		super(str);
-		setFont(GUIParameters.getFont());
+		setFont(GUIParameters.getLeftFont());
 		setForeground(Color.WHITE);
 	}
 }
