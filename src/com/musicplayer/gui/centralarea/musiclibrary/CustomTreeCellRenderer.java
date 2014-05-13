@@ -2,13 +2,13 @@ package com.musicplayer.gui.centralarea.musiclibrary;
 
 import com.musicplayer.core.musiclibrary.ArtistInfo;
 import com.musicplayer.core.song.Song;
-import com.musicplayer.gui.GUIParameters;
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import java.awt.*;
+import java.util.HashMap;
 
 /**
  * Custom tree cell renderer for the music library view
@@ -17,6 +17,16 @@ import java.awt.*;
  */
 public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 	private static final long serialVersionUID = -1612130507183462613L;
+
+	/**
+	 * Store connection between album node and cover image
+	 */
+	private HashMap<DefaultMutableTreeTableNode, Image> cover;
+
+	public CustomTreeCellRenderer() {
+		super();
+		cover = new HashMap<DefaultMutableTreeTableNode, Image>();
+	}
 
 	@Override
 	public Component getTreeCellRendererComponent(JTree tree, Object value,
@@ -34,17 +44,23 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 			if (node.getParent() != tree.getModel().getRoot()
 					&& node.getParent() != null) {
 				// Album cover
-				setIcon(new ImageIcon(ArtistInfo.getDefaultAlbumImage())); // Set to default
+				if (cover.get(node) != null) { // Cover has already been loaded
+					setIcon(new ImageIcon(cover.get(node)));
+				} else { // Default cover
+					setIcon(new ImageIcon(ArtistInfo.getDefaultAlbumImage())); // Set to default
 
-				// Start a thread to get the real cover
-				Thread t = new Thread(new Runnable() {
-					@Override
-					public void run() {
-						setIcon(new ImageIcon(ArtistInfo.getAlbumImage((String) node
-								.getParent().getUserObject(), (String) nodeInfo)));
-					}
-				});
-				t.start();
+					// Start a thread to get the real cover
+					Thread t = new Thread(new Runnable() {
+						@Override
+						public void run() {
+							// Store the cover
+							cover.put(node, ArtistInfo.getAlbumImage((String) node
+									.getParent().getUserObject(), (String) nodeInfo));
+							setIcon(new ImageIcon(cover.get(node))); // Change it
+						}
+					});
+					t.start();
+				}
 			}
 		} else if (nodeInfo instanceof Song) {
 			// Song text
