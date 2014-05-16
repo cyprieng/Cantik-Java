@@ -98,7 +98,11 @@ public class PlaylistView extends CentralArea implements Observer {
 		table.setDragEnabled(true);
 		table.setDropMode(DropMode.INSERT_ROWS);
 		table.setTransferHandler(new TableRowTransferHandler(table));
-		add(CustomScrollBar.getCustomJScrollPane(table));
+
+		// Show scrollbar
+		JScrollPane jsp = CustomScrollBar.getCustomJScrollPane(table);
+		jsp.setBackground(GUIParameters.LEFTBAR_BACKGROUND);
+		add(jsp);
 
 		// Mouse listener for the popup menu
 		table.addMouseListener(new MouseListener() {

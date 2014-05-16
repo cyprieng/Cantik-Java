@@ -127,7 +127,12 @@ public class MusicLibraryView extends CentralArea {
 			Log.addEntry(e);
 		}
 
-		add(CustomScrollBar.getCustomJScrollPane(tree));
+		// Show scrollbar
+		JScrollPane jsp = CustomScrollBar.getCustomJScrollPane(tree);
+		jsp.setBackground(GUIParameters.LEFTBAR_BACKGROUND);
+		add(jsp);
+
+		// Set info msg
 		info.setText("Loading library...");
 		hideScrollbar();
 
