@@ -86,31 +86,7 @@ public class MusicLibraryView extends CentralArea {
 					Object node = path.getLastPathComponent();
 
 					if (node instanceof DefaultMutableTreeTableNode) {
-						Object o = ((DefaultMutableTreeTableNode) node)
-								.getUserObject();
-
-						if (o instanceof Song) { // Add one song
-							Playlist.getPlaylist().addSong((Song) o);
-						} else if (((DefaultMutableTreeTableNode) node)
-								.getParent() == copy.getTreeTableModel()
-								.getRoot()) { // Add an artist
-							Playlist.getPlaylist().addSongSet(
-									MusicLibrary.getMusicLibrary().getSongs(
-											(String) o)
-							);
-						} else { // Add an album
-							Playlist.getPlaylist()
-									.addSongSet(
-											MusicLibrary
-													.getMusicLibrary()
-													.getSongs(
-															(String) ((DefaultMutableTreeTableNode) node)
-																	.getParent()
-																	.getUserObject(),
-															(String) o
-													)
-									);
-						}
+						addNodeToPlaylist((DefaultMutableTreeTableNode) node);
 					}
 				}
 			}
@@ -238,5 +214,26 @@ public class MusicLibraryView extends CentralArea {
 		});
 
 		t.start();
+	}
+
+	/**
+	 * Add a node to the playlist
+	 *
+	 * @param node
+	 * 		The node to add to the playlist
+	 */
+	private void addNodeToPlaylist(DefaultMutableTreeTableNode node) {
+		Object o = node.getUserObject(); // Get node
+
+		if (o instanceof Song) { // Add one song
+			Playlist.getPlaylist().addSong((Song) o);
+		} else { // Add a folder
+			int childNumber = node.getChildCount();
+
+			// Scan folder
+			for (int i = 0; i < childNumber; i++) {
+				addNodeToPlaylist((DefaultMutableTreeTableNode) node.getChildAt(i));
+			}
+		}
 	}
 }
