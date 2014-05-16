@@ -35,23 +35,34 @@ public class TrackInfo extends CentralArea implements Observer {
 		add(lyric, true, false);
 
 		// Show info msg
-		info.setText("No lyric");
+		info.setText("No song");
 		showInfo();
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		if (Playlist.getPlaylist().getCurrentSong() != null) {
-			Font f = GUIParameters.getFont();
+		if (Playlist.getPlaylist().getCurrentSong() != null) { //Song exist
+			if (!Playlist.getPlaylist().getCurrentSong().getLyric().isEmpty()) { // Lyric exist
+				Font f = GUIParameters.getFont();
 
-			hideInfo();
-			lyric.setText("<html><style type='text/css'>html { font-family: '"
-					+ f.getFamily()
-					+ "'; font-size:20px;} </style><h1>Lyric</h1>"
-					+ Playlist.getPlaylist().getCurrentSong().getLyric()
-					.replaceAll("\n", "<br>") + "<html>");
-		} else { //No lyric
+				hideInfo();
+				lyric.setText("<html><style type='text/css'>html { font-family: '"
+						+ f.getFamily()
+						+ "'; font-size:20px;} </style><h1>Lyric</h1>"
+						+ Playlist.getPlaylist().getCurrentSong().getLyric()
+						.replaceAll("\n", "<br>") + "<html>");
+			} else { //No lyric
+				lyric.setText("");
+
+				// Show info msg
+				info.setText("No lyric");
+				showInfo();
+			}
+		} else { // No song
 			lyric.setText("");
+
+			// Show info msg
+			info.setText("No song");
 			showInfo();
 		}
 	}
