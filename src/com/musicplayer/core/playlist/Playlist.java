@@ -127,6 +127,35 @@ public class Playlist extends Observable implements Observer {
 	}
 
 	/**
+	 * Remove several songs
+	 *
+	 * @param index
+	 * 		Array containing index of songs to remove
+	 */
+	public void removeSongs(int[] index) {
+		boolean doNext = false; // Go to next song or not
+
+		// Fetch all songs
+		for (int i = 0; i < index.length; i++) {
+			this.songList.remove(index[i] - i); // Remove song
+
+			if (index[i] - i < currentTrack)
+				currentTrack--;
+			else if (index[i] - i == currentTrack)
+				doNext = true;
+		}
+
+		// Go to next track
+		if (doNext) {
+			currentTrack--;
+			next();
+		}
+
+		setChanged();
+		notifyObservers();
+	}
+
+	/**
 	 * Empty the song list
 	 */
 	public void reset() {

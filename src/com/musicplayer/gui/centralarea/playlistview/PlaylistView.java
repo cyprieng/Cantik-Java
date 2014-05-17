@@ -12,6 +12,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Observable;
@@ -66,10 +68,12 @@ public class PlaylistView extends CentralArea implements Observer {
 					c.setForeground(getForeground());
 				}
 
-				if (table.getSelectedRow() == rowIndex) {
-					// Selected tracks
-					c.setBackground(GUIParameters.LEFTBAR_BACKGROUND);
-					c.setForeground(Color.WHITE);
+				for (int i = 0; i < table.getSelectedRowCount(); i++) {
+					if (table.getSelectedRows()[i] == rowIndex) {
+						// Selected tracks
+						c.setBackground(GUIParameters.LEFTBAR_BACKGROUND);
+						c.setForeground(Color.WHITE);
+					}
 				}
 
 				return c;
@@ -98,11 +102,33 @@ public class PlaylistView extends CentralArea implements Observer {
 		table.setDragEnabled(true);
 		table.setDropMode(DropMode.INSERT_ROWS);
 		table.setTransferHandler(new TableRowTransferHandler(table));
+		table.setRowSelectionAllowed(true);
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
 		// Show scrollbar
 		JScrollPane jsp = CustomScrollBar.getCustomJScrollPane(table);
 		jsp.setBackground(GUIParameters.LEFTBAR_BACKGROUND);
 		add(jsp);
+
+		// Catch delete key press
+		table.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (e.getKeyChar() == KeyEvent.VK_DELETE) { // Delete key
+					Playlist.getPlaylist().removeSongs(table.getSelectedRows());
+				}
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+
+			}
+		});
 
 		// Mouse listener for the popup menu
 		table.addMouseListener(new MouseListener() {
