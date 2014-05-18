@@ -86,7 +86,8 @@ public class MusicLibraryView extends CentralArea {
 					Object node = path.getLastPathComponent();
 
 					if (node instanceof DefaultMutableTreeTableNode) {
-						addNodeToPlaylist((DefaultMutableTreeTableNode) node);
+						addNodeToPlaylist((DefaultMutableTreeTableNode) node); // Add to playlist
+						Playlist.getPlaylist().sendNotifcation(); // Notify changes
 					}
 				}
 			}
@@ -231,7 +232,7 @@ public class MusicLibraryView extends CentralArea {
 		Object o = node.getUserObject(); // Get node
 
 		if (o instanceof Song) { // Add one song
-			Playlist.getPlaylist().addSong((Song) o);
+			Playlist.getPlaylist().addSongWithoutNotifying((Song) o);
 		} else { // Add a folder
 			int childNumber = node.getChildCount();
 

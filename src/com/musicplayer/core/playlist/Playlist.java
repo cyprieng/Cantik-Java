@@ -80,6 +80,21 @@ public class Playlist extends Observable implements Observer {
 	}
 
 	/**
+	 * Add a song to the playlist without notifying observers
+	 *
+	 * @param song
+	 * 		The Song to add to the list
+	 */
+	public void addSongWithoutNotifying(Song song) {
+		this.songList.add(song);
+	}
+
+	public void sendNotifcation() {
+		setChanged();
+		notifyObservers();
+	}
+
+	/**
 	 * Add a Set of song to the playlist
 	 *
 	 * @param songSet
