@@ -87,7 +87,7 @@ public class MusicLibraryView extends CentralArea {
 
 					if (node instanceof DefaultMutableTreeTableNode) {
 						addNodeToPlaylist((DefaultMutableTreeTableNode) node); // Add to playlist
-						Playlist.getPlaylist().sendNotifcation(); // Notify changes
+						Playlist.getPlaylist().sendNotification(); // Notify changes
 					}
 				}
 			}

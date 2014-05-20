@@ -89,7 +89,10 @@ public class Playlist extends Observable implements Observer {
 		this.songList.add(song);
 	}
 
-	public void sendNotifcation() {
+	/**
+	 * Send notification to observers
+	 */
+	public void sendNotification() {
 		setChanged();
 		notifyObservers();
 	}
@@ -292,27 +295,6 @@ public class Playlist extends Observable implements Observer {
 	}
 
 	/**
-	 * Set the random status
-	 *
-	 * @param random
-	 * 		True to enable random, false to disable
-	 */
-	public void setRandom(boolean random) {
-		this.random = random;
-	}
-
-	/**
-	 * Set the repeat status
-	 *
-	 * @param repeat
-	 * 		The repeat state
-	 * @see RepeatState
-	 */
-	public void setRepeat(RepeatState repeat) {
-		this.repeat = repeat;
-	}
-
-	/**
 	 * Get the song which is playing
 	 *
 	 * @return The current Song
@@ -343,12 +325,33 @@ public class Playlist extends Observable implements Observer {
 	}
 
 	/**
+	 * Set the repeat status
+	 *
+	 * @param repeat
+	 * 		The repeat state
+	 * @see RepeatState
+	 */
+	public void setRepeat(RepeatState repeat) {
+		this.repeat = repeat;
+	}
+
+	/**
 	 * Return if the player is random
 	 *
 	 * @return True if yes, false otherwise
 	 */
 	public boolean isRandom() {
 		return random;
+	}
+
+	/**
+	 * Set the random status
+	 *
+	 * @param random
+	 * 		True to enable random, false to disable
+	 */
+	public void setRandom(boolean random) {
+		this.random = random;
 	}
 
 	/**
