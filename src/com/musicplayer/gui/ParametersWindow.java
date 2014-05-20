@@ -155,6 +155,8 @@ public class ParametersWindow extends JFrame {
 
 		// Button to apply
 		JButton apply = new JButton("");
+		apply.setAlignmentX(Component.CENTER_ALIGNMENT);
+
 		// Set icon
 		try {
 			BufferedImage img = ImageIO.read(new File("assets/img/apply.png"));
@@ -169,6 +171,7 @@ public class ParametersWindow extends JFrame {
 		apply.setBackground(form.getBackground());
 
 		// Onclick
+		final JFrame window = this;
 		apply.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -182,6 +185,9 @@ public class ParametersWindow extends JFrame {
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
+
+				// Close window
+				window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
 			}
 		});
 		form.add(apply);
