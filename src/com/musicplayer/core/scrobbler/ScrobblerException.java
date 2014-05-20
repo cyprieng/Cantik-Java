@@ -14,6 +14,6 @@ public class ScrobblerException extends CustomException {
 	 * Constructor with standard message
 	 */
 	public ScrobblerException() {
-		super("Scrobble impossible: not actived or wrong username/password!");
+		super("Error connecting to lastfm");
 	}
 }

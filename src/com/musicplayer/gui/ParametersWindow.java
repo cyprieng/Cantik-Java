@@ -3,6 +3,8 @@ package com.musicplayer.gui;
 import com.musicplayer.core.Log;
 import com.musicplayer.core.config.ConfigFileParser;
 import com.musicplayer.core.config.ConfigFileWriter;
+import com.musicplayer.core.scrobbler.Scrobbler;
+import com.musicplayer.core.scrobbler.ScrobblerException;
 import com.musicplayer.gui.leftbar.LeftbarJLabel;
 
 import javax.imageio.ImageIO;
@@ -13,9 +15,12 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 
 /**
  * Window for configuration
@@ -26,14 +31,9 @@ public class ParametersWindow extends JFrame {
 	private static final long serialVersionUID = -2776375961877258278L;
 
 	/**
-	 * Text field for library path and lastfm user
+	 * Text field for library path
 	 */
-	JTextField path, lastfm_user;
-
-	/**
-	 * Feld for lastfm password
-	 */
-	JPasswordField lastfm_pass;
+	JTextField path;
 
 	/**
 	 * Create the window
@@ -74,35 +74,82 @@ public class ParametersWindow extends JFrame {
 		// Lastfm panel
 		JPanel lastfm = new JPanel();
 		lastfm.setBackground(GUIParameters.LEFTBAR_BACKGROUND);
-		lastfm.setLayout(new GridLayout(2, 2));
+		lastfm.setLayout(new GridLayout(1, 2));
 		lastfm.setBorder(BorderFactory.createTitledBorder(null, "Lastfm",
 				TitledBorder.LEFT, TitledBorder.TOP, GUIParameters.getLeftFont(),
 				Color.white));
 		{
-			// Label for username
-			JLabel userLabel = new LeftbarJLabel("Lastfm username: ");
-			userLabel.setBorder(new EmptyBorder(10, 10, 10, 0));
-			lastfm.add(userLabel);
+			// Button for lastfm
+			final JButton lastfmButton = new JButton();
+			Border emptyBorder = BorderFactory.createEmptyBorder();
+			lastfmButton.setBorder(emptyBorder);
+			lastfmButton.setBackground(lastfm.getBackground());
+			try {
+				BufferedImage img = ImageIO.read(new File("assets/img/lastfm_button.png"));
+				lastfmButton.setIcon(new ImageIcon(img));
+			} catch (IOException e) {
+				Log.addEntry(e);
+			}
 
-			// Text field
-			lastfm_user = new JTextField(ConfigFileParser.getConfigFileParser()
-					.getParams("lastfm_username"));
-			lastfm_user.setBorder(BorderFactory.createMatteBorder(10, 0, 10,
-					10, lastfm.getBackground()));
-			lastfm.add(lastfm_user);
-		}
-		{
-			// Label for password
-			JLabel passLabel = new LeftbarJLabel("Lastfm password: ");
-			passLabel.setBorder(new EmptyBorder(10, 10, 10, 0));
-			lastfm.add(passLabel);
+			// Button text
+			if (ConfigFileParser.getConfigFileParser().getParams("lastfm_session") != null) {
+				lastfmButton.setText("Logged in");
+			} else {
+				lastfmButton.setText("Authenticate");
+			}
 
-			// Field for pass
-			lastfm_pass = new JPasswordField(ConfigFileParser
-					.getConfigFileParser().getParams("lastfm_password"));
-			lastfm_pass.setBorder(BorderFactory.createMatteBorder(10, 0, 10,
-					10, lastfm.getBackground()));
-			lastfm.add(lastfm_pass);
+			lastfmButton.setHorizontalTextPosition(SwingConstants.CENTER);
+			lastfmButton.setFont(GUIParameters.getLeftFont());
+			lastfmButton.setForeground(Color.WHITE);
+
+			// Onclick
+			final JFrame window = this;
+			lastfmButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						// Get lastfm url
+						final String token = Scrobbler.getoken();
+						URI uri = new URI("http://www.last.fm/api/auth/?api_key=" + Scrobbler.KEY +
+								"&token=" + token);
+
+						// When come back to the window
+						window.addWindowFocusListener(new WindowAdapter() {
+							@Override
+							public void windowGainedFocus(WindowEvent e) {
+								super.windowGainedFocus(e);
+
+								try {
+									String lastfm_session = Scrobbler.getSession(token); // Get key session
+
+									// Show that we are logged in
+									lastfmButton.setText("Logged in");
+
+									// Save lastfm key
+									ConfigFileParser.getConfigFileParser().setParam("lastfm_session", lastfm_session);
+									try {
+										ConfigFileWriter.writeConfigFile();
+									} catch (Exception e1) {
+										Log.addEntry(e1);
+									}
+								} catch (ScrobblerException e1) {
+									// Unable to connect
+									lastfmButton.setText("Error");
+								}
+
+								window.removeWindowFocusListener(this); // Disable listener
+							}
+						});
+
+						// Go to the url
+						Desktop.getDesktop().browse(uri);
+					} catch (Exception e1) {
+						Log.addEntry(e1);
+					}
+				}
+			});
+			lastfmButton.setBorder(new EmptyBorder(10, 10, 10, 0));
+			lastfm.add(lastfmButton);
 		}
 		form.add(lastfm);
 
@@ -128,9 +175,6 @@ public class ParametersWindow extends JFrame {
 				// Get new configuration
 				ConfigFileParser cfp = ConfigFileParser.getConfigFileParser();
 				cfp.setParam("library", path.getText());
-				cfp.setParam("lastfm_username", lastfm_user.getText());
-				cfp.setParam("lastfm_password",
-						String.valueOf(lastfm_pass.getPassword()));
 
 				// Write it
 				try {
