@@ -27,7 +27,7 @@ import java.net.URI;
  *
  * @author cyprien
  */
-public class ParametersWindow extends JFrame {
+public class ParametersWindow extends JDialog {
 	private static final long serialVersionUID = -2776375961877258278L;
 
 	/**
@@ -39,7 +39,8 @@ public class ParametersWindow extends JFrame {
 	 * Create the window
 	 */
 	public ParametersWindow() {
-		super("Parameters");
+		super(MainWindow.getMainWindow(), true);
+		this.setTitle("Parameters");
 
 		// Main Panel
 		Container contentPane = getContentPane();
@@ -103,7 +104,7 @@ public class ParametersWindow extends JFrame {
 			lastfmButton.setForeground(Color.WHITE);
 
 			// Onclick
-			final JFrame window = this;
+			final JDialog window = this;
 			lastfmButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -171,7 +172,7 @@ public class ParametersWindow extends JFrame {
 		apply.setBackground(form.getBackground());
 
 		// Onclick
-		final JFrame window = this;
+		final JDialog window = this;
 		apply.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
