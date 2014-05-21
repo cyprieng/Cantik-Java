@@ -31,6 +31,11 @@ public class ParametersWindow extends JDialog {
 	private static final long serialVersionUID = -2776375961877258278L;
 
 	/**
+	 * Label to show if there is an error
+	 */
+	JLabel error;
+
+	/**
 	 * Text field for library path
 	 */
 	JTextField path;
@@ -49,6 +54,11 @@ public class ParametersWindow extends JDialog {
 		form.setBackground(GUIParameters.LEFTBAR_BACKGROUND);
 		form.setBorder(new EmptyBorder(10, 10, 10, 10));
 		contentPane.add(form);
+
+		// Error label
+		error = new LeftbarJLabel("");
+		error.setForeground(GUIParameters.LEFTBAR_ACTIVE);
+		form.add(error);
 
 		// Music path panel
 		JPanel musicPath = new JPanel();
@@ -176,19 +186,28 @@ public class ParametersWindow extends JDialog {
 		apply.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Get new configuration
-				ConfigFileParser cfp = ConfigFileParser.getConfigFileParser();
-				cfp.setParam("library", path.getText());
+				// Test field
+				error.setText("");
+				File f = new File(path.getText());
+				if (!f.exists() || !f.isDirectory()) {
+					// Invalid folder
+					error.setText("Invalid folder name");
+					window.pack();
+				} else {
+					// Get new configuration
+					ConfigFileParser cfp = ConfigFileParser.getConfigFileParser();
+					cfp.setParam("library", path.getText());
 
-				// Write it
-				try {
-					ConfigFileWriter.writeConfigFile();
-				} catch (Exception e1) {
-					e1.printStackTrace();
+					// Write it
+					try {
+						ConfigFileWriter.writeConfigFile();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+
+					// Close window
+					window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
 				}
-
-				// Close window
-				window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
 			}
 		});
 		form.add(apply);
