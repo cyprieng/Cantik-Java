@@ -1,7 +1,9 @@
 package com.musicplayer.core.musiclibrary;
 
 /**
+ * Exception linked to an invalid folder path
  *
+ * @author cyprien
  */
 public class InvalidPathException extends Exception {
 	/**
