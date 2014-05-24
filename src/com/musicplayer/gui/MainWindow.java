@@ -1,6 +1,7 @@
 package com.musicplayer.gui;
 
 import com.musicplayer.core.config.ConfigFileParser;
+import com.musicplayer.core.musiclibrary.InvalidPathException;
 import com.musicplayer.core.musiclibrary.MusicLibrary;
 import com.musicplayer.gui.centralarea.LocalFileView;
 import com.musicplayer.gui.centralarea.ParametersView;
@@ -85,9 +86,15 @@ public class MainWindow {
 
 	public static void main(String[] args) {
 		UIManager.getLookAndFeelDefaults().put("defaultFont", GUIParameters.getFont());
-		MusicLibrary.getMusicLibrary().loadLibraryFolder(
-				ConfigFileParser.getConfigFileParser().getParams("library"));
 		getMainWindow();
-	}
 
+		try {
+			// Load library
+			MusicLibrary.getMusicLibrary().loadLibraryFolder(
+					ConfigFileParser.getConfigFileParser().getParams("library"));
+		} catch (InvalidPathException e) {
+			// No library => settings
+			setCentralArea("Settings");
+		}
+	}
 }

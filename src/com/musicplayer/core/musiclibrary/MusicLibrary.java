@@ -23,21 +23,18 @@ public class MusicLibrary extends Thread {
 	 * Store the unique instance of MusicLibrary
 	 */
 	private static MusicLibrary musicLibrary;
-
-	/**
-	 * Path of the library
-	 */
-	private String libraryPath;
-
 	/**
 	 * Structure storing the music library and the temporary one
 	 */
 	protected Map<String, Map<String, Set<Song>>> library, libraryTemp;
-
 	/**
 	 * Mark if the music library is ready
 	 */
 	protected boolean ready;
+	/**
+	 * Path of the library
+	 */
+	private String libraryPath;
 
 	/**
 	 * Constructor which only init library var
@@ -68,7 +65,28 @@ public class MusicLibrary extends Thread {
 	 * 		The path to load
 	 */
 	@SuppressWarnings("unchecked")
-	public void loadLibraryFolder(String path) {
+	public void loadLibraryFolder(String path) throws InvalidPathException {
+		if (path == null) { // Null path
+			// Library is ready
+			synchronized (this) {
+				ready = true;
+				this.notifyAll();
+			}
+
+			throw new InvalidPathException();
+		}
+
+		File f = new File(path);
+		if (!f.exists() || !f.isDirectory()) { // Invalid folder
+			// Library is ready
+			synchronized (this) {
+				ready = true;
+				this.notifyAll();
+			}
+
+			throw new InvalidPathException();
+		}
+
 		this.libraryPath = path;
 
 		try {
@@ -84,8 +102,10 @@ public class MusicLibrary extends Thread {
 		} catch (Exception e) {
 			Log.addEntry(e);
 		} finally {
-			// Start the thread => scan the library
-			this.start();
+			if (!this.isAlive()) {
+				// Start the thread => scan the library
+				this.start();
+			}
 		}
 	}
 

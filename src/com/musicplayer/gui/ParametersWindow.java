@@ -3,8 +3,11 @@ package com.musicplayer.gui;
 import com.musicplayer.core.Log;
 import com.musicplayer.core.config.ConfigFileParser;
 import com.musicplayer.core.config.ConfigFileWriter;
+import com.musicplayer.core.musiclibrary.InvalidPathException;
+import com.musicplayer.core.musiclibrary.MusicLibrary;
 import com.musicplayer.core.scrobbler.Scrobbler;
 import com.musicplayer.core.scrobbler.ScrobblerException;
+import com.musicplayer.gui.centralarea.musiclibrary.MusicLibraryView;
 import com.musicplayer.gui.leftbar.LeftbarJLabel;
 
 import javax.imageio.ImageIO;
@@ -194,8 +197,20 @@ public class ParametersWindow extends JDialog {
 					error.setText("Invalid folder name");
 					window.pack();
 				} else {
-					// Get new configuration
+					// Get configuration
 					ConfigFileParser cfp = ConfigFileParser.getConfigFileParser();
+
+					// Load library if path has changed
+					if (!path.getText().equals(cfp.getParams("library"))) {
+						try {
+							MusicLibrary.getMusicLibrary().loadLibraryFolder(path.getText());
+							MusicLibraryView.getMusiLibraryView().showLibrary("");
+						} catch (InvalidPathException e1) {
+							Log.addEntry(e1);
+						}
+					}
+
+					// Save config
 					cfp.setParam("library", path.getText());
 
 					// Write it
