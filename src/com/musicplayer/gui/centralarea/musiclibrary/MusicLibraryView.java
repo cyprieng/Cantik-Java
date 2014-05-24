@@ -133,9 +133,7 @@ public class MusicLibraryView extends CentralArea {
 		jsp.setBackground(GUIParameters.LEFTBAR_BACKGROUND);
 		add(jsp);
 
-		// Set info msg
-		info.setText("Loading library...");
-		hideScrollbar();
+		hideScrollbar(); // Hide parent scrollbar
 
 		showLibrary(null);
 	}
@@ -170,10 +168,11 @@ public class MusicLibraryView extends CentralArea {
 				tree.repaint();
 				CustomTableHeader.customizeHeader(tree.getTableHeader());
 
-				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR)); // Load
-				// cursor
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR)); // Load cursor
 
-				showInfo(); // Show wait msg
+				// Show wait msg
+				info.setText("Loading library...");
+				showInfo();
 
 				// Get library
 				MusicLibrary library;
@@ -216,6 +215,13 @@ public class MusicLibraryView extends CentralArea {
 
 				setCursor(Cursor.getDefaultCursor()); // Reset cursor
 				hideInfo(); // Hide wait msg
+
+				// Test empty library
+				if (tree.getRowCount() == 0) {
+					// Show info msg
+					info.setText("No library");
+					showInfo();
+				}
 			}
 		});
 
