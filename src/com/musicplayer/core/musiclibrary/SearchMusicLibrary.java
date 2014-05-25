@@ -29,7 +29,7 @@ public class SearchMusicLibrary extends MusicLibrary {
 	public SearchMusicLibrary(String query) {
 		super();
 		this.query = query.toLowerCase();
-		this.start();
+		t.start();
 	}
 
 	@Override

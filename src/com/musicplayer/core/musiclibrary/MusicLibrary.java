@@ -7,10 +7,7 @@ import com.musicplayer.core.config.ObjectFileWriter;
 import com.musicplayer.core.song.Song;
 
 import java.io.File;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Manage the music library: retrieve and store it. It uses the singleton design
@@ -18,7 +15,7 @@ import java.util.TreeMap;
  *
  * @author cyprien
  */
-public class MusicLibrary extends Thread {
+public class MusicLibrary extends Observable implements Runnable {
 	/**
 	 * Store the unique instance of MusicLibrary
 	 */
@@ -37,10 +34,16 @@ public class MusicLibrary extends Thread {
 	private String libraryPath;
 
 	/**
+	 * Store the thread
+	 */
+	protected Thread t;
+
+	/**
 	 * Constructor which only init library var
 	 */
 	protected MusicLibrary() {
-		super("MusicLibrary");
+		t = new Thread(this);
+		t.setName("MusicLibrary");
 		this.library = new TreeMap<String, Map<String, Set<Song>>>();
 		this.ready = false;
 	}
@@ -102,9 +105,9 @@ public class MusicLibrary extends Thread {
 		} catch (Exception e) {
 			Log.addEntry(e);
 		} finally {
-			if (!this.isAlive()) {
+			if (!t.isAlive()) {
 				// Start the thread => scan the library
-				this.start();
+				t.start();
 			}
 		}
 	}
@@ -116,19 +119,11 @@ public class MusicLibrary extends Thread {
 	 * 		Song to add to the library
 	 */
 	public void addSong(Song song) {
-		if (!libraryTemp.containsKey(song.getArtist())) { // Artist does not
-			// exist
-			// => create artist
+		if (!libraryTemp.containsKey(song.getArtist())) { // Artist does not exist => create artist
 			libraryTemp.put(song.getArtist(), new TreeMap<String, Set<Song>>());
 		}
 		if (!((Map<String, Set<Song>>) libraryTemp.get(song.getArtist()))
-				.containsKey(song.getAlbum())) { // Album
-			// does
-			// not
-			// exist
-			// =>
-			// create
-			// album
+				.containsKey(song.getAlbum())) { // Album does not exist => create album
 			((Map<String, Set<Song>>) libraryTemp.get(song.getArtist())).put(
 					song.getAlbum(), new HashSet<Song>());
 		}
@@ -147,8 +142,7 @@ public class MusicLibrary extends Thread {
 	public void scanFolder(File folder) {
 		if (folder.isFile()) { // It is a file
 			try {
-				this.addSong(new Song(folder.getAbsolutePath())); // Add the
-				// song
+				this.addSong(new Song(folder.getAbsolutePath())); // Add the song
 			} catch (InvalidFileException e) {
 			}
 
@@ -167,11 +161,9 @@ public class MusicLibrary extends Thread {
 	 * Thread run function => scan the folder and store it in a file
 	 */
 	public void run() {
-		this.libraryTemp = new TreeMap<String, Map<String, Set<Song>>>(); // Init
-		// var
+		this.libraryTemp = new TreeMap<String, Map<String, Set<Song>>>(); // Init var
 		this.scanFolder(new File(this.libraryPath)); // Scan library
-		this.library = this.libraryTemp; // Set the library value to the
-		// temporary one
+		this.library = this.libraryTemp; // Set the library value to the temporary one
 		this.libraryTemp = null; // Destroy the temporary library
 
 		// Library is ready
@@ -179,6 +171,9 @@ public class MusicLibrary extends Thread {
 			ready = true;
 			this.notifyAll();
 		}
+		// Notiy changes
+		setChanged();
+		notifyObservers();
 
 		try {
 			// Store library in file

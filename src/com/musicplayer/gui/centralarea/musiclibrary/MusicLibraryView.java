@@ -26,13 +26,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * View of the music library
  *
  * @author cyprien
  */
-public class MusicLibraryView extends CentralArea {
+public class MusicLibraryView extends CentralArea implements Observer {
 	private static final long serialVersionUID = -617334771645897532L;
 	/**
 	 * Store the view
@@ -48,9 +50,16 @@ public class MusicLibraryView extends CentralArea {
 	private JXTreeTable tree;
 
 	/**
+	 * Store the query
+	 */
+	private String query;
+
+	/**
 	 * Create the tree table
 	 */
 	private MusicLibraryView() {
+		MusicLibrary.getMusicLibrary().addObserver(this);
+
 		// Create JXTreeTable
 		DefaultMutableTreeTableNode root = new DefaultMutableTreeTableNode(
 				"Library");
@@ -158,6 +167,8 @@ public class MusicLibraryView extends CentralArea {
 	 * 		The query to search in the library
 	 */
 	public void showLibrary(final String query) {
+		this.query = query;
+
 		Thread t = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -247,5 +258,11 @@ public class MusicLibraryView extends CentralArea {
 				addNodeToPlaylist((DefaultMutableTreeTableNode) node.getChildAt(i));
 			}
 		}
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// Update library
+		showLibrary(query);
 	}
 }
