@@ -6,6 +6,7 @@ import com.musicplayer.core.config.ConfigFileWriter;
 import com.musicplayer.core.musiclibrary.InvalidPathException;
 import com.musicplayer.core.musiclibrary.MusicLibrary;
 import com.musicplayer.core.scrobbler.Scrobbler;
+import com.musicplayer.core.scrobbler.ScrobblerConfig;
 import com.musicplayer.core.scrobbler.ScrobblerException;
 import com.musicplayer.gui.centralarea.musiclibrary.MusicLibraryView;
 import com.musicplayer.gui.leftbar.LeftbarJLabel;
@@ -124,7 +125,7 @@ public class ParametersWindow extends JDialog {
 					try {
 						// Get lastfm url
 						final String token = Scrobbler.getoken();
-						URI uri = new URI("http://www.last.fm/api/auth/?api_key=" + Scrobbler.KEY +
+						URI uri = new URI("http://www.last.fm/api/auth/?api_key=" + ScrobblerConfig.KEY +
 								"&token=" + token);
 
 						// When come back to the window

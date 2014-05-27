@@ -19,16 +19,6 @@ import java.util.logging.Logger;
  */
 public class Scrobbler {
 	/**
-	 * KEY API for Lastfm
-	 */
-	public final static String KEY = "b00af6e57f866d6ed898336da1b9f836";
-
-	/**
-	 * Secret API key for Lastfm
-	 */
-	public final static String SECRET = "bea5b2dcd02de18c1b77d48fba9e206c";
-
-	/**
 	 * Store lastfm session
 	 */
 	private static Session session;
@@ -47,7 +37,7 @@ public class Scrobbler {
 		} else {
 			if (Scrobbler.session == null) { // Create lastfm session
 				Logger.getLogger("de.umass.lastfm").setLevel(Level.OFF);
-				Scrobbler.session = Session.createSession(KEY, SECRET, config.getParams("lastfm_session"));
+				Scrobbler.session = Session.createSession(ScrobblerConfig.KEY, ScrobblerConfig.SECRET, config.getParams("lastfm_session"));
 
 				if (Scrobbler.session == null)
 					throw new ScrobblerException();
@@ -111,7 +101,7 @@ public class Scrobbler {
 	 */
 	public static String getoken() {
 		Logger.getLogger("de.umass.lastfm").setLevel(Level.OFF);
-		return Authenticator.getToken(KEY);
+		return Authenticator.getToken(ScrobblerConfig.KEY);
 	}
 
 	/**
@@ -126,7 +116,7 @@ public class Scrobbler {
 	public static String getSession(String token) throws ScrobblerException {
 		try {
 			Logger.getLogger("de.umass.lastfm").setLevel(Level.OFF);
-			return Authenticator.getSession(token, KEY, SECRET).getKey();
+			return Authenticator.getSession(token, ScrobblerConfig.KEY, ScrobblerConfig.SECRET).getKey();
 		} catch (Exception e) {
 			throw (new ScrobblerException());
 		}
