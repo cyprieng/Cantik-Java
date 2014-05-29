@@ -39,12 +39,25 @@ public class MusicLibrary extends Observable implements Runnable {
 	protected Thread t;
 
 	/**
+	 * Insensitive comparator for Map
+	 */
+	protected final Comparator<String> comparator = new Comparator<String>() {
+		@Override
+		public int compare(String s1, String s2) {
+			int result = s1.compareToIgnoreCase(s2);
+			if (result == 0)
+				result = s1.compareTo(s2);
+			return result;
+		}
+	};
+
+	/**
 	 * Constructor which only init library var
 	 */
 	protected MusicLibrary() {
 		t = new Thread(this);
 		t.setName("MusicLibrary");
-		this.library = new TreeMap<String, Map<String, Set<Song>>>();
+		this.library = new TreeMap<String, Map<String, Set<Song>>>(comparator);
 		this.ready = false;
 	}
 
@@ -120,7 +133,7 @@ public class MusicLibrary extends Observable implements Runnable {
 	 */
 	public void addSong(Song song) {
 		if (!libraryTemp.containsKey(song.getArtist())) { // Artist does not exist => create artist
-			libraryTemp.put(song.getArtist(), new TreeMap<String, Set<Song>>());
+			libraryTemp.put(song.getArtist(), new TreeMap<String, Set<Song>>(comparator));
 		}
 		if (!((Map<String, Set<Song>>) libraryTemp.get(song.getArtist()))
 				.containsKey(song.getAlbum())) { // Album does not exist => create album
@@ -161,7 +174,7 @@ public class MusicLibrary extends Observable implements Runnable {
 	 * Thread run function => scan the folder and store it in a file
 	 */
 	public void run() {
-		this.libraryTemp = new TreeMap<String, Map<String, Set<Song>>>(); // Init var
+		this.libraryTemp = new TreeMap<String, Map<String, Set<Song>>>(comparator); // Init var
 		this.scanFolder(new File(this.libraryPath)); // Scan library
 		this.library = this.libraryTemp; // Set the library value to the temporary one
 		this.libraryTemp = null; // Destroy the temporary library

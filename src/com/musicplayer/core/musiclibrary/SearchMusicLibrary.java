@@ -59,7 +59,7 @@ public class SearchMusicLibrary extends MusicLibrary {
 
 	@Override
 	public void run() {
-		this.libraryTemp = new TreeMap<String, Map<String, Set<Song>>>(); // Init
+		this.libraryTemp = new TreeMap<String, Map<String, Set<Song>>>(comparator); // Init
 		// var
 
 		this.scanFolder(new File(ConfigFileParser.getConfigFileParser()
