@@ -1,41 +1,93 @@
 package com.musicplayer.core;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 /**
- * Log all error in a file
+ * Manage log
  *
  * @author cyprien
  */
 public class Log {
 	/**
-	 * Add an entry in the log file
-	 *
-	 * @param entry
-	 * 		The string to write
+	 * Store the global logget
 	 */
-	public static void addEntry(String entry) {
-		try (PrintWriter out = new PrintWriter(new BufferedWriter(
-				new FileWriter("log.txt", true)))) {
-			Calendar date = Calendar.getInstance();
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YY HH:mm:ss");
-			out.println(sdf.format(date.getTime()) + ": " + entry);
+	private static Logger logger;
+
+	/**
+	 * Filehandler for logs
+	 */
+	private static FileHandler fh;
+
+	/**
+	 * Initialise the logger
+	 */
+	public static void setup() {
+		// Get global logger
+		logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+		// Suppress the logging output to the console
+		logger.setUseParentHandlers(false);
+
+		// Add output file
+		try {
+			fh = new FileHandler("error.log", false);
 		} catch (IOException e) {
 		}
+
+		fh.setFormatter(new SimpleFormatter());
+		logger.addHandler(fh);
+		logger.setLevel(Level.CONFIG);
 	}
 
 	/**
-	 * Add an Exception in the log file
+	 * Log an error
 	 *
-	 * @param entry
-	 * 		The Exception to write
+	 * @param level
+	 * 		Level of the error
+	 * @param msg
+	 * 		Message of the error
 	 */
-	public static void addEntry(Exception entry) {
-		addEntry(entry.getMessage());
+	public static void addEntry(Level level, String msg) {
+		// Setup if it has not been before
+		if (fh == null)
+			setup();
+
+		logger.log(level, msg);
+	}
+
+	/**
+	 * Log an error with a default level of WARNING
+	 *
+	 * @param msg
+	 * 		Message of the error
+	 */
+	public static void addEntry(String msg) {
+		addEntry(Level.WARNING, msg);
+	}
+
+	/**
+	 * Log an exception
+	 *
+	 * @param level
+	 * 		Level of the error
+	 * @param e
+	 * 		Exception to log
+	 */
+	public static void addEntry(Level level, Exception e) {
+		addEntry(level, e.getMessage());
+	}
+
+	/**
+	 * Log an exception with a default level of WARNING
+	 *
+	 * @param e
+	 * 		Exception to log
+	 */
+	public static void addEntry(Exception e) {
+		addEntry(e.getMessage());
 	}
 }
