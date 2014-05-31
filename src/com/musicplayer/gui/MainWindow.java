@@ -31,6 +31,11 @@ public class MainWindow {
 	private static JPanel centralArea;
 
 	/**
+	 * Store the current and the previous card shown
+	 */
+	private static String cardShown, previousCardShown;
+
+	/**
 	 * Init window
 	 */
 	private MainWindow() {
@@ -80,8 +85,22 @@ public class MainWindow {
 	 * 		The name of the panel to show
 	 */
 	public static void setCentralArea(String toShow) {
+		// Update card historic
+		previousCardShown = cardShown;
+		cardShown = toShow;
+
+		// Show card
 		CardLayout cl = (CardLayout) (centralArea.getLayout());
 		cl.show(centralArea, toShow);
+	}
+
+	/**
+	 * Get the previous card shown
+	 *
+	 * @return Name of the previous card
+	 */
+	public static String getPreviousCardShown() {
+		return previousCardShown;
 	}
 
 	public static void main(String[] args) {

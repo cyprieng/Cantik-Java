@@ -21,9 +21,9 @@ public class ParametersView extends CentralArea {
 		// Show window when this CentralArea component is shown
 		addComponentListener(new ComponentAdapter() {
 			public void componentShown(ComponentEvent e) {
-				MainWindow.setCentralArea("Library"); // Show library
+				MainWindow.setCentralArea(MainWindow.getPreviousCardShown()); // Show previous card
 
-				new ParametersWindow(); // Ope window
+				new ParametersWindow(); // Open window
 			}
 
 			public void componentHidden(ComponentEvent e) {
