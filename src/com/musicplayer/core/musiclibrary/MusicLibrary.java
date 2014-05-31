@@ -20,14 +20,17 @@ public class MusicLibrary extends Observable implements Runnable {
 	 * Store the unique instance of MusicLibrary
 	 */
 	private static MusicLibrary musicLibrary;
+
 	/**
 	 * Structure storing the music library and the temporary one
 	 */
 	protected Map<String, Map<String, Set<Song>>> library, libraryTemp;
+
 	/**
 	 * Mark if the music library is ready
 	 */
 	protected boolean ready;
+
 	/**
 	 * Path of the library
 	 */
@@ -39,25 +42,12 @@ public class MusicLibrary extends Observable implements Runnable {
 	protected Thread t;
 
 	/**
-	 * Insensitive comparator for Map
-	 */
-	protected final Comparator<String> comparator = new Comparator<String>() {
-		@Override
-		public int compare(String s1, String s2) {
-			int result = s1.compareToIgnoreCase(s2);
-			if (result == 0)
-				result = s1.compareTo(s2);
-			return result;
-		}
-	};
-
-	/**
 	 * Constructor which only init library var
 	 */
 	protected MusicLibrary() {
 		t = new Thread(this);
 		t.setName("MusicLibrary");
-		this.library = new TreeMap<String, Map<String, Set<Song>>>(comparator);
+		this.library = new TreeMap<String, Map<String, Set<Song>>>(new CaseInsensitiveComparator());
 		this.ready = false;
 	}
 
@@ -133,7 +123,7 @@ public class MusicLibrary extends Observable implements Runnable {
 	 */
 	public void addSong(Song song) {
 		if (!libraryTemp.containsKey(song.getArtist())) { // Artist does not exist => create artist
-			libraryTemp.put(song.getArtist(), new TreeMap<String, Set<Song>>(comparator));
+			libraryTemp.put(song.getArtist(), new TreeMap<String, Set<Song>>(new CaseInsensitiveComparator()));
 		}
 		if (!((Map<String, Set<Song>>) libraryTemp.get(song.getArtist()))
 				.containsKey(song.getAlbum())) { // Album does not exist => create album
@@ -174,7 +164,7 @@ public class MusicLibrary extends Observable implements Runnable {
 	 * Thread run function => scan the folder and store it in a file
 	 */
 	public void run() {
-		this.libraryTemp = new TreeMap<String, Map<String, Set<Song>>>(comparator); // Init var
+		this.libraryTemp = new TreeMap<String, Map<String, Set<Song>>>(new CaseInsensitiveComparator()); // Init var
 		this.scanFolder(new File(this.libraryPath)); // Scan library
 		this.library = this.libraryTemp; // Set the library value to the temporary one
 		this.libraryTemp = null; // Destroy the temporary library
@@ -184,9 +174,6 @@ public class MusicLibrary extends Observable implements Runnable {
 			ready = true;
 			this.notifyAll();
 		}
-		// Notiy changes
-		setChanged();
-		notifyObservers();
 
 		try {
 			// Store library in file
@@ -195,6 +182,10 @@ public class MusicLibrary extends Observable implements Runnable {
 		} catch (Exception e) {
 			Log.addEntry(e);
 		}
+
+		// Notify changes
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
