@@ -20,10 +20,11 @@ import org.jdesktop.swingx.treetable.MutableTreeTableNode;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.tree.TreePath;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
@@ -67,37 +68,22 @@ public class MusicLibraryView extends CentralArea implements Observer {
 		tree = new JXTreeTable(model);
 
 		// Click event
-		final JXTreeTable copy = tree;
-		tree.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-
+		tree.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					// Double click => add the selected song
-					TreePath path = copy.getPathForRow(copy.rowAtPoint(e
-							.getPoint()));
-					Object node = path.getLastPathComponent();
+					addCurrentNodesToPlaylist();
+				}
+			}
+		});
 
-					if (node instanceof DefaultMutableTreeTableNode) {
-						addNodeToPlaylist((DefaultMutableTreeTableNode) node); // Add to playlist
-						Playlist.getPlaylist().sendNotification(); // Notify changes
-					}
+		// Keyboard event
+		tree.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+					addCurrentNodesToPlaylist();
 				}
 			}
 		});
@@ -237,6 +223,19 @@ public class MusicLibraryView extends CentralArea implements Observer {
 		});
 
 		t.start();
+	}
+
+	/**
+	 * Add the selected nodes to the playlist
+	 */
+	public void addCurrentNodesToPlaylist() {
+		for (int i : tree.getSelectedRows()) {
+			if (tree.getPathForRow(i).getLastPathComponent() instanceof DefaultMutableTreeTableNode) {
+				addNodeToPlaylist((DefaultMutableTreeTableNode) tree.getPathForRow(i).getLastPathComponent()); // Add to playlist
+			}
+		}
+
+		Playlist.getPlaylist().sendNotification(); // Notify changes
 	}
 
 	/**
