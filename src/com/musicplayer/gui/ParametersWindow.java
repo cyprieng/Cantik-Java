@@ -228,6 +228,10 @@ public class ParametersWindow extends JDialog {
 		});
 		form.add(apply);
 
+		// Set default button
+		JRootPane rootPane = SwingUtilities.getRootPane(apply);
+		rootPane.setDefaultButton(apply);
+
 		setResizable(false);
 		pack();
 		setLocationRelativeTo(MainWindow.getMainWindow());
