@@ -17,11 +17,6 @@ public class WindowsHotkeys implements IntellitypeListener {
 		// Initialize JIntellitype
 		JIntellitype.getInstance();
 
-		// Check to see if an instance of this application is already running
-		if (JIntellitype.checkInstanceAlreadyRunning("Musicplayer")) {
-			return;
-		}
-
 		// Assign this class to be a IntellitypeListener
 		JIntellitype.getInstance().addIntellitypeListener(this);
 	}
