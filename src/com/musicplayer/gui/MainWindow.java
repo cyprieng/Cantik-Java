@@ -8,6 +8,7 @@ import com.musicplayer.gui.centralarea.ParametersView;
 import com.musicplayer.gui.centralarea.TrackInfo;
 import com.musicplayer.gui.centralarea.musiclibrary.MusicLibraryView;
 import com.musicplayer.gui.centralarea.playlistview.PlaylistView;
+import com.musicplayer.gui.hotkeys.WindowsHotkeys;
 import com.musicplayer.gui.leftbar.LeftBar;
 import com.musicplayer.gui.player.Player;
 
@@ -106,6 +107,9 @@ public class MainWindow {
 	public static void main(String[] args) {
 		UIManager.getLookAndFeelDefaults().put("defaultFont", GUIParameters.getFont());
 		getMainWindow();
+
+		// Load hotkeys
+		new WindowsHotkeys();
 
 		try {
 			// Load library

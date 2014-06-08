@@ -230,6 +230,16 @@ public class Playlist extends Observable implements Observer {
 	}
 
 	/**
+	 * Switch between play / pause state
+	 */
+	public void playPause() {
+		if (getPlayer() == null || getPlayer().getState() == PlayerState.PAUSED)
+			play();
+		else
+			player.pause();
+	}
+
+	/**
 	 * Jump to next track
 	 */
 	public void next() {
