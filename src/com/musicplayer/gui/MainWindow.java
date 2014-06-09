@@ -3,6 +3,7 @@ package com.musicplayer.gui;
 import com.musicplayer.core.config.ConfigFileParser;
 import com.musicplayer.core.musiclibrary.InvalidPathException;
 import com.musicplayer.core.musiclibrary.MusicLibrary;
+import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.gui.centralarea.LocalFileView;
 import com.musicplayer.gui.centralarea.ParametersView;
 import com.musicplayer.gui.centralarea.TrackInfo;
@@ -15,6 +16,7 @@ import com.musicplayer.gui.player.Player;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 /**
  * Main window
@@ -116,6 +118,17 @@ public class MainWindow {
 			new WindowsHotkeys();
 		else if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix"))
 			new LinuxHotkeys();
+
+		// Add keyboard shortcut: SPACE => Play / Pause
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+			@Override
+			public boolean dispatchKeyEvent(KeyEvent e) {
+				if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_SPACE)
+					Playlist.getPlaylist().playPause();
+
+				return false;
+			}
+		});
 
 		try {
 			// Load library
