@@ -13,6 +13,7 @@ import com.musicplayer.gui.hotkeys.LinuxHotkeys;
 import com.musicplayer.gui.hotkeys.WindowsHotkeys;
 import com.musicplayer.gui.leftbar.LeftBar;
 import com.musicplayer.gui.player.Player;
+import com.musicplayer.gui.trayicon.TrayIconMenu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -129,6 +130,9 @@ public class MainWindow {
 				return false;
 			}
 		});
+
+		// Add systray
+		new TrayIconMenu();
 
 		try {
 			// Load library
