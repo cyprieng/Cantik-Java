@@ -38,7 +38,7 @@ public class MainWindow {
 	/**
 	 * Store the current and the previous card shown
 	 */
-	private static String cardShown, previousCardShown;
+	private static String cardShown = "Library", previousCardShown;
 
 	/**
 	 * Init window
