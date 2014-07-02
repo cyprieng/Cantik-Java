@@ -4,6 +4,8 @@ import com.melloware.jintellitype.IntellitypeListener;
 import com.melloware.jintellitype.JIntellitype;
 import com.musicplayer.core.playlist.Playlist;
 
+import java.io.File;
+
 /**
  * Register hotkeys for Windows
  *
@@ -14,6 +16,12 @@ public class WindowsHotkeys implements IntellitypeListener {
 	 * Init Jintellitype
 	 */
 	public WindowsHotkeys() {
+		// Load the correct dll
+		if (System.getProperty("sun.arch.data.model").equals("64"))
+			JIntellitype.setLibraryLocation(new File("JIntellitype64.dll"));
+		else
+			JIntellitype.setLibraryLocation(new File("JIntellitype.dll"));
+
 		// Initialize JIntellitype
 		JIntellitype.getInstance();
 
