@@ -1,5 +1,6 @@
 package com.musicplayer.gui;
 
+import com.musicplayer.core.Log;
 import com.musicplayer.core.config.ConfigFileParser;
 import com.musicplayer.core.musiclibrary.InvalidPathException;
 import com.musicplayer.core.musiclibrary.MusicLibrary;
@@ -15,9 +16,12 @@ import com.musicplayer.gui.leftbar.LeftBar;
 import com.musicplayer.gui.player.Player;
 import com.musicplayer.gui.trayicon.TrayIconMenu;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Main window
@@ -44,7 +48,14 @@ public class MainWindow {
 	 * Init window
 	 */
 	private MainWindow() {
-		window = new JFrame("MusicPlayer");
+		// Set name and icon
+		window = new JFrame("Cantik");
+		try {
+			window.setIconImage(ImageIO.read(new File("assets/img/icon.png")));
+		} catch (IOException e) {
+			Log.addEntry(e);
+		}
+
 		window.setLayout(new BorderLayout());
 		Container container = window.getContentPane();
 
