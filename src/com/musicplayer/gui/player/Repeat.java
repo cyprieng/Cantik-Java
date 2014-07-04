@@ -64,14 +64,14 @@ public class Repeat extends JButton {
 			// Change state and img
 			switch (Playlist.getPlaylist().getRepeat()) {
 				case OFF:
-					Playlist.getPlaylist().setRepeat(RepeatState.SONG);
-					((Repeat) e.getSource()).setIcon("assets/img/repeat_song.png");
-					break;
-				case SONG:
 					Playlist.getPlaylist().setRepeat(RepeatState.ALL);
 					((Repeat) e.getSource()).setIcon("assets/img/repeat_all.png");
 					break;
 				case ALL:
+					Playlist.getPlaylist().setRepeat(RepeatState.SONG);
+					((Repeat) e.getSource()).setIcon("assets/img/repeat_song.png");
+					break;
+				case SONG:
 					Playlist.getPlaylist().setRepeat(RepeatState.OFF);
 					((Repeat) e.getSource()).setIcon("assets/img/repeat.png");
 					break;
