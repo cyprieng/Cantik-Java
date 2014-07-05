@@ -2,6 +2,7 @@ package com.musicplayer.gui.centralarea.musiclibrary;
 
 import com.musicplayer.core.Core;
 import com.musicplayer.core.song.Song;
+import com.musicplayer.gui.MainWindow;
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
 
@@ -14,7 +15,8 @@ public class CustomTreeTableModel extends DefaultTreeTableModel {
 	/**
 	 * Name of columns
 	 */
-	private final static String[] COLUMN_NAMES = {"Title", "Year", "Length"};
+	private final static String[] COLUMN_NAMES = {MainWindow.bundle.getString("title"),
+			MainWindow.bundle.getString("year"), MainWindow.bundle.getString("length")};
 
 	/**
 	 * Call super constructor

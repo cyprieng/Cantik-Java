@@ -22,6 +22,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * Main window
@@ -43,6 +45,11 @@ public class MainWindow {
 	 * Store the current and the previous card shown
 	 */
 	private static String cardShown = "Library", previousCardShown;
+
+	/**
+	 * Store the resource bundle
+	 */
+	public static ResourceBundle bundle;
 
 	/**
 	 * Init window
@@ -120,6 +127,9 @@ public class MainWindow {
 	}
 
 	public static void main(String[] args) {
+		// Get the resource bundle
+		bundle = ResourceBundle.getBundle("com.musicplayer.gui.i18n.Text", Locale.getDefault());
+
 		UIManager.getLookAndFeelDefaults().put("defaultFont", GUIParameters.getFont());
 		getMainWindow();
 

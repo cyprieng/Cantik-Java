@@ -4,6 +4,7 @@ import com.musicplayer.core.Log;
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.core.song.Song;
 import com.musicplayer.gui.GUIParameters;
+import com.musicplayer.gui.MainWindow;
 import org.jdesktop.swinghelper.tray.JXTrayIcon;
 
 import javax.imageio.ImageIO;
@@ -69,7 +70,7 @@ public class TrayIconMenu implements Observer {
 			album = new CustomJMenuItem("");
 			title = new CustomJMenuItem("");
 
-			JMenuItem play = new CustomJMenuItem("Play/Pause", ImageIO.read(new File("assets/img/play.png")));
+			JMenuItem play = new CustomJMenuItem(MainWindow.bundle.getString("playPause"), ImageIO.read(new File("assets/img/play.png")));
 			play.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -77,7 +78,7 @@ public class TrayIconMenu implements Observer {
 				}
 			});
 
-			JMenuItem back = new CustomJMenuItem("Back", ImageIO.read(new File("assets/img/previous.png")));
+			JMenuItem back = new CustomJMenuItem(MainWindow.bundle.getString("back"), ImageIO.read(new File("assets/img/previous.png")));
 			back.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -85,7 +86,7 @@ public class TrayIconMenu implements Observer {
 				}
 			});
 
-			JMenuItem next = new CustomJMenuItem("Next", ImageIO.read(new File("assets/img/next.png")));
+			JMenuItem next = new CustomJMenuItem(MainWindow.bundle.getString("next"), ImageIO.read(new File("assets/img/next.png")));
 			next.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -125,15 +126,15 @@ public class TrayIconMenu implements Observer {
 			// Notify
 			if (!trayIconLastMsg.equals(s.getTitle() + s.getAlbum() + s.getArtist())) { // Check if track changed
 				trayIconLastMsg = s.getTitle() + s.getAlbum() + s.getArtist();
-				trayIcon.displayMessage(s.getTitle(), "Album: " + s.getAlbum() + "\nArtist: " + s.getArtist(),
-						TrayIcon.MessageType.INFO);
+				trayIcon.displayMessage(s.getTitle(), MainWindow.bundle.getString("album") + ": " + s.getAlbum() +
+						"\n" + MainWindow.bundle.getString("artist") + ": " + s.getArtist(), TrayIcon.MessageType.INFO);
 			}
 		} else {
 			trayIconLastMsg = "";
 
 			title.setText("");
 			album.setText("");
-			artist.setText("No song");
+			artist.setText(MainWindow.bundle.getString("noSong"));
 		}
 	}
 }

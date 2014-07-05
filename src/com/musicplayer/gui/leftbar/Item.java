@@ -79,7 +79,7 @@ public class Item extends JPanel {
 		}
 
 		// Add text
-		LeftbarJLabel text = new LeftbarJLabel(str);
+		LeftbarJLabel text = new LeftbarJLabel(MainWindow.bundle.getString(str));
 		Border empty = new EmptyBorder(0, 10, 0, 0);
 		text.setBorder(empty);
 		this.add(text);

@@ -5,6 +5,7 @@ import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.core.song.Song;
 import com.musicplayer.gui.CustomScrollBar;
 import com.musicplayer.gui.GUIParameters;
+import com.musicplayer.gui.MainWindow;
 import com.musicplayer.gui.centralarea.CentralArea;
 import com.musicplayer.gui.centralarea.CustomTableHeader;
 
@@ -45,7 +46,8 @@ public class PlaylistView extends CentralArea implements Observer {
 		Playlist.getPlaylist().addObserver(this);
 
 		// Create table model
-		String[] columnNames = {"Title", "Artist", "Album", "Length"};
+		String[] columnNames = {MainWindow.bundle.getString("title"), MainWindow.bundle.getString("artist"),
+				MainWindow.bundle.getString("album"), MainWindow.bundle.getString("length")};
 		tableModel = new CustomTableModel(columnNames, 0);
 
 		// Create custom Table
@@ -185,7 +187,7 @@ public class PlaylistView extends CentralArea implements Observer {
 			}
 		});
 
-		info.setText("Empty playlist");
+		info.setText(MainWindow.bundle.getString("emptyPlaylist"));
 		update(null, null); // Update to initialize the table
 	}
 

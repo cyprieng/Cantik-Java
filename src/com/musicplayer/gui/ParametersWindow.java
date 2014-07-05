@@ -49,7 +49,7 @@ public class ParametersWindow extends JDialog {
 	 */
 	public ParametersWindow() {
 		super(MainWindow.getMainWindow(), true);
-		this.setTitle("Parameters");
+		this.setTitle(MainWindow.bundle.getString("parameters"));
 
 		// Main Panel
 		Container contentPane = getContentPane();
@@ -69,11 +69,11 @@ public class ParametersWindow extends JDialog {
 		musicPath.setLayout(new GridLayout(1, 2));
 		musicPath.setBackground(GUIParameters.LEFTBAR_BACKGROUND);
 		musicPath.setBorder(BorderFactory.createTitledBorder(null,
-				"Music Path", TitledBorder.LEFT, TitledBorder.TOP,
+				MainWindow.bundle.getString("musicPath"), TitledBorder.LEFT, TitledBorder.TOP,
 				GUIParameters.getLeftFont(), Color.white));
 		{
 			// Label for the path
-			JLabel pathLabel = new LeftbarJLabel("Music path: ");
+			JLabel pathLabel = new LeftbarJLabel(MainWindow.bundle.getString("musicPath") + ":");
 			pathLabel.setBorder(new EmptyBorder(10, 10, 10, 0));
 			musicPath.add(pathLabel);
 
@@ -108,9 +108,9 @@ public class ParametersWindow extends JDialog {
 
 			// Button text
 			if (ConfigFileParser.getConfigFileParser().getParams("lastfm_session") != null) {
-				lastfmButton.setText("Logged in");
+				lastfmButton.setText(MainWindow.bundle.getString("loggedIn"));
 			} else {
-				lastfmButton.setText("Authenticate");
+				lastfmButton.setText(MainWindow.bundle.getString("authenticate"));
 			}
 
 			lastfmButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -138,7 +138,7 @@ public class ParametersWindow extends JDialog {
 									String lastfm_session = Scrobbler.getSession(token); // Get key session
 
 									// Show that we are logged in
-									lastfmButton.setText("Logged in");
+									lastfmButton.setText(MainWindow.bundle.getString("loggedIn"));
 
 									// Save lastfm key
 									ConfigFileParser.getConfigFileParser().setParam("lastfm_session", lastfm_session);
@@ -149,7 +149,7 @@ public class ParametersWindow extends JDialog {
 									}
 								} catch (ScrobblerException e1) {
 									// Unable to connect
-									lastfmButton.setText("Error");
+									lastfmButton.setText(MainWindow.bundle.getString("error"));
 								}
 
 								window.removeWindowFocusListener(this); // Disable listener
@@ -195,7 +195,7 @@ public class ParametersWindow extends JDialog {
 				File f = new File(path.getText());
 				if (!f.exists() || !f.isDirectory()) {
 					// Invalid folder
-					error.setText("Invalid folder name");
+					error.setText(MainWindow.bundle.getString("invalidFolderName"));
 					window.pack();
 				} else {
 					// Get configuration

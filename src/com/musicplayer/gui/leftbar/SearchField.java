@@ -2,6 +2,7 @@ package com.musicplayer.gui.leftbar;
 
 import com.musicplayer.core.Log;
 import com.musicplayer.gui.GUIParameters;
+import com.musicplayer.gui.MainWindow;
 import com.musicplayer.gui.centralarea.musiclibrary.MusicLibraryView;
 
 import javax.imageio.ImageIO;
@@ -114,7 +115,7 @@ public class SearchField extends JTextField {
 			Graphics2D g2 = (Graphics2D) g.create();
 			g2.setColor(GUIParameters.BORDER);
 			g2.setFont(getFont().deriveFont(Font.ITALIC));
-			g2.drawString("Search", 30, 20);
+			g2.drawString(MainWindow.bundle.getString("search"), 30, 20);
 			g2.dispose();
 		}
 	}

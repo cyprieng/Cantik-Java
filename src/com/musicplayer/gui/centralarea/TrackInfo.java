@@ -2,6 +2,7 @@ package com.musicplayer.gui.centralarea;
 
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.gui.GUIParameters;
+import com.musicplayer.gui.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +36,7 @@ public class TrackInfo extends CentralArea implements Observer {
 		add(lyric, true, false);
 
 		// Show info msg
-		info.setText("No song");
+		info.setText(MainWindow.bundle.getString("noSong"));
 		showInfo();
 	}
 
@@ -48,21 +49,21 @@ public class TrackInfo extends CentralArea implements Observer {
 				hideInfo();
 				lyric.setText("<html><style type='text/css'>html { font-family: '"
 						+ f.getFamily()
-						+ "'; font-size:20px;} </style><h1>Lyric</h1>"
+						+ "'; font-size:20px;} </style><h1>" + MainWindow.bundle.getString("lyric") + "</h1>"
 						+ Playlist.getPlaylist().getCurrentSong().getLyric()
 						.replaceAll("\n", "<br>") + "<html>");
 			} else { //No lyric
 				lyric.setText("");
 
 				// Show info msg
-				info.setText("No lyric");
+				info.setText(MainWindow.bundle.getString("noLyric"));
 				showInfo();
 			}
 		} else { // No song
 			lyric.setText("");
 
 			// Show info msg
-			info.setText("No song");
+			info.setText(MainWindow.bundle.getString("noSong"));
 			showInfo();
 		}
 	}

@@ -8,6 +8,7 @@ import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.core.song.Song;
 import com.musicplayer.gui.CustomScrollBar;
 import com.musicplayer.gui.GUIParameters;
+import com.musicplayer.gui.MainWindow;
 import com.musicplayer.gui.centralarea.CentralArea;
 import com.musicplayer.gui.centralarea.CustomTableHeader;
 import org.jdesktop.swingx.JXTreeTable;
@@ -168,7 +169,7 @@ public class MusicLibraryView extends CentralArea implements Observer {
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR)); // Load cursor
 
 				// Show wait msg
-				info.setText("Loading library...");
+				info.setText(MainWindow.bundle.getString("loadingLibrary"));
 				showInfo();
 
 				// Get library
@@ -216,7 +217,7 @@ public class MusicLibraryView extends CentralArea implements Observer {
 				// Test empty library
 				if (tree.getRowCount() == 0) {
 					// Show info msg
-					info.setText("No library");
+					info.setText(MainWindow.bundle.getString("noLibrary"));
 					showInfo();
 				}
 			}
