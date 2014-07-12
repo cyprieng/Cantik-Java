@@ -115,25 +115,25 @@ public class Song implements Serializable {
 	 */
 	public String getLyric() {
 		if (this.lyric == "") { // No ID3 tag value
-			String lyric = "";
+			StringBuilder lyric = new StringBuilder();
 			try {
 				// Get lyric from API
 				URL url = new URL("http://api.ntag.fr/lyrics/?artist="
 						+ this.artist + "&title=" + this.title);
+
 				BufferedReader in = new BufferedReader(new InputStreamReader(
-						url.openStream()));
+						url.openStream(), "UTF-8"));
 				String str;
 				while ((str = in.readLine()) != null) {
-					lyric += str + "\n";
+					lyric.append(str).append("\r\n");
 				}
 				in.close();
 			} catch (IOException e) {
 				Log.addEntry(e);
 			}
 
-			this.lyric = lyric; // Store lyric for next time
-			return lyric;
-
+			this.lyric = lyric.toString(); // Store lyric for next time
+			return lyric.toString();
 		} else { // Return ID3 tag value
 			return this.lyric;
 		}

@@ -39,10 +39,8 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 												  boolean sel, boolean expanded, boolean leaf, int row,
 												  boolean hasFocus) {
 
-
 		super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf,
 				row, hasFocus);
-
 
 		// Get node
 		final DefaultMutableTreeTableNode node = (DefaultMutableTreeTableNode) value;
