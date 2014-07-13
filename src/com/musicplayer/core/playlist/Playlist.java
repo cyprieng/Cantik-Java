@@ -45,6 +45,11 @@ public class Playlist extends Observable implements Observer {
 	private RepeatState repeat;
 
 	/**
+	 * Index of the stop after track
+	 */
+	private int stopTrack;
+
+	/**
 	 * Constructor of Playlist. Init witch an empty songList
 	 */
 	private Playlist() {
@@ -52,6 +57,7 @@ public class Playlist extends Observable implements Observer {
 		this.currentTrack = 0;
 		this.random = false;
 		this.repeat = RepeatState.OFF;
+		this.stopTrack = -1;
 	}
 
 	/**
@@ -246,6 +252,13 @@ public class Playlist extends Observable implements Observer {
 		if (this.repeat == RepeatState.SONG) { // Repeat song
 			this.play(this.currentTrack);
 		} else {
+			if (stopTrack == currentTrack) { // Check stop track
+				if (this.player != null)
+					this.player.stop();
+
+				return;
+			}
+
 			if (random) { // Random song
 				this.play((int) (Math.random() * (this.songList.size() + 1)));
 			} else {
@@ -394,6 +407,16 @@ public class Playlist extends Observable implements Observer {
 		}
 
 		return PlayerState.STOPPED; // Default answer
+	}
+
+	/**
+	 * Set the stop after track
+	 *
+	 * @param i
+	 * 		Id of the song
+	 */
+	public void setStopTrack(int i) {
+		stopTrack = i;
 	}
 
 	@Override
