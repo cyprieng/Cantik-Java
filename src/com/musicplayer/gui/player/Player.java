@@ -33,10 +33,16 @@ public class Player extends JPanel implements Observer {
 		setBackground(Color.BLACK);
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-		Border empty = new EmptyBorder(0, 75, 0, 0);
+		Border empty;
+
+		// Reduce
+		Reduce reduce = new Reduce();
+		empty = new EmptyBorder(5, 5, 79, 0);
+		reduce.setBorder(empty);
 
 		// Previous
 		Previous previous = new Previous();
+		empty = new EmptyBorder(0, 75, 0, 0);
 		previous.setBorder(empty);
 
 		// Play
@@ -85,6 +91,7 @@ public class Player extends JPanel implements Observer {
 		repeat.setBorder(empty);
 
 		// Add all component
+		add(reduce);
 		add(previous);
 		add(play);
 		add(next);
