@@ -37,12 +37,12 @@ public class Player extends JPanel implements Observer {
 
 		// Reduce
 		Reduce reduce = new Reduce();
-		empty = new EmptyBorder(5, 5, 79, 0);
+		empty = new EmptyBorder(5, 5, 88, 0);
 		reduce.setBorder(empty);
 
 		// Previous
 		Previous previous = new Previous();
-		empty = new EmptyBorder(0, 75, 0, 0);
+		empty = new EmptyBorder(0, 58, 0, 0);
 		previous.setBorder(empty);
 
 		// Play
