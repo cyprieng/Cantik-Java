@@ -1,7 +1,9 @@
 package com.musicplayer.gui.player;
 
 import com.musicplayer.core.Log;
+import com.musicplayer.core.musiclibrary.ArtistInfo;
 import com.musicplayer.core.playlist.Playlist;
+import com.musicplayer.core.song.Song;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -37,19 +39,31 @@ public class Cover extends JLabel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (Playlist.getPlaylist().getCurrentSong() == null
-				|| Playlist.getPlaylist().getCurrentSong().getCover() == null)
-			// Default cover
-			try {
-				this.setIcon(new ImageIcon(ImageIO.read(new File(
-						"assets/img/cover.png"))));
-			} catch (IOException e) {
-				Log.addEntry(e);
-			}
-		else
-			// Song cover
-			this.setIcon(new ImageIcon(Playlist.getPlaylist().getCurrentSong()
-					.getCover().getScaledInstance(86, 86, Image.SCALE_SMOOTH)));
-	}
+		// Default icon
+		ImageIcon ii = new ImageIcon();
+		try {
+			ii = new ImageIcon(ImageIO.read(new File(
+					"assets/img/cover.png")));
+		} catch (IOException e) {
+			Log.addEntry(e);
+		}
 
+		if (Playlist.getPlaylist().getCurrentSong() != null) { // There is a song playing
+			if (Playlist.getPlaylist().getCurrentSong().getCover() == null) {
+				// Get from web
+				Song s = Playlist.getPlaylist().getCurrentSong();
+
+				if (ArtistInfo.getAlbumImage(s.getArtist(), s.getAlbum()) != null)
+					ii = new ImageIcon(ArtistInfo.getAlbumImage(s.getArtist(), s.getAlbum())
+							.getScaledInstance(86, 86, Image.SCALE_SMOOTH));
+			} else {
+				// Song cover
+				ii = new ImageIcon(Playlist.getPlaylist().getCurrentSong()
+						.getCover().getScaledInstance(86, 86, Image.SCALE_SMOOTH));
+			}
+		}
+
+		// Set icon
+		this.setIcon(ii);
+	}
 }
