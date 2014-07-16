@@ -20,18 +20,22 @@ import java.io.IOException;
  */
 public class Reduce extends JButton {
 	/**
+	 * Dimension use to reset the size
+	 */
+	private static Dimension lastDim;
+
+	/**
+	 * Main Window
+	 */
+	private static JFrame window = MainWindow.getMainWindow();
+
+	/**
 	 * Constructor: init image and action
 	 */
 	public Reduce() {
 		super();
 
-		// Set icon
-		try {
-			BufferedImage img = ImageIO.read(new File("assets/img/reduce.png"));
-			this.setIcon(new ImageIcon(img));
-		} catch (IOException e) {
-			Log.addEntry(e);
-		}
+		setIcon("assets/img/reduce.png");
 
 		// Disable border
 		Border emptyBorder = BorderFactory.createEmptyBorder();
@@ -39,15 +43,75 @@ public class Reduce extends JButton {
 
 		setBackground(Color.BLACK);
 
-		// Add onclick event
-		this.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// Set size
-				JFrame window = MainWindow.getMainWindow();
-				window.setSize(new Dimension(window.getWidth(),
-						105 + (window.getHeight() - window.getContentPane().getHeight())));
+		this.addActionListener(new ReduceClick());
+	}
+
+	/**
+	 * Change the icon of the button
+	 *
+	 * @param imgPath
+	 * 		The new icon to set
+	 */
+	public void setIcon(String imgPath) {
+		try {
+			BufferedImage img = ImageIO.read(new File(imgPath));
+			this.setIcon(new ImageIcon(img));
+		} catch (IOException e) {
+			Log.addEntry(e);
+		}
+	}
+
+	/**
+	 * Reduce the window
+	 *
+	 * @author cyprien
+	 */
+	private static class ReduceClick implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// Change size and behavior
+			lastDim = window.getSize();
+			window.setResizable(false);
+			window.setAlwaysOnTop(true);
+			window.setSize(new Dimension(window.getWidth(),
+					105 + window.getInsets().top + window.getInsets().bottom));
+
+			// Delete other event
+			for (ActionListener al : ((JButton) e.getSource())
+					.getActionListeners()) {
+				((JButton) e.getSource()).removeActionListener(al);
 			}
-		});
+
+			((JButton) e.getSource()).addActionListener(new MaxiClick()); // Change event
+
+			((Reduce) e.getSource()).setIcon("assets/img/maxi.png"); // Change icon
+		}
+
+	}
+
+	/**
+	 * Reset the window
+	 *
+	 * @author cyprien
+	 */
+	private static class MaxiClick implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// Reset window
+			window.setResizable(true);
+			window.setAlwaysOnTop(false);
+			window.setSize(lastDim);
+
+			// Delete other event
+			for (ActionListener al : ((JButton) e.getSource())
+					.getActionListeners()) {
+				((JButton) e.getSource()).removeActionListener(al);
+			}
+
+			((JButton) e.getSource()).addActionListener(new ReduceClick()); // Change event
+
+			((Reduce) e.getSource()).setIcon("assets/img/reduce.png"); // Change icon
+		}
+
 	}
 }
