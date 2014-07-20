@@ -3,6 +3,7 @@ package com.updater;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -116,7 +117,12 @@ public class Main {
 		} catch (Exception e) {
 		}
 
+		// Create JFrame
 		JFrame frame = new JFrame("Updating");
+		try {
+			frame.setIconImage(ImageIO.read(new File("assets/icon.png")));
+		} catch (IOException e) {
+		}
 
 		// Progress bar
 		JProgressBar progressBar = new JProgressBar();
