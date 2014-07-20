@@ -142,7 +142,6 @@ public class MusicLibrary extends Observable implements Runnable {
 	 * 		Folder to scan
 	 */
 	public void scanFolder(File folder) {
-		Log.addEntry(folder.getAbsolutePath());
 		if (folder.isFile()) { // It is a file
 			try {
 				this.addSong(new Song(folder.getAbsolutePath())); // Add the song
