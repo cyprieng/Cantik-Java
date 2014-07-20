@@ -120,7 +120,7 @@ public class Main {
 		// Create JFrame
 		JFrame frame = new JFrame("Updating");
 		try {
-			frame.setIconImage(ImageIO.read(new File("assets/icon.png")));
+			frame.setIconImage(ImageIO.read(new File("cantik.png")));
 		} catch (IOException e) {
 		}
 
