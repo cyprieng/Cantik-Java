@@ -17,10 +17,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -83,6 +80,39 @@ public class ParametersWindow extends JDialog {
 			path.setBorder(BorderFactory.createMatteBorder(10, 0, 10, 10,
 					musicPath.getBackground()));
 			musicPath.add(path);
+
+			// Show folder chooser
+			path.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// Use the system look and feel
+					try {
+						UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					} catch (ClassNotFoundException | InstantiationException
+							| IllegalAccessException | UnsupportedLookAndFeelException e2) {
+						Log.addEntry(e2);
+					}
+
+					// Create folder chooser
+					final JFileChooser fc = new JFileChooser();
+					fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+					// Reset default look and feel
+					try {
+						UIManager.setLookAndFeel(UIManager
+								.getCrossPlatformLookAndFeelClassName());
+					} catch (ClassNotFoundException | InstantiationException
+							| IllegalAccessException | UnsupportedLookAndFeelException e2) {
+						Log.addEntry(e2);
+					}
+
+					// Fill path with selected folder
+					int returnVal = fc.showOpenDialog(MainWindow.getMainWindow());
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						path.setText(fc.getSelectedFile().getAbsolutePath());
+					}
+				}
+			});
 		}
 		form.add(musicPath);
 
