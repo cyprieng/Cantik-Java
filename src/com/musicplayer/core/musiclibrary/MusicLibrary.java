@@ -98,7 +98,7 @@ public class MusicLibrary extends Observable implements Runnable {
 		try {
 			// Get library from file
 			this.library = (Map<String, Map<String, Set<Song>>>) ObjectFileWriter
-					.get(new File(Core.getUserPath() + "library"));
+					.get(new File(Core.getUserPath() + "cantik.library"));
 
 			// Library is ready
 			synchronized (this) {
@@ -178,7 +178,7 @@ public class MusicLibrary extends Observable implements Runnable {
 		try {
 			// Store library in file
 			ObjectFileWriter.store(this.library, new File(Core.getUserPath()
-					+ "library"));
+					+ "cantik.library"));
 		} catch (Exception e) {
 			Log.addEntry(e);
 		}

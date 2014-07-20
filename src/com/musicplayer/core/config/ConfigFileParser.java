@@ -32,12 +32,12 @@ public class ConfigFileParser {
 		params = new HashMap<String, String>();
 
 		// Test file
-		File configFile = new File(Core.getUserPath() + "config");
+		File configFile = new File(Core.getUserPath() + "cantik.config");
 		if (configFile.exists() && configFile.isFile()) {
 			try {
 				// Read config file
 				BufferedReader br = new BufferedReader(new InputStreamReader(
-						new FileInputStream(Core.getUserPath() + "config")));
+						new FileInputStream(Core.getUserPath() + "cantik.config")));
 
 				String str;
 				while ((str = br.readLine()) != null) {
