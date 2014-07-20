@@ -16,6 +16,8 @@ import java.nio.channels.ReadableByteChannel;
  * @author cyprien
  */
 public class Main {
+	private static final String thisPath = "cantik.exe";
+
 	/**
 	 * URL of the info file which contain the timestamp of the release
 	 */
@@ -72,6 +74,15 @@ public class Main {
 				File zip = new File(projectPath + ".zip");
 				zip.delete();
 			} catch (java.io.IOException e) {
+				if (System.getProperty("os.name").toLowerCase().contains("win")) {
+					// We try to run as admin
+					w.dispose();
+					try {
+						Runtime.getRuntime().exec("Elevate.exe " + thisPath);
+					} catch (IOException e1) {
+					}
+					return;
+				}
 			}
 
 			w.dispose(); //Close window
