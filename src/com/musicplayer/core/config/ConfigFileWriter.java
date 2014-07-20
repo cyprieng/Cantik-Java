@@ -24,7 +24,7 @@ public class ConfigFileWriter {
 	public static void writeConfigFile() throws Exception {
 		// Open config file
 		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(
-				Core.getUserPath() + "config")));
+				Core.getUserPath() + "cantik.config")));
 
 		// Run through the hashmap of ConfigFileParser
 		HashMap<String, String> params = ConfigFileParser.getConfigFileParser()
