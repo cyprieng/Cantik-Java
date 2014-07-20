@@ -45,8 +45,6 @@ public class MusicLibrary extends Observable implements Runnable {
 	 * Constructor which only init library var
 	 */
 	protected MusicLibrary() {
-		t = new Thread(this);
-		t.setName("MusicLibrary");
 		this.library = new TreeMap<String, Map<String, Set<Song>>>(new CaseInsensitiveComparator());
 		this.ready = false;
 	}
@@ -108,10 +106,11 @@ public class MusicLibrary extends Observable implements Runnable {
 		} catch (Exception e) {
 			Log.addEntry(e);
 		} finally {
-			if (!t.isAlive()) {
-				// Start the thread => scan the library
-				t.start();
-			}
+			t = new Thread(this);
+			t.setName("MusicLibrary");
+
+			// Start the thread => scan the library
+			t.start();
 		}
 	}
 
@@ -143,6 +142,7 @@ public class MusicLibrary extends Observable implements Runnable {
 	 * 		Folder to scan
 	 */
 	public void scanFolder(File folder) {
+		Log.addEntry(folder.getAbsolutePath());
 		if (folder.isFile()) { // It is a file
 			try {
 				this.addSong(new Song(folder.getAbsolutePath())); // Add the song

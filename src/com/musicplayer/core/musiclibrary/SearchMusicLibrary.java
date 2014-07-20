@@ -29,6 +29,8 @@ public class SearchMusicLibrary extends MusicLibrary {
 	public SearchMusicLibrary(String query) {
 		super();
 		this.query = query.toLowerCase();
+		t = new Thread(this);
+		t.setName("MusicLibrary");
 		t.start();
 	}
 
