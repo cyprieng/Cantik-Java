@@ -16,6 +16,11 @@ public class LeftBar extends JPanel {
 	private static final long serialVersionUID = -2680840975440683979L;
 
 	/**
+	 * Store the search field
+	 */
+	private JTextField search;
+
+	/**
 	 * Add all elements
 	 */
 	public LeftBar() {
@@ -28,7 +33,7 @@ public class LeftBar extends JPanel {
 		searchWrap.setPreferredSize(new Dimension(250, 60));
 		searchWrap.setMaximumSize(searchWrap.getPreferredSize());
 		searchWrap.setMinimumSize(searchWrap.getPreferredSize());
-		SearchField search = new SearchField();
+		search = new SearchField();
 		search.setAlignmentX(Component.CENTER_ALIGNMENT);
 		searchWrap.add(search);
 		Border empty = new EmptyBorder(20, 0, 0, 0);
@@ -54,5 +59,14 @@ public class LeftBar extends JPanel {
 
 		this.add(new Item("Settings"));
 		this.add(new Separator());
+	}
+
+	/**
+	 * Get the search field
+	 *
+	 * @return JTextField
+	 */
+	public JTextField getSearch() {
+		return search;
 	}
 }

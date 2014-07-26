@@ -42,6 +42,11 @@ public class MainWindow {
 	private static JPanel centralArea;
 
 	/**
+	 * Store the left bar
+	 */
+	private static LeftBar leftBar;
+
+	/**
 	 * Store the current and the previous card shown
 	 */
 	private static String cardShown = "Library", previousCardShown;
@@ -75,7 +80,8 @@ public class MainWindow {
 		centralArea.add(new ParametersView(), "Settings");
 
 		// Add elements
-		container.add(new LeftBar(), BorderLayout.WEST);
+		leftBar = new LeftBar();
+		container.add(leftBar, BorderLayout.WEST);
 		container.add(new Player(), BorderLayout.SOUTH);
 		container.add(centralArea, BorderLayout.CENTER);
 
@@ -145,7 +151,8 @@ public class MainWindow {
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
 			@Override
 			public boolean dispatchKeyEvent(KeyEvent e) {
-				if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_SPACE)
+				if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_SPACE
+						&& !leftBar.getSearch().isFocusOwner())
 					Playlist.getPlaylist().playPause();
 
 				return false;
