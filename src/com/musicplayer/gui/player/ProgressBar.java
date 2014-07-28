@@ -44,6 +44,7 @@ public class ProgressBar extends JSlider implements Observer {
 	public ProgressBar() {
 		super(0, 100);
 		setValue(0);
+		setEnabled(false);
 
 		Playlist.getPlaylist().addObserver(this);
 		playing = false;
@@ -89,6 +90,7 @@ public class ProgressBar extends JSlider implements Observer {
 			Song s = Playlist.getPlaylist().getCurrentSong();
 			setMaximum(s.getDuration());
 			setValue(0);
+			setEnabled(true);
 		}
 
 		if (Playlist.getPlaylist().getPlayerState() == PlayerState.PLAYING
@@ -126,6 +128,7 @@ public class ProgressBar extends JSlider implements Observer {
 				} catch (Exception e) {
 				}
 			}
+			setEnabled(false);
 			playing = false;
 		}
 	}

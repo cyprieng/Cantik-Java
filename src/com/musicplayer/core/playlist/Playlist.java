@@ -193,10 +193,14 @@ public class Playlist extends Observable implements Observer {
 	 * Start playing the playlist
 	 */
 	public void play() {
+		if (songList.size() == 0)
+			// Nothing to play
+			return;
+
 		if (this.player != null && this.player.getState() == PlayerState.PAUSED)
 			// Player paused => resume
 			this.player.play();
-		else
+		else if (currentTrack >= 0)
 			// Start the current song
 			this.play(currentTrack);
 

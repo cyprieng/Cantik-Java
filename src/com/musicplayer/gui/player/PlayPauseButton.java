@@ -67,6 +67,10 @@ public class PlayPauseButton extends JButton implements Observer {
 		public void actionPerformed(ActionEvent e) {
 			Playlist.getPlaylist().play(); // Play
 
+			// Check if player is playing
+			if (Playlist.getPlaylist().getPlayerState() != PlayerState.PLAYING)
+				return;
+
 			// Delete other event
 			for (ActionListener al : ((JButton) e.getSource())
 					.getActionListeners()) {
@@ -90,7 +94,7 @@ public class PlayPauseButton extends JButton implements Observer {
 	private static class PauseClick implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Playlist.getPlaylist().getPlayer().pause(); // Pause
+			Playlist.getPlaylist().playPause(); // Pause
 
 			// Delete other event
 			for (ActionListener al : ((JButton) e.getSource())
