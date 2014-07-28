@@ -16,7 +16,6 @@ import org.jdesktop.swingx.decorator.ColorHighlighter;
 import org.jdesktop.swingx.decorator.ComponentAdapter;
 import org.jdesktop.swingx.decorator.HighlightPredicate;
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
-import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
 import org.jdesktop.swingx.treetable.MutableTreeTableNode;
 
 import javax.imageio.ImageIO;
@@ -38,14 +37,17 @@ import java.util.Observer;
  */
 public class MusicLibraryView extends CentralArea implements Observer {
 	private static final long serialVersionUID = -617334771645897532L;
+
 	/**
 	 * Store the view
 	 */
 	private static MusicLibraryView mlv;
+
 	/**
 	 * Model of the tree table
 	 */
-	private DefaultTreeTableModel model;
+	private CustomTreeTableModel model;
+
 	/**
 	 * The tree table
 	 */
@@ -237,6 +239,7 @@ public class MusicLibraryView extends CentralArea implements Observer {
 		}
 
 		Playlist.getPlaylist().sendNotification(); // Notify changes
+		tree.repaint(); // Repaint
 	}
 
 	/**
