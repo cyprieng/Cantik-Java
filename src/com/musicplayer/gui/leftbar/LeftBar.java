@@ -1,6 +1,7 @@
 package com.musicplayer.gui.leftbar;
 
 import com.musicplayer.gui.GUIParameters;
+import com.musicplayer.gui.MainWindow;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -47,12 +48,12 @@ public class LeftBar extends JPanel {
 		this.add(searchWrap);
 		this.add(new Separator());
 
-		this.add(new CategoryLabel("collection"));
+		this.add(new CategoryLabel(MainWindow.bundle.getString("collection")));
 		this.add(defaultItem);
 		this.add(new Item("Local File"));
 		this.add(new Separator());
 
-		this.add(new CategoryLabel("Now Playing"));
+		this.add(new CategoryLabel(MainWindow.bundle.getString("nowPlaying")));
 		this.add(new Item("Playlist"));
 		this.add(new Item("Info"));
 		this.add(new Separator());

@@ -23,6 +23,9 @@ public class Text_fr extends ListResourceBundle {
 			{"album", "Album"},
 			{"length", "Durée"},
 			{"emptyPlaylist", "Playlist vide"},
+			{"removeFromPlaylist", "Supprimer de la playlist"},
+			{"stopAfter", "Arrêter aprés cette piste"},
+			{"unsetStopAfter", "Supprimer \"arrêter après cette piste\""},
 
 			// Track Info
 			{"noSong", "Pas de piste"},
@@ -43,6 +46,8 @@ public class Text_fr extends ListResourceBundle {
 			{"invalidFolderName", "Dossier non valide"},
 
 			// Leftbar
+			{"collection", "Collection"},
+			{"nowPlaying", "En cours de lecture"},
 			{"Library", "Bibliothèque"},
 			{"Local File", "Fichier local"},
 			{"Playlist", "Playlist"},

@@ -1,6 +1,7 @@
 package com.musicplayer.gui.centralarea.playlistview;
 
 import com.musicplayer.core.playlist.Playlist;
+import com.musicplayer.gui.MainWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -39,7 +40,7 @@ public class PlaylistPopUpMenu extends JPopupMenu {
 		super();
 
 		// Add item "delete"
-		delete = new JMenuItem("Remove from playlist");
+		delete = new JMenuItem(MainWindow.bundle.getString("removeFromPlaylist"));
 		add(delete);
 		delete.addActionListener(new ActionListener() {
 			@Override
@@ -51,7 +52,7 @@ public class PlaylistPopUpMenu extends JPopupMenu {
 		addSeparator();
 
 		// Add item "stop track"
-		stopTrack = new JMenuItem("Stop after this song");
+		stopTrack = new JMenuItem(MainWindow.bundle.getString("stopAfter"));
 		add(stopTrack);
 		stopTrack.addActionListener(new ActionListener() {
 			@Override
@@ -61,7 +62,7 @@ public class PlaylistPopUpMenu extends JPopupMenu {
 		});
 
 		// Add item "unset stop track"
-		stopTrackUnset = new JMenuItem("Unset 'stop after this song'");
+		stopTrackUnset = new JMenuItem(MainWindow.bundle.getString("unsetStopAfter"));
 		add(stopTrackUnset);
 		stopTrackUnset.addActionListener(new ActionListener() {
 			@Override
