@@ -57,7 +57,7 @@ public class PlaylistView extends CentralArea implements Observer {
 			@Override
 			public Component prepareRenderer(TableCellRenderer renderer,
 											 int rowIndex, int vColIndex) {
-				Component c = super.prepareRenderer(renderer, rowIndex,
+				JComponent c = (JComponent) super.prepareRenderer(renderer, rowIndex,
 						vColIndex);
 
 				if (rowIndex == Playlist.getPlaylist().getCurrentTrack()) {
@@ -76,6 +76,11 @@ public class PlaylistView extends CentralArea implements Observer {
 						c.setBackground(GUIParameters.LEFTBAR_BACKGROUND);
 						c.setForeground(Color.WHITE);
 					}
+				}
+
+				// Add line below stop after track
+				if (rowIndex == Playlist.getPlaylist().getStopTrack()) {
+					c.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK));
 				}
 
 				return c;
@@ -206,5 +211,7 @@ public class PlaylistView extends CentralArea implements Observer {
 		if (tableModel.getRowCount() == 0) { // Show text for empty playlist
 			showInfo();
 		}
+
+		table.repaint();
 	}
 }

@@ -421,6 +421,18 @@ public class Playlist extends Observable implements Observer {
 	 */
 	public void setStopTrack(int i) {
 		stopTrack = i;
+
+		setChanged();
+		notifyObservers();
+	}
+
+	/**
+	 * Get the stop track index
+	 *
+	 * @return index of the stop after track
+	 */
+	public int getStopTrack() {
+		return stopTrack;
 	}
 
 	@Override
