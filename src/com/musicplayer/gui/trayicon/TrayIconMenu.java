@@ -66,7 +66,7 @@ public class TrayIconMenu implements Observer {
 
 			// Create a pop-up menu components
 			Playlist.getPlaylist().addObserver(this);
-			artist = new CustomJMenuItem("No song");
+			artist = new CustomJMenuItem(MainWindow.bundle.getString("noSong"));
 			album = new CustomJMenuItem("");
 			title = new CustomJMenuItem("");
 
