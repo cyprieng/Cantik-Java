@@ -92,7 +92,7 @@ public class MusicLibraryView extends CentralArea implements Observer {
 		});
 
 		// Style
-		tree.setTreeCellRenderer(new CustomTreeCellRenderer());
+		tree.setTreeCellRenderer(new CustomTreeCellRenderer(tree));
 		tree.setRowHeight(50);
 		CustomTableHeader.customizeHeader(tree.getTableHeader());
 

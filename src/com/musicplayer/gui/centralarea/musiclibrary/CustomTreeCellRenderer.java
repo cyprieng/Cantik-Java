@@ -2,6 +2,7 @@ package com.musicplayer.gui.centralarea.musiclibrary;
 
 import com.musicplayer.core.musiclibrary.ArtistInfo;
 import com.musicplayer.core.song.Song;
+import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import org.jdesktop.swingx.treetable.DefaultTreeTableModel;
 
@@ -28,14 +29,20 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 	 */
 	private HashMap<DefaultMutableTreeTableNode, Image> artist;
 
-	public CustomTreeCellRenderer() {
+	/**
+	 * JXTreeTable managed by this renderer
+	 */
+	private JXTreeTable treeTable;
+
+	public CustomTreeCellRenderer(JXTreeTable treeTable) {
 		super();
 		cover = new HashMap<DefaultMutableTreeTableNode, Image>();
 		artist = new HashMap<DefaultMutableTreeTableNode, Image>();
+		this.treeTable = treeTable;
 	}
 
 	@Override
-	public Component getTreeCellRendererComponent(JTree tree, Object value,
+	public Component getTreeCellRendererComponent(final JTree tree, Object value,
 												  boolean sel, boolean expanded, boolean leaf, int row,
 												  boolean hasFocus) {
 
@@ -63,6 +70,8 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 							cover.put(node, ArtistInfo.getAlbumImage((String) node
 									.getParent().getUserObject(), (String) nodeInfo));
 							setIcon(new ImageIcon(cover.get(node))); // Change it
+
+							treeTable.repaint(); // Repaint
 						}
 					});
 					t.start();
@@ -81,6 +90,8 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 
 							if (artist.get(node) != null)
 								setIcon(new ImageIcon(artist.get(node))); // Change it
+
+							treeTable.repaint(); // Repaint
 						}
 					});
 					t.start();
