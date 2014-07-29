@@ -245,6 +245,18 @@ public class Song implements Serializable {
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Song song = (Song) o;
+
+		if (!path.equals(song.path)) return false;
+
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		return "Song [path=" + path + ", title=" + title + ", album=" + album
 				+ ", artist=" + artist + ", year=" + year + ", duration="
