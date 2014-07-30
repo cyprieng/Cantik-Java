@@ -27,7 +27,7 @@ public class Main {
 	/**
 	 * URL of the release
 	 */
-	public static final String zipURL = "https://cyprieng.github.io/Cantik/download//cantik.zip";
+	public static final String zipURL = "https://cyprieng.github.io/Cantik/download/cantik.zip";
 
 	/**
 	 * Path of the project (where the zip will be extracted)
@@ -94,6 +94,7 @@ public class Main {
 			final Process proc = new ProcessBuilder(
 					"java",
 					"-jar",
+					"-Xmx180m",
 					f.getAbsolutePath())
 					.directory(new File(projectPath))
 					.start();
