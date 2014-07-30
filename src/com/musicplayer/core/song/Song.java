@@ -257,6 +257,11 @@ public class Song implements Serializable {
 	}
 
 	@Override
+	public int hashCode() {
+		return path.hashCode();
+	}
+
+	@Override
 	public String toString() {
 		return "Song [path=" + path + ", title=" + title + ", album=" + album
 				+ ", artist=" + artist + ", year=" + year + ", duration="

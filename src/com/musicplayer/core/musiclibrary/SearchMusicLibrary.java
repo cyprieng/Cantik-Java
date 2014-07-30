@@ -5,9 +5,6 @@ import com.musicplayer.core.config.ConfigFileParser;
 import com.musicplayer.core.song.Song;
 
 import java.io.File;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 
 /**
  * Music library with a filter
@@ -61,15 +58,8 @@ public class SearchMusicLibrary extends MusicLibrary {
 
 	@Override
 	public void run() {
-		this.libraryTemp = new TreeMap<String, Map<String, Set<Song>>>(new CaseInsensitiveComparator()); // Init
-		// var
-
 		this.scanFolder(new File(ConfigFileParser.getConfigFileParser()
 				.getParams("library"))); // Scan library
-		this.library = this.libraryTemp; // Set the library value to the
-		// temporary one
-
-		this.libraryTemp = null; // Destroy the temporary library
 
 		// Library is ready
 		synchronized (this) {

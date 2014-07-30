@@ -24,7 +24,7 @@ public class MusicLibrary extends Observable implements Runnable {
 	/**
 	 * Structure storing the music library and the temporary one
 	 */
-	protected Map<String, Map<String, Set<Song>>> library, libraryTemp;
+	protected Map<String, Map<String, Set<Song>>> library;
 
 	/**
 	 * Mark if the music library is ready
@@ -121,18 +121,19 @@ public class MusicLibrary extends Observable implements Runnable {
 	 * 		Song to add to the library
 	 */
 	public void addSong(Song song) {
-		if (!libraryTemp.containsKey(song.getArtist())) { // Artist does not exist => create artist
-			libraryTemp.put(song.getArtist(), new TreeMap<String, Set<Song>>(new CaseInsensitiveComparator()));
+		if (!library.containsKey(song.getArtist())) { // Artist does not exist => create artist
+			library.put(song.getArtist(), new TreeMap<String, Set<Song>>(new CaseInsensitiveComparator()));
 		}
-		if (!((Map<String, Set<Song>>) libraryTemp.get(song.getArtist()))
+		if (!((Map<String, Set<Song>>) library.get(song.getArtist()))
 				.containsKey(song.getAlbum())) { // Album does not exist => create album
-			((Map<String, Set<Song>>) libraryTemp.get(song.getArtist())).put(
+			((Map<String, Set<Song>>) library.get(song.getArtist())).put(
 					song.getAlbum(), new HashSet<Song>());
 		}
 
-		// Create song
-		((Set<Song>) ((Map<String, Set<Song>>) libraryTemp
-				.get(song.getArtist())).get(song.getAlbum())).add(song);
+		if (!this.getSongs(song.getArtist(), song.getAlbum()).contains(song))
+			// Create song if it does not exist
+			((Set<Song>) ((Map<String, Set<Song>>) library
+					.get(song.getArtist())).get(song.getAlbum())).add(song);
 	}
 
 	/**
@@ -163,10 +164,7 @@ public class MusicLibrary extends Observable implements Runnable {
 	 * Thread run function => scan the folder and store it in a file
 	 */
 	public void run() {
-		this.libraryTemp = new TreeMap<String, Map<String, Set<Song>>>(new CaseInsensitiveComparator()); // Init var
 		this.scanFolder(new File(this.libraryPath)); // Scan library
-		this.library = this.libraryTemp; // Set the library value to the temporary one
-		this.libraryTemp = null; // Destroy the temporary library
 
 		// Library is ready
 		synchronized (this) {
