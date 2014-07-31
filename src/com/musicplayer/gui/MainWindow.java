@@ -1,5 +1,6 @@
 package com.musicplayer.gui;
 
+import com.musicplayer.core.Core;
 import com.musicplayer.core.Log;
 import com.musicplayer.core.config.ConfigFileParser;
 import com.musicplayer.core.musiclibrary.InvalidPathException;
@@ -139,12 +140,12 @@ public class MainWindow {
 		UIManager.getLookAndFeelDefaults().put("defaultFont", GUIParameters.getFont());
 		getMainWindow();
 
-		String OS = System.getProperty("os.name").toLowerCase();
+		String OS = Core.getOS();
 
 		// Load hotkeys
-		if (OS.contains("win"))
+		if (OS.equals("windows"))
 			new WindowsHotkeys();
-		else if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix"))
+		else if (OS.equals("linux"))
 			new LinuxHotkeys();
 
 		// Add keyboard shortcut: SPACE => Play / Pause
