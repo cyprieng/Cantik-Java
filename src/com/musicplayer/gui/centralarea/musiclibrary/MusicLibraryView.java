@@ -113,8 +113,8 @@ public class MusicLibraryView extends CentralArea implements Observer {
 		tree.setSelectionForeground(Color.WHITE);
 
 		// Icon
-		tree.setOpenIcon(new ImageIcon(ArtistInfo.getDefaultArtistImage()));
-		tree.setClosedIcon(new ImageIcon(ArtistInfo.getDefaultArtistImage()));
+		tree.setOpenIcon(ArtistInfo.getDefaultArtistImage());
+		tree.setClosedIcon(ArtistInfo.getDefaultArtistImage());
 		tree.setLeafIcon(null);
 
 		try {

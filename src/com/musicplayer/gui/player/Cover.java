@@ -40,27 +40,13 @@ public class Cover extends JLabel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		// Default icon
-		ImageIcon ii = new ImageIcon();
-		try {
-			ii = new ImageIcon(ImageIO.read(new File(
-					"assets/img/cover.png")));
-		} catch (IOException e) {
-			Log.addEntry(e);
-		}
+		ImageIcon ii = ArtistInfo.getDefaultAlbumImage();
 
 		if (Playlist.getPlaylist().getCurrentSong() != null) { // There is a song playing
-			if (Playlist.getPlaylist().getCurrentSong().getCover() == null) {
-				// Get from web
-				Song s = Playlist.getPlaylist().getCurrentSong();
+			Song s = Playlist.getPlaylist().getCurrentSong();
 
-				if (ArtistInfo.getAlbumImage(s.getArtist(), s.getAlbum()) != null)
-					ii = new ImageIcon(ArtistInfo.getAlbumImage(s.getArtist(), s.getAlbum())
-							.getScaledInstance(86, 86, Image.SCALE_SMOOTH));
-			} else {
-				// Song cover
-				ii = new ImageIcon(Playlist.getPlaylist().getCurrentSong()
-						.getCover().getScaledInstance(86, 86, Image.SCALE_SMOOTH));
-			}
+			if (ArtistInfo.getAlbumImage(s.getArtist(), s.getAlbum()) != null)
+				ii = ArtistInfo.getAlbumImage(s.getArtist(), s.getAlbum(), new Dimension(86, 86));
 		}
 
 		// Set icon

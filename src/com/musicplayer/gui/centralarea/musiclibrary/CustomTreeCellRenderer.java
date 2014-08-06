@@ -22,12 +22,12 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 	/**
 	 * Store connection between album node and cover image
 	 */
-	private HashMap<DefaultMutableTreeTableNode, Image> cover;
+	private HashMap<DefaultMutableTreeTableNode, ImageIcon> cover;
 
 	/**
 	 * Store connection beetwen artist node and image
 	 */
-	private HashMap<DefaultMutableTreeTableNode, Image> artist;
+	private HashMap<DefaultMutableTreeTableNode, ImageIcon> artist;
 
 	/**
 	 * JXTreeTable managed by this renderer
@@ -36,8 +36,8 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 
 	public CustomTreeCellRenderer(JXTreeTable treeTable) {
 		super();
-		cover = new HashMap<DefaultMutableTreeTableNode, Image>();
-		artist = new HashMap<DefaultMutableTreeTableNode, Image>();
+		cover = new HashMap<DefaultMutableTreeTableNode, ImageIcon>();
+		artist = new HashMap<DefaultMutableTreeTableNode, ImageIcon>();
 		this.treeTable = treeTable;
 	}
 
@@ -58,9 +58,9 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 					&& node.getParent() != null) {
 				// Album cover
 				if (cover.get(node) != null) { // Cover has already been loaded
-					setIcon(new ImageIcon(cover.get(node)));
+					setIcon(cover.get(node));
 				} else { // Get cover
-					setIcon(new ImageIcon(ArtistInfo.getDefaultAlbumImage())); // Set to default
+					setIcon((ArtistInfo.getDefaultAlbumImage())); // Set to default
 
 					// Start a thread to get the real cover
 					Thread t = new Thread(new Runnable() {
@@ -69,7 +69,7 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 							// Store the cover
 							cover.put(node, ArtistInfo.getAlbumImage((String) node
 									.getParent().getUserObject(), (String) nodeInfo));
-							setIcon(new ImageIcon(cover.get(node))); // Change it
+							setIcon(cover.get(node)); // Change it
 
 							treeTable.repaint(); // Repaint
 						}
@@ -78,7 +78,7 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 				}
 			} else { // Artist image
 				if (artist.get(node) != null) { // Image has already been loaded
-					setIcon(new ImageIcon(artist.get(node)));
+					setIcon(artist.get(node));
 				} else { // Get image
 					// Start a thread to get the image
 					Thread t = new Thread(new Runnable() {
@@ -89,7 +89,7 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 									.getUserObject()));
 
 							if (artist.get(node) != null)
-								setIcon(new ImageIcon(artist.get(node))); // Change it
+								setIcon(artist.get(node)); // Change it
 
 							treeTable.repaint(); // Repaint
 						}

@@ -3,6 +3,7 @@ package com.musicplayer.gui;
 import com.musicplayer.core.Core;
 import com.musicplayer.core.Log;
 import com.musicplayer.core.config.ConfigFileParser;
+import com.musicplayer.core.musiclibrary.ArtistInfo;
 import com.musicplayer.core.musiclibrary.InvalidPathException;
 import com.musicplayer.core.musiclibrary.MusicLibrary;
 import com.musicplayer.core.playlist.Playlist;
@@ -21,6 +22,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -89,6 +92,14 @@ public class MainWindow {
 		// Size and maximized
 		window.setPreferredSize(new Dimension(1024, 768));
 		window.setExtendedState(window.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+
+		// Save cover when closing
+		window.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				ArtistInfo.save();
+			}
+		});
 
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.pack();

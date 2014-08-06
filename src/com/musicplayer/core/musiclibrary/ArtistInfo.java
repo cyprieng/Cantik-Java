@@ -1,6 +1,8 @@
 package com.musicplayer.core.musiclibrary;
 
+import com.musicplayer.core.Core;
 import com.musicplayer.core.Log;
+import com.musicplayer.core.config.ObjectFileWriter;
 import com.musicplayer.core.scrobbler.ScrobblerConfig;
 import com.musicplayer.core.song.Song;
 import de.umass.lastfm.Album;
@@ -8,6 +10,7 @@ import de.umass.lastfm.Artist;
 import de.umass.lastfm.ImageSize;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -25,35 +28,48 @@ public class ArtistInfo {
 	/**
 	 * Store albums cover
 	 */
-	private static HashMap<String, Image> albumCover = new HashMap<String, Image>();
+	private static HashMap<String, ImageIcon> albumCover = new HashMap<String, ImageIcon>();
 
 	/**
 	 * Store artists img
 	 */
-	private static HashMap<String, Image> artistImg = new HashMap<String, Image>();
+	private static HashMap<String, ImageIcon> artistImg = new HashMap<String, ImageIcon>();
 
 	/**
 	 * Default artist image
 	 */
-	private static Image defaultArtistImage;
+	private static ImageIcon defaultArtistImage;
 
 	/**
 	 * Default album image
 	 */
-	private static Image defaultAlbumImage;
+	private static ImageIcon defaultAlbumImage;
+
+	// Retrieve cover from file
+	static {
+		try {
+			albumCover = (HashMap<String, ImageIcon>) ObjectFileWriter.get(new File(Core.getUserPath()
+					+ "albumcover"));
+
+			artistImg = (HashMap<String, ImageIcon>) ObjectFileWriter.get(new File(Core.getUserPath()
+					+ "artistimg"));
+		} catch (Exception e) {
+			Log.addEntry(e);
+		}
+	}
 
 	/**
 	 * Get the default image for an artist
 	 *
 	 * @return the Image
 	 */
-	public static Image getDefaultArtistImage() {
+	public static ImageIcon getDefaultArtistImage() {
 		if (defaultArtistImage != null)
 			return defaultArtistImage;
 
 		try {
 			// Load and store image
-			defaultArtistImage = ImageIO.read(new File("assets/img/person.png"));
+			defaultArtistImage = new ImageIcon(ImageIO.read(new File("assets/img/person.png")));
 			return defaultArtistImage;
 		} catch (IOException e) {
 			Log.addEntry(e);
@@ -68,7 +84,7 @@ public class ArtistInfo {
 	 * 		Name of the artist
 	 * @return The Image
 	 */
-	public static Image getArtistImage(String artist) {
+	public static ImageIcon getArtistImage(String artist) {
 		if (artistImg.get(artist) != null)
 			return artistImg.get(artist);
 
@@ -80,12 +96,14 @@ public class ArtistInfo {
 
 			// Load and store image
 			URL url = new URL(imgURL);
-			Image image = ImageIO.read(url).getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+			ImageIcon image = new ImageIcon(ImageIO.read(url).getScaledInstance(50, 50, Image.SCALE_SMOOTH));
 			artistImg.put(artist, image);
 			return image;
 		} catch (Exception e) {
 			Log.addEntry(e);
-			return null;
+
+			// Default image
+			return getDefaultArtistImage();
 		}
 	}
 
@@ -98,7 +116,7 @@ public class ArtistInfo {
 	 * 		Album name
 	 * @return The cover of the album
 	 */
-	public static Image getAlbumImage(String artist, String album) {
+	public static ImageIcon getAlbumImage(String artist, String album) {
 		// Check if it was already stored
 		if (albumCover.get(artist + album) != null) {
 			return albumCover.get(artist + album);
@@ -108,9 +126,9 @@ public class ArtistInfo {
 		MusicLibrary ml = MusicLibrary.getMusicLibrary();
 		Song s = ml.getSongs(artist, album).iterator().next();
 		if (s.getCover() != null) {
-			albumCover.put(artist + album,
-					s.getCover().getScaledInstance(50, 50, Image.SCALE_SMOOTH)); // Store for next time
-			return s.getCover().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+			ImageIcon ii = new ImageIcon(s.getCover().getScaledInstance(86, 86, Image.SCALE_SMOOTH));
+			albumCover.put(artist + album, ii); // Store for next time
+			return ii;
 		}
 
 		// Get cover from lastfm
@@ -122,7 +140,7 @@ public class ArtistInfo {
 
 			// Load and store image
 			URL url = new URL(imgURL);
-			Image image = ImageIO.read(url).getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+			ImageIcon image = new ImageIcon(ImageIO.read(url).getScaledInstance(86, 86, Image.SCALE_SMOOTH));
 			albumCover.put(artist, image);
 			return image;
 		} catch (Exception e) {
@@ -130,17 +148,24 @@ public class ArtistInfo {
 		}
 
 		// Default image
-		try {
-			albumCover.put(artist + album,
-					ImageIO.read(new File("assets/img/cover.png"))
-							.getScaledInstance(50, 50, Image.SCALE_SMOOTH)
-			); // Store for next time
-			return ImageIO.read(new File("assets/img/cover.png"))
-					.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-		} catch (IOException e) {
-			Log.addEntry(e);
-			return null;
-		}
+		return getDefaultAlbumImage();
+	}
+
+	/**
+	 * Get album image of specified size
+	 *
+	 * @param artist
+	 * 		Artist name
+	 * @param album
+	 * 		Album title
+	 * @param dim
+	 * 		Dimension of the image
+	 * @return ImageIcon of the album
+	 */
+	public static ImageIcon getAlbumImage(String artist, String album, Dimension dim) {
+		ImageIcon ii = getAlbumImage(artist, album);
+		ii.setImage(ii.getImage().getScaledInstance(dim.width, dim.height, Image.SCALE_SMOOTH));
+		return ii;
 	}
 
 	/**
@@ -148,18 +173,33 @@ public class ArtistInfo {
 	 *
 	 * @return an Image with the default album cover
 	 */
-	public static Image getDefaultAlbumImage() {
+	public static ImageIcon getDefaultAlbumImage() {
 		if (defaultAlbumImage != null)
 			return defaultAlbumImage;
 
 		try {
 			// Load and store image
-			defaultAlbumImage = ImageIO.read(new File("assets/img/cover.png"))
-					.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+			defaultAlbumImage = new ImageIcon(ImageIO.read(new File("assets/img/cover.png"))
+					.getScaledInstance(86, 86, Image.SCALE_SMOOTH));
 			return defaultAlbumImage;
 		} catch (IOException e) {
 			Log.addEntry(e);
 			return null;
+		}
+	}
+
+	/**
+	 * Save cover to file
+	 */
+	public static void save() {
+		try {
+			ObjectFileWriter.store(albumCover, new File(Core.getUserPath()
+					+ "albumcover"));
+
+			ObjectFileWriter.store(artistImg, new File(Core.getUserPath()
+					+ "artistimg"));
+		} catch (Exception e) {
+			Log.addEntry(e);
 		}
 	}
 }
