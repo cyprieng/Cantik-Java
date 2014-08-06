@@ -163,9 +163,7 @@ public class ArtistInfo {
 	 * @return ImageIcon of the album
 	 */
 	public static ImageIcon getAlbumImage(String artist, String album, Dimension dim) {
-		ImageIcon ii = getAlbumImage(artist, album);
-		ii.setImage(ii.getImage().getScaledInstance(dim.width, dim.height, Image.SCALE_SMOOTH));
-		return ii;
+		return new ImageIcon(getAlbumImage(artist, album).getImage().getScaledInstance(dim.width, dim.height, Image.SCALE_SMOOTH));
 	}
 
 	/**
@@ -186,6 +184,17 @@ public class ArtistInfo {
 			Log.addEntry(e);
 			return null;
 		}
+	}
+
+	/**
+	 * Get the default album cover of the specified size
+	 *
+	 * @param dim
+	 * 		Dimension of the image
+	 * @return an Image with the default album cover
+	 */
+	public static ImageIcon getDefaultAlbumImage(Dimension dim) {
+		return new ImageIcon(getDefaultAlbumImage().getImage().getScaledInstance(dim.width, dim.height, Image.SCALE_SMOOTH));
 	}
 
 	/**

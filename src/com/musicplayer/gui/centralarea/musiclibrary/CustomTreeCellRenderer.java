@@ -60,7 +60,7 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 				if (cover.get(node) != null) { // Cover has already been loaded
 					setIcon(cover.get(node));
 				} else { // Get cover
-					setIcon((ArtistInfo.getDefaultAlbumImage())); // Set to default
+					setIcon((ArtistInfo.getDefaultAlbumImage(new Dimension(50, 50)))); // Set to default
 
 					// Start a thread to get the real cover
 					Thread t = new Thread(new Runnable() {
@@ -68,7 +68,7 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 						public void run() {
 							// Store the cover
 							cover.put(node, ArtistInfo.getAlbumImage((String) node
-									.getParent().getUserObject(), (String) nodeInfo));
+									.getParent().getUserObject(), (String) nodeInfo, new Dimension(50, 50)));
 							setIcon(cover.get(node)); // Change it
 
 							treeTable.repaint(); // Repaint
