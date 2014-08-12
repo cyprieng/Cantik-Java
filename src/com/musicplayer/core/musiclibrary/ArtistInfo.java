@@ -8,6 +8,7 @@ import com.musicplayer.core.song.Song;
 import de.umass.lastfm.Album;
 import de.umass.lastfm.Artist;
 import de.umass.lastfm.ImageSize;
+import de.umass.lastfm.Track;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,7 +16,9 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -210,5 +213,53 @@ public class ArtistInfo {
 		} catch (Exception e) {
 			Log.addEntry(e);
 		}
+	}
+
+	/**
+	 * Get biography of an artist
+	 *
+	 * @param artist
+	 * 		Name of the artist
+	 * @return String with the biography
+	 */
+	public static String getBio(String artist) {
+		Logger.getLogger("de.umass.lastfm").setLevel(Level.OFF);
+		return Artist.getInfo(artist, Locale.getDefault(), "", ScrobblerConfig.KEY).getWikiText();
+	}
+
+	/**
+	 * Get artist number of auditors
+	 *
+	 * @param artist
+	 * 		Artist name
+	 * @return Number of auditors (lastfm)
+	 */
+	public static int getNbAuditors(String artist) {
+		Logger.getLogger("de.umass.lastfm").setLevel(Level.OFF);
+		return Artist.getInfo(artist, ScrobblerConfig.KEY).getListeners();
+	}
+
+	/**
+	 * Get URL of the artist image
+	 *
+	 * @param artist
+	 * 		Artist name
+	 * @return String with the URL (lastfm)
+	 */
+	public static String getArtistImageURL(String artist) {
+		Logger.getLogger("de.umass.lastfm").setLevel(Level.OFF);
+		return Artist.getInfo(artist, ScrobblerConfig.KEY).getImageURL(ImageSize.EXTRALARGE);
+	}
+
+	/**
+	 * Get artist top tracks
+	 *
+	 * @param artist
+	 * 		Artist name
+	 * @return Collection of top Track (lastfm)
+	 */
+	public static Collection<Track> getTopTracks(String artist) {
+		Logger.getLogger("de.umass.lastfm").setLevel(Level.OFF);
+		return Artist.getTopTracks(artist, ScrobblerConfig.KEY);
 	}
 }

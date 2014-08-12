@@ -46,7 +46,7 @@ public class CentralArea extends JPanel {
 		content.add(panelInfo, "info");
 
 		// Add scrollbar
-		jsp = CustomScrollBar.getCustomJScrollPane(content);
+		jsp = CustomScrollBar.getCustomJScrollPane(content, CustomScrollBar.BOTH);
 		super.add(jsp);
 	}
 

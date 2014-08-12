@@ -55,7 +55,8 @@ public class LeftBar extends JPanel {
 
 		this.add(new CategoryLabel(MainWindow.bundle.getString("nowPlaying")));
 		this.add(new Item("Playlist"));
-		this.add(new Item("Info"));
+		this.add(new Item("Lyrics"));
+		this.add(new Item("Artist Info"));
 		this.add(new Separator());
 
 		this.add(new Item("Settings"));

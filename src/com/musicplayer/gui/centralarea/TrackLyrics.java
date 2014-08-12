@@ -14,7 +14,7 @@ import java.util.Observer;
  *
  * @author cyprien
  */
-public class TrackInfo extends CentralArea implements Observer {
+public class TrackLyrics extends CentralArea implements Observer {
 	private static final long serialVersionUID = 2431135003545294862L;
 
 	/**
@@ -25,7 +25,7 @@ public class TrackInfo extends CentralArea implements Observer {
 	/**
 	 * Init panel
 	 */
-	public TrackInfo() {
+	public TrackLyrics() {
 		super();
 		Playlist.getPlaylist().addObserver(this);
 

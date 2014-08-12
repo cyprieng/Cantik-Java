@@ -113,7 +113,7 @@ public class PlaylistView extends CentralArea implements Observer {
 		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
 		// Show scrollbar
-		JScrollPane jsp = CustomScrollBar.getCustomJScrollPane(table);
+		JScrollPane jsp = CustomScrollBar.getCustomJScrollPane(table, CustomScrollBar.BOTH);
 		jsp.setBackground(GUIParameters.LEFTBAR_BACKGROUND);
 		add(jsp);
 

@@ -27,10 +27,13 @@ public class Text extends ListResourceBundle {
 			{"stopAfter", "Stop after this song"},
 			{"unsetStopAfter", "Unset 'stop after this song'"},
 
-			// Track Info
+			// Track Lyrics
 			{"noSong", "No song"},
 			{"lyric", "Lyrics"},
 			{"noLyric", "No lyric"},
+
+			// Track Artist
+			{"noBio", "No biography"},
 
 			// Tray Icon
 			{"playPause", "Play/Pause"},
@@ -51,7 +54,8 @@ public class Text extends ListResourceBundle {
 			{"Library", "Library"},
 			{"Local File", "Local File"},
 			{"Playlist", "Playlist"},
-			{"Info", "Info"},
+			{"Lyrics", "Lyrics"},
+			{"Artist Info", "Artist Info"},
 			{"Settings", "Settings"},
 
 			// Search

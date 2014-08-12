@@ -21,40 +21,63 @@ import java.io.IOException;
  */
 public class CustomScrollBar extends BasicScrollBarUI {
 	/**
+	 * Vertical scrollbar only
+	 */
+	public static final int VERTICAL = JScrollBar.VERTICAL;
+
+	/**
+	 * Horizontal scrollbar only
+	 */
+	public static final int HORIZONTAL = JScrollBar.HORIZONTAL;
+
+	/**
+	 * Vertical & horizontal scrollbars
+	 */
+	public static final int BOTH = -1;
+
+	/**
 	 * Get a {@link JScrollPane} with the custom scrollbar ui
 	 *
 	 * @param view
 	 * 		The view to pass to the scrollpane constructor
+	 * @param orientation
+	 * 		Orientation of the scrollbar {@link #VERTICAL}, {@link #HORIZONTAL}, {@link #BOTH}
 	 * @return The custom {@link JScrollPane}
 	 */
-	public static JScrollPane getCustomJScrollPane(Component view) {
+	public static JScrollPane getCustomJScrollPane(Component view, int orientation) {
 		JScrollPane jsp = new JScrollPane(view);
 
-		// Vertical scrollbar
-		JScrollBar sbv = new JScrollBar(JScrollBar.VERTICAL);
-		final JScrollBar copyv = sbv;
-		sbv.getModel().addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				copyv.repaint(); // Repaint when moving
-			}
-		});
-		sbv.setUI(new CustomScrollBar());
-		sbv.setUnitIncrement(30);
-		jsp.setVerticalScrollBar(sbv);
+		if (orientation == VERTICAL || orientation == BOTH) {
+			// Vertical scrollbar
+			JScrollBar sbv = new JScrollBar(VERTICAL);
+			final JScrollBar copyv = sbv;
+			sbv.getModel().addChangeListener(new ChangeListener() {
+				@Override
+				public void stateChanged(ChangeEvent e) {
+					copyv.repaint(); // Repaint when moving
+				}
+			});
+			sbv.setUI(new CustomScrollBar());
+			sbv.setUnitIncrement(30);
+			jsp.setVerticalScrollBar(sbv);
+		} else
+			jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 
-		// Horizontal scrollbar
-		JScrollBar sbh = new JScrollBar(JScrollBar.HORIZONTAL);
-		final JScrollBar copyh = sbh;
-		sbh.getModel().addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				copyh.repaint();// Repaint when moving
-			}
-		});
-		sbh.setUI(new CustomScrollBar());
-		sbh.setUnitIncrement(30);
-		jsp.setHorizontalScrollBar(sbh);
+		if (orientation == HORIZONTAL || orientation == BOTH) {
+			// Horizontal scrollbar
+			JScrollBar sbh = new JScrollBar(HORIZONTAL);
+			final JScrollBar copyh = sbh;
+			sbh.getModel().addChangeListener(new ChangeListener() {
+				@Override
+				public void stateChanged(ChangeEvent e) {
+					copyh.repaint();// Repaint when moving
+				}
+			});
+			sbh.setUI(new CustomScrollBar());
+			sbh.setUnitIncrement(30);
+			jsp.setHorizontalScrollBar(sbh);
+		} else
+			jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
 		return jsp;
 	}

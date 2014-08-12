@@ -27,10 +27,13 @@ public class Text_fr extends ListResourceBundle {
 			{"stopAfter", "Arrêter aprés cette piste"},
 			{"unsetStopAfter", "Supprimer \"arrêter après cette piste\""},
 
-			// Track Info
+			// Track Lyrics
 			{"noSong", "Pas de piste"},
 			{"lyric", "Paroles"},
 			{"noLyric", "Pas de parole"},
+
+			// Track Artist
+			{"noBio", "Pas de biographie"},
 
 			// Tray Icon
 			{"playPause", "Play/Pause"},
@@ -51,7 +54,8 @@ public class Text_fr extends ListResourceBundle {
 			{"Library", "Bibliothèque"},
 			{"Local File", "Fichier local"},
 			{"Playlist", "Playlist"},
-			{"Info", "Info"},
+			{"Lyrics", "Paroles"},
+			{"Artist Info", "Info Artiste"},
 			{"Settings", "Paramètres"},
 
 			// Search

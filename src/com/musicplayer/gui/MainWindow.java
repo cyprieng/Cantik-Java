@@ -9,7 +9,8 @@ import com.musicplayer.core.musiclibrary.MusicLibrary;
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.gui.centralarea.LocalFileView;
 import com.musicplayer.gui.centralarea.ParametersView;
-import com.musicplayer.gui.centralarea.TrackInfo;
+import com.musicplayer.gui.centralarea.TrackArtist.TrackArtist;
+import com.musicplayer.gui.centralarea.TrackLyrics;
 import com.musicplayer.gui.centralarea.musiclibrary.MusicLibraryView;
 import com.musicplayer.gui.centralarea.playlistview.PlaylistView;
 import com.musicplayer.gui.hotkeys.LinuxHotkeys;
@@ -80,7 +81,8 @@ public class MainWindow {
 		centralArea.add(MusicLibraryView.getMusiLibraryView(), "Library");
 		centralArea.add(new LocalFileView(), "Local File");
 		centralArea.add(new PlaylistView(), "Playlist");
-		centralArea.add(new TrackInfo(), "Info");
+		centralArea.add(new TrackLyrics(), "Lyrics");
+		centralArea.add(new TrackArtist(), "Artist Info");
 		centralArea.add(new ParametersView(), "Settings");
 
 		// Add elements

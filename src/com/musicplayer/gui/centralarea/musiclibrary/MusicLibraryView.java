@@ -127,7 +127,7 @@ public class MusicLibraryView extends CentralArea implements Observer {
 		}
 
 		// Show scrollbar
-		JScrollPane jsp = CustomScrollBar.getCustomJScrollPane(tree);
+		JScrollPane jsp = CustomScrollBar.getCustomJScrollPane(tree, CustomScrollBar.BOTH);
 		jsp.setBackground(GUIParameters.LEFTBAR_BACKGROUND);
 		add(jsp);
 
