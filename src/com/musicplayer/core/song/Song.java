@@ -14,6 +14,7 @@ import org.jaudiotagger.tag.TagException;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -113,12 +114,12 @@ public class Song implements Serializable {
 	 * @see http://api.ntag.fr/lyrics/doc.php
 	 */
 	public String getLyric() {
-		if (this.lyric == "") { // No ID3 tag value
+		if (this.lyric.isEmpty()) { // No ID3 tag value
 			StringBuilder lyric = new StringBuilder();
 			try {
 				// Get lyric from API
 				URL url = new URL("http://api.ntag.fr/lyrics/?artist="
-						+ this.artist + "&title=" + this.title);
+						+ URLEncoder.encode(this.artist, "UTF-8") + "&title=" + URLEncoder.encode(this.title, "UTF-8"));
 
 				BufferedReader in = new BufferedReader(new InputStreamReader(
 						url.openStream(), "UTF-8"));
