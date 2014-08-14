@@ -1,7 +1,5 @@
 package com.musicplayer.gui;
 
-import com.musicplayer.core.Log;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -13,6 +11,8 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Custom UI for scrollbar
@@ -20,6 +20,11 @@ import java.io.IOException;
  * @author cyprien
  */
 public class CustomScrollBar extends BasicScrollBarUI {
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(CustomScrollBar.class.getName());
+
 	/**
 	 * Vertical scrollbar only
 	 */
@@ -102,7 +107,7 @@ public class CustomScrollBar extends BasicScrollBarUI {
 
 			btn.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 
 		return btn;
@@ -128,7 +133,7 @@ public class CustomScrollBar extends BasicScrollBarUI {
 
 			btn.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 
 		return btn;

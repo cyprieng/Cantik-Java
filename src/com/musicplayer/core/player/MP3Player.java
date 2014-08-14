@@ -1,9 +1,9 @@
 package com.musicplayer.core.player;
 
-import com.musicplayer.core.Log;
-
 import java.io.InputStream;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class managing MP3 playback
@@ -11,6 +11,11 @@ import java.util.Observable;
  * @author cyprien
  */
 public class MP3Player extends Observable implements Runnable, Player {
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(MP3Player.class.getName());
+
 	/**
 	 * Path of the song
 	 */
@@ -58,7 +63,7 @@ public class MP3Player extends Observable implements Runnable, Player {
 
 			this.playerThread = new Thread(this, "AudioPlayerThread");
 		} catch (Exception e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 	}
 
@@ -109,7 +114,7 @@ public class MP3Player extends Observable implements Runnable, Player {
 					notifyObservers();
 				}
 			} catch (Exception e) {
-				Log.addEntry(e);
+				logger.log(Level.WARNING, e.getMessage());
 				break;
 			}
 
@@ -119,7 +124,7 @@ public class MP3Player extends Observable implements Runnable, Player {
 					try {
 						wait();
 					} catch (Exception e) {
-						Log.addEntry(e);
+						logger.log(Level.WARNING, e.getMessage());
 					}
 				}
 			}
@@ -152,7 +157,7 @@ public class MP3Player extends Observable implements Runnable, Player {
 			// Skip
 			song.skip((long) (song.available() * (double) ((double) percent / 100.0)));
 		} catch (Exception e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 	}
 }

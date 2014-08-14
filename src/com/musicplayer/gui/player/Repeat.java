@@ -1,6 +1,5 @@
 package com.musicplayer.gui.player;
 
-import com.musicplayer.core.Log;
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.core.playlist.RepeatState;
 
@@ -13,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Custom JButton switching repeat state
@@ -21,6 +22,11 @@ import java.io.IOException;
  */
 public class Repeat extends JButton {
 	private static final long serialVersionUID = 4971170300022461995L;
+
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(Repeat.class.getName());
 
 	/**
 	 * Constructor: init the button
@@ -49,7 +55,7 @@ public class Repeat extends JButton {
 			BufferedImage img = ImageIO.read(new File(imgPath));
 			this.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 	}
 

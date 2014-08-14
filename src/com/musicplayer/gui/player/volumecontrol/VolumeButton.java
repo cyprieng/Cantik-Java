@@ -1,7 +1,5 @@
 package com.musicplayer.gui.player.volumecontrol;
 
-import com.musicplayer.core.Log;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -11,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * JButton showing the VolumePanel
@@ -20,6 +20,11 @@ import java.io.IOException;
  */
 public class VolumeButton extends JButton {
 	private static final long serialVersionUID = -6805154968692111306L;
+
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(VolumeButton.class.getName());
 
 	/**
 	 * Store the volume panel
@@ -39,7 +44,7 @@ public class VolumeButton extends JButton {
 			BufferedImage img = ImageIO.read(new File("assets/img/volume.png"));
 			this.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 
 		// Disable border

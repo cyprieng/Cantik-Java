@@ -1,6 +1,5 @@
 package com.musicplayer.gui.leftbar;
 
-import com.musicplayer.core.Log;
 import com.musicplayer.gui.GUIParameters;
 import com.musicplayer.gui.MainWindow;
 
@@ -17,6 +16,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Create a JPanel containing an item entry
@@ -25,6 +26,11 @@ import java.util.Set;
  */
 public class Item extends JPanel {
 	private static final long serialVersionUID = -2428032016539504254L;
+
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(Item.class.getName());
 
 	/**
 	 * List of all items
@@ -75,7 +81,7 @@ public class Item extends JPanel {
 			image.setBorder(empty);
 			this.add(image);
 		} catch (IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 
 		// Add text

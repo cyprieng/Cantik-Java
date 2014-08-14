@@ -1,6 +1,5 @@
 package com.musicplayer.gui.hotkeys;
 
-import com.musicplayer.core.Log;
 import com.musicplayer.core.playlist.Playlist;
 import jxgrabkey.HotkeyConflictException;
 import jxgrabkey.JXGrabKey;
@@ -8,6 +7,8 @@ import jxgrabkey.X11KeysymDefinitions;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Register hotkeys for Linux
@@ -15,12 +16,17 @@ import java.io.IOException;
  * @author cyprien
  */
 public class LinuxHotkeys implements jxgrabkey.HotkeyListener {
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(LinuxHotkeys.class.getName());
+
 	public LinuxHotkeys() {
 		// Load JXGrabKey lib
 		try {
 			System.load(new File("libJXGrabKey.so").getCanonicalPath());
 		} catch (IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 
 		// Register hotkeys
@@ -29,7 +35,7 @@ public class LinuxHotkeys implements jxgrabkey.HotkeyListener {
 			JXGrabKey.getInstance().registerX11Hotkey(2, 0, X11KeysymDefinitions.AUDIO_NEXT);
 			JXGrabKey.getInstance().registerX11Hotkey(3, 0, X11KeysymDefinitions.AUDIO_PREV);
 		} catch (HotkeyConflictException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 
 		JXGrabKey.getInstance().addHotkeyListener(this);

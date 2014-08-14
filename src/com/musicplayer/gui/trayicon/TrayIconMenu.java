@@ -1,6 +1,5 @@
 package com.musicplayer.gui.trayicon;
 
-import com.musicplayer.core.Log;
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.core.song.Song;
 import com.musicplayer.gui.GUIParameters;
@@ -15,6 +14,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Show the tray icon in the systray
@@ -22,6 +23,11 @@ import java.util.Observer;
  * @author cyprien
  */
 public class TrayIconMenu implements Observer {
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(TrayIconMenu.class.getName());
+
 	/**
 	 * Item showing current track info
 	 */
@@ -108,7 +114,7 @@ public class TrayIconMenu implements Observer {
 			trayIcon.setImageAutoSize(true);
 			tray.add(trayIcon);
 		} catch (Exception e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 	}
 

@@ -1,7 +1,6 @@
 package com.musicplayer.core.song;
 
 import com.musicplayer.core.InvalidFileException;
-import com.musicplayer.core.Log;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
@@ -25,6 +24,11 @@ import java.util.logging.Logger;
  */
 public class Song implements Serializable {
 	private static final long serialVersionUID = -2359300133101740540L;
+
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(Song.class.getName());
 
 	/**
 	 * Path of the song
@@ -103,7 +107,7 @@ public class Song implements Serializable {
 
 			this.duration = f.getAudioHeader().getTrackLength();
 		} catch (Exception e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 	}
 
@@ -129,7 +133,7 @@ public class Song implements Serializable {
 				}
 				in.close();
 			} catch (IOException e) {
-				Log.addEntry(e);
+				logger.log(Level.WARNING, e.getMessage());
 			}
 
 			this.lyric = lyric.toString(); // Store lyric for next time
@@ -238,7 +242,7 @@ public class Song implements Serializable {
 
 			} catch (CannotReadException | IOException | TagException
 					| ReadOnlyFileException | InvalidAudioFrameException e) {
-				Log.addEntry(e);
+				logger.log(Level.WARNING, e.getMessage());
 			}
 		}
 

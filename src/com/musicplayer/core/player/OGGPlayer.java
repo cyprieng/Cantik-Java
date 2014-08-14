@@ -1,11 +1,11 @@
 package com.musicplayer.core.player;
 
-import com.musicplayer.core.Log;
-
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class managing OGG playback
@@ -13,6 +13,11 @@ import java.util.Observable;
  * @author cyprien
  */
 public class OGGPlayer extends Observable implements Player, Runnable {
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(OGGPlayer.class.getName());
+
 	/**
 	 * Path of the song
 	 */
@@ -73,7 +78,7 @@ public class OGGPlayer extends Observable implements Player, Runnable {
 						try {
 							wait();
 						} catch (Exception e) {
-							Log.addEntry(e);
+							logger.log(Level.WARNING, e.getMessage());
 						}
 					}
 				}
@@ -169,7 +174,7 @@ public class OGGPlayer extends Observable implements Player, Runnable {
 				notifyObservers();
 			}
 		} catch (Exception e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 	}
 
@@ -191,7 +196,7 @@ public class OGGPlayer extends Observable implements Player, Runnable {
 				in.reset();
 				in.skip((long) (in.available() * (double) ((double) percent / 100.0)));
 			} catch (Exception e) {
-				Log.addEntry(e);
+				logger.log(Level.WARNING, e.getMessage());
 			}
 		}
 	}

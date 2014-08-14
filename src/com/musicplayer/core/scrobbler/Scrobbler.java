@@ -1,6 +1,5 @@
 package com.musicplayer.core.scrobbler;
 
-import com.musicplayer.core.Log;
 import com.musicplayer.core.config.ConfigFileParser;
 import com.musicplayer.core.song.Song;
 import de.umass.lastfm.Authenticator;
@@ -18,6 +17,11 @@ import java.util.logging.Logger;
  * @see Lastfm API
  */
 public class Scrobbler {
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(Scrobbler.class.getName());
+
 	/**
 	 * Store lastfm session
 	 */
@@ -63,7 +67,7 @@ public class Scrobbler {
 							.getDuration(), song.getAlbum(), "", "", -1, "");
 					Track.updateNowPlaying(scrobbleData, Scrobbler.session);
 				} catch (ScrobblerException e) {
-					Log.addEntry(e);
+					logger.log(Level.WARNING, e.getMessage());
 				}
 			}
 		});
@@ -87,7 +91,7 @@ public class Scrobbler {
 					Track.scrobble(song.getArtist(), song.getTitle(), now,
 							Scrobbler.session);
 				} catch (ScrobblerException e) {
-					Log.addEntry(e);
+					logger.log(Level.WARNING, e.getMessage());
 				}
 			}
 		});

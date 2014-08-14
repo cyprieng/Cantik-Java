@@ -1,6 +1,5 @@
 package com.musicplayer.gui.player;
 
-import com.musicplayer.core.Log;
 import com.musicplayer.gui.MainWindow;
 
 import javax.imageio.ImageIO;
@@ -12,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Button to reduce the window: only show player
@@ -19,6 +20,11 @@ import java.io.IOException;
  * @author cyprien
  */
 public class Reduce extends JButton {
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(Reduce.class.getName());
+
 	/**
 	 * Dimension use to reset the size
 	 */
@@ -57,7 +63,7 @@ public class Reduce extends JButton {
 			BufferedImage img = ImageIO.read(new File(imgPath));
 			this.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 	}
 

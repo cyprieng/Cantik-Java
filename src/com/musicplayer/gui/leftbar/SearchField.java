@@ -1,6 +1,5 @@
 package com.musicplayer.gui.leftbar;
 
-import com.musicplayer.core.Log;
 import com.musicplayer.gui.GUIParameters;
 import com.musicplayer.gui.MainWindow;
 import com.musicplayer.gui.centralarea.musiclibrary.MusicLibraryView;
@@ -17,6 +16,8 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Create a custom JTextField for the search bar
@@ -25,6 +26,11 @@ import java.io.IOException;
  */
 public class SearchField extends JTextField {
 	private static final long serialVersionUID = -1258623083307335060L;
+
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(SearchField.class.getName());
 
 	/**
 	 * Represent the round rect
@@ -103,7 +109,7 @@ public class SearchField extends JTextField {
 			BufferedImage img = ImageIO.read(new File("assets/img/search.png"));
 			g.drawImage(img, 5, 3, 24, 24, this);
 		} catch (IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 
 		super.paintComponent(g);

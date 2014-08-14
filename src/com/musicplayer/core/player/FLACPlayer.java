@@ -1,6 +1,5 @@
 package com.musicplayer.core.player;
 
-import com.musicplayer.core.Log;
 import org.kc7bfi.jflac.FLACDecoder;
 import org.kc7bfi.jflac.PCMProcessor;
 import org.kc7bfi.jflac.metadata.StreamInfo;
@@ -12,6 +11,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class managing FLAC playback
@@ -20,6 +21,11 @@ import java.util.Vector;
  */
 public class FLACPlayer extends Observable implements Player, Runnable,
 		PCMProcessor {
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(FLACPlayer.class.getName());
+
 	/**
 	 * Path of the song
 	 */
@@ -129,7 +135,7 @@ public class FLACPlayer extends Observable implements Player, Runnable,
 			line.open(fmt, AudioSystem.NOT_SPECIFIED);
 			line.start();
 		} catch (LineUnavailableException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 	}
 
@@ -147,7 +153,7 @@ public class FLACPlayer extends Observable implements Player, Runnable,
 				try {
 					wait();
 				} catch (Exception e) {
-					Log.addEntry(e);
+					logger.log(Level.WARNING, e.getMessage());
 				}
 			}
 
@@ -218,7 +224,7 @@ public class FLACPlayer extends Observable implements Player, Runnable,
 			setChanged();
 			notifyObservers();
 		} catch (IOException | LineUnavailableException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 	}
 
@@ -247,7 +253,7 @@ public class FLACPlayer extends Observable implements Player, Runnable,
 				is.skip((long) (is.available() * (double) ((double) percent / 100.0)));
 				play();
 			} catch (Exception e) {
-				Log.addEntry(e);
+				logger.log(Level.WARNING, e.getMessage());
 			}
 		}
 	}

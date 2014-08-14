@@ -1,10 +1,10 @@
 package com.musicplayer.gui;
 
-import com.musicplayer.core.Log;
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Parameters of the UI (Color, font...)
@@ -12,6 +12,11 @@ import java.io.IOException;
  * @author cyprien
  */
 public class GUIParameters {
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(GUIParameters.class.getName());
+
 	/**
 	 * Color of borders
 	 */
@@ -62,7 +67,7 @@ public class GUIParameters {
 
 			return f.deriveFont(20.0f);
 		} catch (FontFormatException | IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 			return null;
 		}
 	}
@@ -82,7 +87,7 @@ public class GUIParameters {
 
 			return f.deriveFont(15.0f);
 		} catch (FontFormatException | IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 			return null;
 		}
 	}

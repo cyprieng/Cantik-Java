@@ -1,6 +1,5 @@
 package com.musicplayer.gui;
 
-import com.musicplayer.core.Log;
 import com.musicplayer.core.config.ConfigFileParser;
 import com.musicplayer.core.config.ConfigFileWriter;
 import com.musicplayer.core.musiclibrary.InvalidPathException;
@@ -22,6 +21,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Window for configuration
@@ -30,6 +31,11 @@ import java.net.URI;
  */
 public class ParametersWindow extends JDialog {
 	private static final long serialVersionUID = -2776375961877258278L;
+
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(ParametersWindow.class.getName());
 
 	/**
 	 * Label to show if there is an error
@@ -90,7 +96,7 @@ public class ParametersWindow extends JDialog {
 						UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					} catch (ClassNotFoundException | InstantiationException
 							| IllegalAccessException | UnsupportedLookAndFeelException e2) {
-						Log.addEntry(e2);
+						logger.log(Level.WARNING, e2.getMessage());
 					}
 
 					// Create folder chooser
@@ -103,7 +109,7 @@ public class ParametersWindow extends JDialog {
 								.getCrossPlatformLookAndFeelClassName());
 					} catch (ClassNotFoundException | InstantiationException
 							| IllegalAccessException | UnsupportedLookAndFeelException e2) {
-						Log.addEntry(e2);
+						logger.log(Level.WARNING, e2.getMessage());
 					}
 
 					// Fill path with selected folder
@@ -133,7 +139,7 @@ public class ParametersWindow extends JDialog {
 				BufferedImage img = ImageIO.read(new File("assets/img/lastfm_button.png"));
 				lastfmButton.setIcon(new ImageIcon(img));
 			} catch (IOException e) {
-				Log.addEntry(e);
+				logger.log(Level.WARNING, e.getMessage());
 			}
 
 			// Button text
@@ -175,7 +181,7 @@ public class ParametersWindow extends JDialog {
 									try {
 										ConfigFileWriter.writeConfigFile();
 									} catch (Exception e1) {
-										Log.addEntry(e1);
+										logger.log(Level.WARNING, e1.getMessage());
 									}
 								} catch (ScrobblerException e1) {
 									// Unable to connect
@@ -189,7 +195,7 @@ public class ParametersWindow extends JDialog {
 						// Go to the url
 						Desktop.getDesktop().browse(uri);
 					} catch (Exception e1) {
-						Log.addEntry(e1);
+						logger.log(Level.WARNING, e1.getMessage());
 					}
 				}
 			});
@@ -207,7 +213,7 @@ public class ParametersWindow extends JDialog {
 			BufferedImage img = ImageIO.read(new File("assets/img/apply.png"));
 			apply.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 
 		// Delete border
@@ -237,7 +243,7 @@ public class ParametersWindow extends JDialog {
 							MusicLibrary.getMusicLibrary().loadLibraryFolder(path.getText());
 							MusicLibraryView.getMusiLibraryView().showLibrary("");
 						} catch (InvalidPathException e1) {
-							Log.addEntry(e1);
+							logger.log(Level.WARNING, e1.getMessage());
 						}
 					}
 

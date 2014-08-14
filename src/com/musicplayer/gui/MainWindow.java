@@ -1,7 +1,6 @@
 package com.musicplayer.gui;
 
 import com.musicplayer.core.Core;
-import com.musicplayer.core.Log;
 import com.musicplayer.core.config.ConfigFileParser;
 import com.musicplayer.core.musiclibrary.ArtistInfo;
 import com.musicplayer.core.musiclibrary.InvalidPathException;
@@ -29,6 +28,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 /**
  * Main window
@@ -36,6 +38,11 @@ import java.util.ResourceBundle;
  * @author cyprien
  */
 public class MainWindow {
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(MainWindow.class.getName());
+
 	/**
 	 * Store the unique JFrame
 	 */
@@ -70,7 +77,7 @@ public class MainWindow {
 		try {
 			window.setIconImage(ImageIO.read(new File("assets/img/icon.png")));
 		} catch (IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 
 		window.setLayout(new BorderLayout());
@@ -147,6 +154,12 @@ public class MainWindow {
 	}
 
 	public static void main(String[] args) {
+		// Load log config file
+		try {
+			LogManager.getLogManager().readConfiguration(MainWindow.class.getClassLoader().getResourceAsStream("logging.properties"));
+		} catch (SecurityException | IOException e1) {
+		}
+
 		// Get the resource bundle
 		bundle = ResourceBundle.getBundle("com.musicplayer.gui.i18n.Text", Locale.getDefault());
 

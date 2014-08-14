@@ -1,7 +1,6 @@
 package com.musicplayer.core.musiclibrary;
 
 import com.musicplayer.core.Core;
-import com.musicplayer.core.Log;
 import com.musicplayer.core.config.ObjectFileWriter;
 import com.musicplayer.core.scrobbler.ScrobblerConfig;
 import com.musicplayer.core.song.Song;
@@ -28,6 +27,11 @@ import java.util.logging.Logger;
  * @author cyprien
  */
 public class ArtistInfo {
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(ArtistInfo.class.getName());
+
 	/**
 	 * Store albums cover
 	 */
@@ -57,7 +61,7 @@ public class ArtistInfo {
 			artistImg = (HashMap<String, ImageIcon>) ObjectFileWriter.get(new File(Core.getUserPath()
 					+ "artistimg"));
 		} catch (Exception e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 	}
 
@@ -75,7 +79,7 @@ public class ArtistInfo {
 			defaultArtistImage = new ImageIcon(ImageIO.read(new File("assets/img/person.png")));
 			return defaultArtistImage;
 		} catch (IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 			return null;
 		}
 	}
@@ -103,7 +107,7 @@ public class ArtistInfo {
 			artistImg.put(artist, image);
 			return image;
 		} catch (Exception e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 
 			// Default image
 			return getDefaultArtistImage();
@@ -147,7 +151,7 @@ public class ArtistInfo {
 			albumCover.put(artist, image);
 			return image;
 		} catch (Exception e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 
 		// Default image
@@ -184,7 +188,7 @@ public class ArtistInfo {
 					.getScaledInstance(86, 86, Image.SCALE_SMOOTH));
 			return defaultAlbumImage;
 		} catch (IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 			return null;
 		}
 	}
@@ -211,7 +215,7 @@ public class ArtistInfo {
 			ObjectFileWriter.store(artistImg, new File(Core.getUserPath()
 					+ "artistimg"));
 		} catch (Exception e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 	}
 

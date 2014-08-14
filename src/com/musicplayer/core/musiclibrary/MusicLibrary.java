@@ -2,12 +2,13 @@ package com.musicplayer.core.musiclibrary;
 
 import com.musicplayer.core.Core;
 import com.musicplayer.core.InvalidFileException;
-import com.musicplayer.core.Log;
 import com.musicplayer.core.config.ObjectFileWriter;
 import com.musicplayer.core.song.Song;
 
 import java.io.File;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Manage the music library: retrieve and store it. It uses the singleton design
@@ -16,6 +17,11 @@ import java.util.*;
  * @author cyprien
  */
 public class MusicLibrary extends Observable implements Runnable {
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(MusicLibrary.class.getName());
+
 	/**
 	 * Store the unique instance of MusicLibrary
 	 */
@@ -104,7 +110,7 @@ public class MusicLibrary extends Observable implements Runnable {
 				this.notifyAll();
 			}
 		} catch (Exception e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		} finally {
 			t = new Thread(this);
 			t.setName("MusicLibrary");
@@ -177,7 +183,7 @@ public class MusicLibrary extends Observable implements Runnable {
 			ObjectFileWriter.store(this.library, new File(Core.getUserPath()
 					+ "cantik.library"));
 		} catch (Exception e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 
 		// Notify changes
@@ -194,7 +200,7 @@ public class MusicLibrary extends Observable implements Runnable {
 		try {
 			return library.keySet();
 		} catch (Exception e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 			return null;
 		}
 	}
@@ -210,7 +216,7 @@ public class MusicLibrary extends Observable implements Runnable {
 		try {
 			return ((Map<String, Set<Song>>) library.get(artist)).keySet();
 		} catch (Exception e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 			return null;
 		}
 	}
@@ -234,7 +240,7 @@ public class MusicLibrary extends Observable implements Runnable {
 
 			return songs;
 		} catch (Exception e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 			return null;
 		}
 	}
@@ -253,7 +259,7 @@ public class MusicLibrary extends Observable implements Runnable {
 			return ((Set<Song>) ((Map<String, Set<Song>>) library.get(artist))
 					.get(album));
 		} catch (Exception e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 			return null;
 		}
 	}

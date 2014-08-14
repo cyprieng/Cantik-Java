@@ -1,6 +1,5 @@
 package com.musicplayer.gui.player;
 
-import com.musicplayer.core.Log;
 import com.musicplayer.core.playlist.Playlist;
 
 import javax.imageio.ImageIO;
@@ -12,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Custom JButton jumping to last track
@@ -20,6 +21,11 @@ import java.io.IOException;
  */
 public class Previous extends JButton {
 	private static final long serialVersionUID = 6570346642101647547L;
+
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(Previous.class.getName());
 
 	/**
 	 * Constructor: init image and action
@@ -33,7 +39,7 @@ public class Previous extends JButton {
 					.read(new File("assets/img/previous.png"));
 			this.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 
 		// Disable border

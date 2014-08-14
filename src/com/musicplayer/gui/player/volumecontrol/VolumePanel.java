@@ -1,10 +1,11 @@
 package com.musicplayer.gui.player.volumecontrol;
 
-import com.musicplayer.core.Log;
 import com.musicplayer.gui.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Floating JPanel showing VolumeControl
@@ -13,6 +14,11 @@ import java.awt.*;
  */
 public class VolumePanel extends JPanel {
 	private static final long serialVersionUID = 8107614292050804904L;
+
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(VolumePanel.class.getName());
 
 	/**
 	 * Store the slider
@@ -61,7 +67,7 @@ public class VolumePanel extends JPanel {
 		try {
 			finalize();
 		} catch (Throwable e) {
-			Log.addEntry(e.getMessage());
+			logger.log(Level.WARNING, e.getMessage());
 		}
 	}
 }

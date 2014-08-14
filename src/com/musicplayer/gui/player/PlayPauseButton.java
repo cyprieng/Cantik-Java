@@ -1,6 +1,5 @@
 package com.musicplayer.gui.player;
 
-import com.musicplayer.core.Log;
 import com.musicplayer.core.player.PlayerState;
 import com.musicplayer.core.playlist.Playlist;
 
@@ -15,6 +14,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Custom JButton playing or pausing the current track
@@ -23,6 +24,11 @@ import java.util.Observer;
  */
 public class PlayPauseButton extends JButton implements Observer {
 	private static final long serialVersionUID = -6417580002540736687L;
+
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(PlayPauseButton.class.getName());
 
 	/**
 	 * Constructor: init the button
@@ -53,7 +59,7 @@ public class PlayPauseButton extends JButton implements Observer {
 			BufferedImage img = ImageIO.read(new File(imgPath));
 			this.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 	}
 

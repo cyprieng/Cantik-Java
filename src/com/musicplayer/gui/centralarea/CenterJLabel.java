@@ -1,9 +1,10 @@
 package com.musicplayer.gui.centralarea;
 
-import com.musicplayer.core.Log;
 import com.musicplayer.gui.leftbar.LeftbarJLabel;
 
 import java.awt.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * JLabel positioned in the center of its parent
@@ -12,6 +13,11 @@ import java.awt.*;
  */
 public class CenterJLabel extends LeftbarJLabel {
 	private static final long serialVersionUID = 3849599444981028032L;
+
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(CenterJLabel.class.getName());
 
 	/**
 	 * Create label with given text and apply the right font
@@ -38,7 +44,7 @@ public class CenterJLabel extends LeftbarJLabel {
 		try {
 			finalize();
 		} catch (Throwable e) {
-			Log.addEntry(e.getMessage());
+			logger.log(Level.WARNING, e.getMessage());
 		}
 	}
 }

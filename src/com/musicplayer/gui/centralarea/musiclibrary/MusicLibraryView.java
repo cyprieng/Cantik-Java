@@ -1,6 +1,5 @@
 package com.musicplayer.gui.centralarea.musiclibrary;
 
-import com.musicplayer.core.Log;
 import com.musicplayer.core.musiclibrary.ArtistInfo;
 import com.musicplayer.core.musiclibrary.MusicLibrary;
 import com.musicplayer.core.musiclibrary.SearchMusicLibrary;
@@ -29,6 +28,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * View of the music library
@@ -37,6 +38,11 @@ import java.util.Observer;
  */
 public class MusicLibraryView extends CentralArea implements Observer {
 	private static final long serialVersionUID = -617334771645897532L;
+
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(MusicLibraryView.class.getName());
 
 	/**
 	 * Store the view
@@ -123,7 +129,7 @@ public class MusicLibraryView extends CentralArea implements Observer {
 			tree.setExpandedIcon(new ImageIcon(ImageIO.read(new File(
 					"assets/img/expanded.png"))));
 		} catch (IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 
 		// Show scrollbar
@@ -187,7 +193,7 @@ public class MusicLibraryView extends CentralArea implements Observer {
 						try {
 							library.wait();
 						} catch (InterruptedException e) {
-							Log.addEntry(e);
+							logger.log(Level.WARNING, e.getMessage());
 						}
 					}
 				}

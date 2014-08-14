@@ -1,7 +1,6 @@
 package com.musicplayer.gui.centralarea;
 
 import com.musicplayer.core.InvalidFileException;
-import com.musicplayer.core.Log;
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.core.song.Song;
 import com.musicplayer.core.song.SongExtension;
@@ -13,6 +12,8 @@ import javax.swing.filechooser.FileFilter;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class showing a File Chooser for adding song in the playlist
@@ -23,6 +24,11 @@ public class LocalFileView extends CentralArea {
 	private static final long serialVersionUID = -4136316670805228071L;
 
 	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(LocalFileView.class.getName());
+
+	/**
 	 * Create the JFileChooser
 	 */
 	public LocalFileView() {
@@ -31,7 +37,7 @@ public class LocalFileView extends CentralArea {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 
 		final JFileChooser fc = new JFileChooser();
@@ -42,7 +48,7 @@ public class LocalFileView extends CentralArea {
 					.getCrossPlatformLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 
 		// Set selection options
@@ -101,7 +107,7 @@ public class LocalFileView extends CentralArea {
 							Playlist.getPlaylist().addSong(
 									new Song(f.getAbsolutePath()));
 						} catch (InvalidFileException e2) {
-							Log.addEntry(e2);
+							logger.log(Level.WARNING, e2.getMessage());
 						}
 					}
 				}

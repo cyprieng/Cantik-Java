@@ -1,13 +1,14 @@
 package com.musicplayer.core.config;
 
 import com.musicplayer.core.Core;
-import com.musicplayer.core.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Parse config file. It uses singleton design pattern
@@ -15,6 +16,11 @@ import java.util.HashMap;
  * @author cyprien
  */
 public class ConfigFileParser {
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(ConfigFileParser.class.getName());
+
 	/**
 	 * Store the config
 	 */
@@ -51,7 +57,7 @@ public class ConfigFileParser {
 				}
 				br.close();
 			} catch (Exception e) {
-				Log.addEntry(e);
+				logger.log(Level.WARNING, e.getMessage());
 			}
 		}
 	}

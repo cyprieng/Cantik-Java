@@ -1,6 +1,5 @@
 package com.musicplayer.gui.player;
 
-import com.musicplayer.core.Log;
 import com.musicplayer.core.playlist.Playlist;
 
 import javax.imageio.ImageIO;
@@ -12,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Custom JButton switching the random state
@@ -20,6 +21,11 @@ import java.io.IOException;
  */
 public class Random extends JButton {
 	private static final long serialVersionUID = 2654540862809367609L;
+
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(Random.class.getName());
 
 	/**
 	 * Constructor: init the button
@@ -48,7 +54,7 @@ public class Random extends JButton {
 			BufferedImage img = ImageIO.read(new File(imgPath));
 			this.setIcon(new ImageIcon(img));
 		} catch (IOException e) {
-			Log.addEntry(e);
+			logger.log(Level.WARNING, e.getMessage());
 		}
 	}
 

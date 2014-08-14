@@ -1,12 +1,12 @@
 package com.musicplayer.core.player;
 
-import com.musicplayer.core.Log;
-
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.Line.Info;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Port;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Manage the sound volume
@@ -14,6 +14,11 @@ import javax.sound.sampled.Port;
  * @author cyprien
  */
 public class SoundVolume {
+	/**
+	 * Logger for the class
+	 */
+	private static Logger logger = Logger.getLogger(SoundVolume.class.getName());
+
 	/**
 	 * Source
 	 */
@@ -37,7 +42,7 @@ public class SoundVolume {
 							.getControl(FloatControl.Type.VOLUME))
 							.setValue(newVolume);
 				} catch (LineUnavailableException e) {
-					Log.addEntry(e);
+					logger.log(Level.WARNING, e.getMessage());
 				}
 			}
 		}
