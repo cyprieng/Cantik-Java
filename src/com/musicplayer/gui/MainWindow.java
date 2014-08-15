@@ -25,6 +25,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -156,8 +157,12 @@ public class MainWindow {
 	public static void main(String[] args) {
 		// Load log config file
 		try {
-			LogManager.getLogManager().readConfiguration(MainWindow.class.getClassLoader().getResourceAsStream("logging.properties"));
-		} catch (SecurityException | IOException e1) {
+			LogManager.getLogManager().readConfiguration(new FileInputStream("logging.properties"));
+		} catch (Exception e) {
+			try {
+				LogManager.getLogManager().readConfiguration(MainWindow.class.getClassLoader().getResourceAsStream("logging.properties"));
+			} catch (IOException e1) {
+			}
 		}
 
 		// Get the resource bundle
