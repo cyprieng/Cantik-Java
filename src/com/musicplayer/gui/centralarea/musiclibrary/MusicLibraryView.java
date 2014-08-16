@@ -228,6 +228,8 @@ public class MusicLibraryView extends CentralArea implements Observer {
 					info.setText(MainWindow.bundle.getString("noLibrary"));
 					showInfo();
 				}
+
+				CustomTableHeader.customizeHeader(tree.getTableHeader()); // Set header style again
 			}
 		});
 
