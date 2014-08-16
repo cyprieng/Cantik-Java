@@ -114,6 +114,7 @@ public class MainWindow {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.pack();
 		window.setVisible(true);
+		window.requestFocus();
 	}
 
 	/**
