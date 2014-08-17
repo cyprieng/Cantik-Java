@@ -51,6 +51,16 @@ public class TrackArtist extends CentralArea implements Observer {
 	private JPanel panel;
 
 	/**
+	 * hread updating artist info
+	 */
+	private Thread t;
+
+	/**
+	 * Store last artist shown
+	 */
+	private String lastArtist;
+
+	/**
 	 * Init panel
 	 */
 	public TrackArtist() {
@@ -129,56 +139,63 @@ public class TrackArtist extends CentralArea implements Observer {
 		showInfo();
 	}
 
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		// Reset table
-		tableModel.setRowCount(0);
+	/**
+	 * Update artist info
+	 */
+	public void updateInfo() {
+		Song s = Playlist.getPlaylist().getCurrentSong();
+		if (s != null) { //Song exist
+			if (s.getArtist().equals(lastArtist))
+				return; // Same artist => do not need to reload
 
-		if (Playlist.getPlaylist().getCurrentSong() != null) { //Song exist
-			final String artist = Playlist.getPlaylist().getCurrentSong().getArtist();
+			// Store artist
+			lastArtist = s.getArtist();
+
+			// Reset table
+			tableModel.setRowCount(0);
+
+			final String artist = s.getArtist();
 			final String bioTxt = ArtistInfo.getBio(artist);
 			if (!bioTxt.isEmpty()) { // Lyric exist
 				final Font f = GUIParameters.getFont();
-				Thread t = new Thread(new Runnable() {
-					public void run() {
-						hideInfo();
-						bio.setText("<html><style type='text/css'>html {width:500px; font-family: '"
-								+ f.getFamily()
-								+ "'; font-size:20px;}h1{margin-bottom:0;} </style><h1>" + artist + "</h1>"
-								+ "<h3>" + NumberFormat.getInstance().format(ArtistInfo.getNbAuditors(artist)) + " Auditeurs</h6>"
-								+ "<p><img src = \"" + ArtistInfo.getArtistImageURL(artist) + "\" />"
-								+ bioTxt.replaceAll("(?m)^User-contributed.*\\s+$", "")
-								.replaceAll("\n", "<br>").replaceAll("<a.*</a>\\.?", "") + "</p>"
-								+ "<html>");
 
-						int i = 0;
-						Iterator it = ArtistInfo.getTopTracks(artist).iterator();
-						while (it.hasNext() && i < 5) { // Get top tracks
-							Track t = (Track) it.next();
+				bio.setText("<html><style type='text/css'>html {width:500px; font-family: '"
+						+ f.getFamily()
+						+ "'; font-size:20px;}h1{margin-bottom:0;} </style><h1>" + artist + "</h1>"
+						+ "<h3>" + NumberFormat.getInstance().format(ArtistInfo.getNbAuditors(artist)) + " Auditeurs</h6>"
+						+ "<p><img src = \"" + ArtistInfo.getArtistImageURL(artist) + "\" />"
+						+ bioTxt.replaceAll("(?m)^User-contributed.*\\s+$", "")
+						.replaceAll("\n", "<br>").replaceAll("<a.*</a>\\.?", "") + "</p>"
+						+ "<html>");
+				hideInfo();
 
-							// Find top track in library
-							Set<Song> songs = MusicLibrary.getMusicLibrary().getSongs(artist);
-							Iterator it2 = songs.iterator();
-							boolean find = false;
-							Song s = null;
-							while (it2.hasNext() && !find) {
-								s = (Song) it2.next();
-								if (s.getTitle().toLowerCase().equals(t.getName().toLowerCase())) {
-									find = true;
-								}
-							}
+				int i = 0;
+				Iterator it = ArtistInfo.getTopTracks(artist).iterator();
+				while (it.hasNext() && i < 5) { // Get top tracks
+					Track t = (Track) it.next();
 
-							// If found => add song to cell
-							if (find)
-								tableModel.addRow(new Object[]{t.getName(), NumberFormat.getInstance().format(t.getListeners()), s});
-							else
-								tableModel.addRow(new Object[]{t.getName(), NumberFormat.getInstance().format(t.getListeners()), ""});
-							i++;
+					// Find top track in library
+					Set<Song> songs = MusicLibrary.getMusicLibrary().getSongs(artist);
+					Iterator it2 = songs.iterator();
+					boolean find = false;
+					Song s2 = null;
+					while (it2.hasNext() && !find) {
+						s2 = (Song) it2.next();
+						if (s2.getTitle().toLowerCase().equals(t.getName().toLowerCase())) {
+							find = true;
 						}
-						topTracks.repaint();
 					}
-				});
-				t.start();
+
+					// If found => add song to cell
+					if (find)
+						tableModel.addRow(new Object[]{t.getName(), NumberFormat.getInstance().format(t.getListeners()), s});
+					else
+						tableModel.addRow(new Object[]{t.getName(), NumberFormat.getInstance().format(t.getListeners()), ""});
+					i++;
+				}
+				tableModel.setRowCount(5);
+				topTracks.repaint();
+
 
 			} else { //No bio
 				bio.setText("");
@@ -194,5 +211,15 @@ public class TrackArtist extends CentralArea implements Observer {
 			info.setText(MainWindow.bundle.getString("noSong"));
 			showInfo();
 		}
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		t = new Thread(new Runnable() {
+			public void run() {
+				updateInfo();
+			}
+		});
+		t.start();
 	}
 }

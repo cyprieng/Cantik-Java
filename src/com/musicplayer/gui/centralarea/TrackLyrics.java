@@ -1,6 +1,7 @@
 package com.musicplayer.gui.centralarea;
 
 import com.musicplayer.core.playlist.Playlist;
+import com.musicplayer.core.song.Song;
 import com.musicplayer.gui.GUIParameters;
 import com.musicplayer.gui.MainWindow;
 
@@ -23,6 +24,16 @@ public class TrackLyrics extends CentralArea implements Observer {
 	private JLabel lyric;
 
 	/**
+	 * Thread updating lyrics
+	 */
+	private Thread t;
+
+	/**
+	 * Store last song
+	 */
+	private Song lastSong;
+
+	/**
 	 * Init panel
 	 */
 	public TrackLyrics() {
@@ -40,17 +51,26 @@ public class TrackLyrics extends CentralArea implements Observer {
 		showInfo();
 	}
 
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		if (Playlist.getPlaylist().getCurrentSong() != null) { //Song exist
-			if (!Playlist.getPlaylist().getCurrentSong().getLyric().isEmpty()) { // Lyric exist
+	/**
+	 * Update lyrics
+	 */
+	public void updateLyrics() {
+		Song s = Playlist.getPlaylist().getCurrentSong();
+
+		if (s.equals(lastSong))
+			return; // Same song => do not need to reload
+
+		lastSong = s; // Store song
+
+		if (s != null) { //Song exist
+			if (!s.getLyric().isEmpty()) { // Lyric exist
 				Font f = GUIParameters.getFont();
 
 				hideInfo();
 				lyric.setText("<html><style type='text/css'>html { font-family: '"
 						+ f.getFamily()
 						+ "'; font-size:20px;} </style><h1>" + MainWindow.bundle.getString("lyric") + "</h1>"
-						+ Playlist.getPlaylist().getCurrentSong().getLyric()
+						+ s.getLyric()
 						.replaceAll("\n", "<br>") + "<html>");
 			} else { //No lyric
 				lyric.setText("");
@@ -66,5 +86,15 @@ public class TrackLyrics extends CentralArea implements Observer {
 			info.setText(MainWindow.bundle.getString("noSong"));
 			showInfo();
 		}
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		t = new Thread(new Runnable() {
+			public void run() {
+				updateLyrics();
+			}
+		});
+		t.start();
 	}
 }
