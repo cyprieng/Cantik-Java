@@ -188,7 +188,7 @@ public class TrackArtist extends CentralArea implements Observer {
 
 					// If found => add song to cell
 					if (find)
-						tableModel.addRow(new Object[]{t.getName(), NumberFormat.getInstance().format(t.getListeners()), s});
+						tableModel.addRow(new Object[]{t.getName(), NumberFormat.getInstance().format(t.getListeners()), s2});
 					else
 						tableModel.addRow(new Object[]{t.getName(), NumberFormat.getInstance().format(t.getListeners()), ""});
 					i++;
