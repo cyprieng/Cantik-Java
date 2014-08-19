@@ -24,7 +24,10 @@ public class LinuxHotkeys implements jxgrabkey.HotkeyListener {
 	public LinuxHotkeys() {
 		// Load JXGrabKey lib
 		try {
-			System.load(new File("libJXGrabKey.so").getCanonicalPath());
+			if (System.getProperty("sun.arch.data.model").equals("64"))
+				System.load(new File("libJXGrabKey64.so").getCanonicalPath());
+			else
+				System.load(new File("libJXGrabKey.so").getCanonicalPath());
 		} catch (IOException e) {
 			logger.log(Level.WARNING, e.getMessage());
 		}
