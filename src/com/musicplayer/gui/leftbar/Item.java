@@ -43,6 +43,11 @@ public class Item extends JPanel {
 	private JPanel activeIndicator;
 
 	/**
+	 * Text of the item
+	 */
+	protected JLabel text;
+
+	/**
 	 * Indicate if the item must be always active
 	 */
 	private boolean keepActive = false;
@@ -85,7 +90,7 @@ public class Item extends JPanel {
 		}
 
 		// Add text
-		LeftbarJLabel text = new LeftbarJLabel(MainWindow.bundle.getString(str));
+		text = new LeftbarJLabel(MainWindow.bundle.getString(str));
 		Border empty = new EmptyBorder(0, 10, 0, 0);
 		text.setBorder(empty);
 		this.add(text);

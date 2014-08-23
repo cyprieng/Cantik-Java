@@ -41,7 +41,7 @@ public class LeftBar extends JPanel {
 		searchWrap.setBorder(empty);
 
 		// Item active by default
-		Item defaultItem = new Item("Library");
+		Item defaultItem = new LibraryItem("Library");
 		defaultItem.setActive(true);
 
 		// Add items
