@@ -8,7 +8,7 @@ import com.musicplayer.core.musiclibrary.MusicLibrary;
 import com.musicplayer.core.playlist.Playlist;
 import com.musicplayer.gui.centralarea.LocalFileView;
 import com.musicplayer.gui.centralarea.ParametersView;
-import com.musicplayer.gui.centralarea.TrackArtist.TrackArtist;
+import com.musicplayer.gui.centralarea.trackartist.TrackArtist;
 import com.musicplayer.gui.centralarea.TrackLyrics;
 import com.musicplayer.gui.centralarea.musiclibrary.MusicLibraryView;
 import com.musicplayer.gui.centralarea.playlistview.PlaylistView;

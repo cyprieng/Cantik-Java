@@ -1,4 +1,4 @@
-package com.musicplayer.gui.centralarea.TrackArtist;
+package com.musicplayer.gui.centralarea.trackartist;
 
 import com.musicplayer.core.song.Song;
 
@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
  * Model for the TopTracks table
  *
  * @author cyprien
- * @see com.musicplayer.gui.centralarea.TrackArtist.TrackArtist
+ * @see com.musicplayer.gui.centralarea.trackartist.TrackArtist
  */
 public class TopTracksModel extends DefaultTableModel {
 	/**

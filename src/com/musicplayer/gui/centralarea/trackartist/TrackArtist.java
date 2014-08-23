@@ -1,4 +1,4 @@
-package com.musicplayer.gui.centralarea.TrackArtist;
+package com.musicplayer.gui.centralarea.trackartist;
 
 import com.musicplayer.core.musiclibrary.ArtistInfo;
 import com.musicplayer.core.musiclibrary.MusicLibrary;
