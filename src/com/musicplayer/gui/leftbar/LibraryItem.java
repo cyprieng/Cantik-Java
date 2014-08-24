@@ -1,6 +1,6 @@
 package com.musicplayer.gui.leftbar;
 
-import com.musicplayer.core.musiclibrary.MusicLibrary;
+import com.musicplayer.gui.centralarea.musiclibrary.MusicLibraryView;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -34,16 +34,16 @@ public class LibraryItem extends Item implements Observer {
 		add(loading);
 
 		// Add to observer & update
-		MusicLibrary.getMusicLibrary().addObserver(this);
-		update(MusicLibrary.getMusicLibrary(), null);
+		MusicLibraryView.getMusiLibraryView().addObserver(this);
+		update(null, null);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		// Show / hide loading icon
-		if (MusicLibrary.getMusicLibrary().isReady())
-			loading.setVisible(false);
-		else
+		if (MusicLibraryView.getMusiLibraryView().isLoading())
 			loading.setVisible(true);
+		else
+			loading.setVisible(false);
 	}
 }

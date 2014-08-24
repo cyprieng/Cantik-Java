@@ -26,6 +26,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
@@ -65,10 +66,23 @@ public class MusicLibraryView extends CentralArea implements Observer {
 	private String query;
 
 	/**
+	 * Define either the library is loading or not
+	 */
+	private boolean loading;
+
+	/**
+	 * List of observers
+	 */
+	private ArrayList<Observer> listeners;
+
+	/**
 	 * Create the tree table
 	 */
 	private MusicLibraryView() {
 		MusicLibrary.getMusicLibrary().addObserver(this);
+
+		loading = false;
+		listeners = new ArrayList<>();
 
 		// Create JXTreeTable
 		DefaultMutableTreeTableNode root = new DefaultMutableTreeTableNode(
@@ -167,6 +181,8 @@ public class MusicLibraryView extends CentralArea implements Observer {
 		Thread t = new Thread(new Runnable() {
 			@Override
 			public void run() {
+				setLoading(true);
+
 				// Reset tree table
 				DefaultMutableTreeTableNode root = new DefaultMutableTreeTableNode(
 						"Library");
@@ -230,6 +246,8 @@ public class MusicLibraryView extends CentralArea implements Observer {
 				}
 
 				CustomTableHeader.customizeHeader(tree.getTableHeader()); // Set header style again
+
+				setLoading(false);
 			}
 		});
 
@@ -269,6 +287,39 @@ public class MusicLibraryView extends CentralArea implements Observer {
 				addNodeToPlaylist((DefaultMutableTreeTableNode) node.getChildAt(i));
 			}
 		}
+	}
+
+	/**
+	 * Add observer to the list
+	 *
+	 * @param o
+	 * 		Observer to add
+	 */
+	public void addObserver(Observer o) {
+		listeners.add(o);
+	}
+
+	/**
+	 * Define loading state and notify Observer
+	 *
+	 * @param b
+	 * 		New loading state
+	 */
+	private void setLoading(boolean b) {
+		loading = b;
+
+		// Notify
+		for (Observer o : listeners)
+			o.update(null, null);
+	}
+
+	/**
+	 * Get the loading state
+	 *
+	 * @return True if loading, false otherwise
+	 */
+	public boolean isLoading() {
+		return loading;
 	}
 
 	@Override
