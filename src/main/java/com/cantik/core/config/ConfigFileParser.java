@@ -2,10 +2,7 @@ package com.cantik.core.config;
 
 import com.cantik.core.Core;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,31 +32,61 @@ public class ConfigFileParser {
 	 * Constructor: parse the file
 	 */
 	private ConfigFileParser() {
-		params = new HashMap<String, String>();
+		params = new HashMap<>();
 
-		// Test file
+		// Get File
 		File configFile = new File(Core.getUserPath() + "cantik.config");
-		if (configFile.exists() && configFile.isFile()) {
-			try {
-				// Read config file
-				BufferedReader br = new BufferedReader(new InputStreamReader(
-						new FileInputStream(Core.getUserPath() + "cantik.config")));
 
-				String str;
-				while ((str = br.readLine()) != null) {
-					String temp[] = str.split("=", 2); // Get right and left
-					// part
-					// of the line
+		try {
+			this.loadConfigFile(configFile);
+		} catch (IOException e) {
+			logger.log(Level.WARNING, e.getMessage());
+		}
+	}
 
-					if (temp.length == 2) { // Add param
-						params.put(temp[0].trim(), temp[1].trim());
-					}
-				}
-				br.close();
-			} catch (Exception e) {
-				logger.log(Level.WARNING, e.getMessage());
+	/**
+	 * Constructor: parse the given file
+	 *
+	 * @param configFile
+	 * 		File to parse
+	 */
+	private ConfigFileParser(File configFile) {
+		params = new HashMap<>();
+
+		// Get File
+		if (configFile == null) {
+			configFile = new File(Core.getUserPath() + "cantik.config");
+		}
+
+		try {
+			this.loadConfigFile(configFile);
+		} catch (IOException e) {
+			logger.log(Level.WARNING, e.getMessage());
+		}
+	}
+
+	/**
+	 * Load the given config file in the parameters.
+	 *
+	 * @param configFile
+	 * 		Config file to parse.
+	 * @throws IOException
+	 * 		In case an error happen while reading the file.
+	 */
+	public void loadConfigFile(File configFile) throws IOException {
+		// Read config file
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				new FileInputStream(configFile)));
+
+		String str;
+		while ((str = br.readLine()) != null) {
+			String temp[] = str.split("=", 2); // Get right and left part of the line
+
+			if (temp.length == 2) { // Add param
+				this.params.put(temp[0].trim(), temp[1].trim());
 			}
 		}
+		br.close();
 	}
 
 	/**
