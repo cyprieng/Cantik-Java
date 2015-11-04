@@ -26,15 +26,15 @@ public class AdaptativePlayer extends Observable implements Player, Observer {
 				.toUpperCase();
 
 		// Switch format
-		if (fileExt.equals("MP3")) {
+		if ("MP3".equals(fileExt)) {
 			MP3Player p = new MP3Player(str);
 			p.addObserver(this);
 			player = p;
-		} else if (fileExt.equals("FLAC")) {
+		} else if ("FLAC".equals(fileExt)) {
 			FLACPlayer p = new FLACPlayer(str);
 			p.addObserver(this);
 			player = p;
-		} else if (fileExt.equals("OGG")) {
+		} else if ("OGG".equals(fileExt)) {
 			OGGPlayer p = new OGGPlayer(str);
 			p.addObserver(this);
 			player = p;

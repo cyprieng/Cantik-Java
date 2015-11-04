@@ -53,11 +53,6 @@ public class ConfigFileParser {
 	private ConfigFileParser(File configFile) {
 		params = new HashMap<>();
 
-		// Get File
-		if (configFile == null) {
-			configFile = new File(Core.getUserPath() + "cantik.config");
-		}
-
 		try {
 			this.loadConfigFile(configFile);
 		} catch (IOException e) {

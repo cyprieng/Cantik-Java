@@ -56,6 +56,8 @@ public class LinuxHotkeys implements jxgrabkey.HotkeyListener {
 			case 3:
 				Playlist.getPlaylist().back();
 				break;
+			default:  // Unknow hotkey
+			break;
 		}
 	}
 }

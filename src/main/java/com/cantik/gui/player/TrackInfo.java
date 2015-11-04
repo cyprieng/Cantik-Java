@@ -20,7 +20,7 @@ public class TrackInfo extends JPanel implements Observer {
 	/**
 	 * JLabel showing info
 	 */
-	LeftbarJLabel title, album, artist;
+	private LeftbarJLabel title, album, artist;
 
 	/*
 	 * Init JLabel

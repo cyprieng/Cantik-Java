@@ -23,7 +23,7 @@ public class Player extends JPanel implements Observer {
 	/**
 	 * JLabel showing the duration of the song
 	 */
-	LeftbarJLabel duration;
+	private LeftbarJLabel duration;
 
 	/**
 	 * Constructor: init all component

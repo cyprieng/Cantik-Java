@@ -116,8 +116,8 @@ public class SearchField extends JTextField {
 
 		// Placeholder
 		if (getText().isEmpty()
-				&& !(FocusManager.getCurrentKeyboardFocusManager()
-				.getFocusOwner() == this)) {
+				&& FocusManager.getCurrentKeyboardFocusManager()
+				.getFocusOwner() != this) {
 			Graphics2D g2 = (Graphics2D) g.create();
 			g2.setColor(GUIParameters.BORDER);
 			g2.setFont(getFont().deriveFont(Font.ITALIC));

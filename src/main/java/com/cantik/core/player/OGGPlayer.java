@@ -194,7 +194,12 @@ public class OGGPlayer extends Observable implements Player, Runnable {
 			try {
 				// Skip
 				in.reset();
-				in.skip((long) (in.available() * (double) ((double) percent / 100.0)));
+				long to_skip = (long) (in.available() * ((double) percent / 100.0));
+				long skipped = 1;
+				while(to_skip != 0 && skipped != 0){
+					skipped = in.skip(to_skip);
+					to_skip -= skipped;
+				}
 			} catch (Exception e) {
 				logger.log(Level.WARNING, e.getMessage());
 			}

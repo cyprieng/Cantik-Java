@@ -60,6 +60,8 @@ public class CustomTreeTableModel extends DefaultTreeTableModel {
 					return ((Song) o).getYear();
 				case 3:
 					return Core.stringifyDuration(((Song) o).getDuration());
+				default:  // Column not containing song metadata
+				break;
 			}
 		}
 

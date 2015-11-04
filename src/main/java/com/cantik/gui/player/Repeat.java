@@ -81,6 +81,8 @@ public class Repeat extends JButton {
 					Playlist.getPlaylist().setRepeat(RepeatState.OFF);
 					((Repeat) e.getSource()).setIcon("assets/img/repeat.png");
 					break;
+				default:  // Unknow repeat state
+				break;
 			}
 		}
 	}

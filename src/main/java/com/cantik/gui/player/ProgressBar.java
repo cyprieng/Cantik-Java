@@ -26,17 +26,17 @@ public class ProgressBar extends JSlider implements Observer {
 	/**
 	 * Timer updating the value of the slider
 	 */
-	Timer timer;
+	private Timer timer;
 
 	/**
 	 * Define if we are playing
 	 */
-	Boolean playing;
+	private Boolean playing;
 
 	/**
 	 * Define if we have to call the listener
 	 */
-	Boolean changeListener;
+	private Boolean changeListener;
 
 	/**
 	 * Init the JSlider

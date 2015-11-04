@@ -41,6 +41,8 @@ public class WindowsHotkeys implements IntellitypeListener {
 			case JIntellitype.APPCOMMAND_MEDIA_PREVIOUSTRACK:
 				Playlist.getPlaylist().back();
 				break;
+			default:  // Unknow hotkey
+			break;
 		}
 	}
 }

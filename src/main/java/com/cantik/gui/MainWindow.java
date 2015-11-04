@@ -175,9 +175,9 @@ public class MainWindow {
 		String OS = Core.getOS();
 
 		// Load hotkeys
-		if (OS.equals("windows"))
+		if ("windows".equals(OS))
 			new WindowsHotkeys();
-		else if (OS.equals("linux"))
+		else if ("linux".equals(OS))
 			new LinuxHotkeys();
 
 		// Add keyboard shortcut: SPACE => Play / Pause

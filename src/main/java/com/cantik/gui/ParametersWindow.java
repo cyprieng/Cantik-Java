@@ -40,12 +40,12 @@ public class ParametersWindow extends JDialog {
 	/**
 	 * Label to show if there is an error
 	 */
-	JLabel error;
+	private JLabel error;
 
 	/**
 	 * Text field for library path
 	 */
-	JTextField path;
+	private JTextField path;
 
 	/**
 	 * Create the window

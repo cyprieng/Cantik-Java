@@ -256,9 +256,7 @@ public class Song implements Serializable {
 
 		Song song = (Song) o;
 
-		if (!path.equals(song.path)) return false;
-
-		return true;
+		return path.equals(song.path);
 	}
 
 	@Override

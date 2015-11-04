@@ -250,7 +250,14 @@ public class FLACPlayer extends Observable implements Player, Runnable,
 
 				// Skip
 				pause();
-				is.skip((long) (is.available() * (double) ((double) percent / 100.0)));
+
+				long to_skip = (long) (is.available() * ((double) percent / 100.0));
+				long skipped = 1;
+				while(to_skip != 0 && skipped != 0){
+					skipped = is.skip(to_skip);
+					to_skip -= skipped;
+				}
+
 				play();
 			} catch (Exception e) {
 				logger.log(Level.WARNING, e.getMessage());

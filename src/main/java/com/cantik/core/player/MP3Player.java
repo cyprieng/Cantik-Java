@@ -155,7 +155,12 @@ public class MP3Player extends Observable implements Runnable, Player {
 			);
 
 			// Skip
-			song.skip((long) (song.available() * (double) ((double) percent / 100.0)));
+			long to_skip = (long) (song.available() * ((double) percent / 100.0));
+			long skipped = 1;
+			while(to_skip != 0 && skipped != 0){
+				skipped = song.skip(to_skip);
+				to_skip -= skipped;
+			}
 		} catch (Exception e) {
 			logger.log(Level.WARNING, e.getMessage());
 		}
