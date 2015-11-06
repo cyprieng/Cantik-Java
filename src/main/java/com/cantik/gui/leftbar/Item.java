@@ -99,12 +99,12 @@ public class Item extends JPanel {
 		final Item label = this;
 		this.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseEntered(java.awt.event.MouseEvent evt) {
+			public void mouseEntered(MouseEvent evt) {
 				label.setActive(false);
 			}
 
 			@Override
-			public void mouseExited(java.awt.event.MouseEvent evt) {
+			public void mouseExited(MouseEvent evt) {
 				label.unsetActive(false);
 			}
 		});
@@ -113,18 +113,22 @@ public class Item extends JPanel {
 		this.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				// Placeholder
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
+				// Placeholder
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
+				// Placeholder
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				// Placeholder
 			}
 
 			@Override

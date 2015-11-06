@@ -152,7 +152,8 @@ public class CustomScrollBar extends BasicScrollBarUI {
 			int h = thumbR.y - y;
 			g.fillRect(x, y, w, h);
 		} else {
-			int x, w;
+			int x;
+			int w;
 			if (scrollbar.getComponentOrientation().isLeftToRight()) {
 				x = decrButton.getX() + decrButton.getWidth();
 				w = thumbR.x - x;

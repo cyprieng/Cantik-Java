@@ -94,15 +94,15 @@ public class Song implements Serializable {
 			Tag tag = f.getTag();
 
 			// Read tags
-			if (tag.getFirst(FieldKey.TITLE) != "")
+			if (!"".equals(tag.getFirst(FieldKey.TITLE)))
 				this.title = tag.getFirst(FieldKey.TITLE);
-			if (tag.getFirst(FieldKey.ALBUM) != "")
+			if (!"".equals(tag.getFirst(FieldKey.ALBUM)))
 				this.album = tag.getFirst(FieldKey.ALBUM);
-			if (tag.getFirst(FieldKey.ARTIST) != "")
+			if (!"".equals(tag.getFirst(FieldKey.ARTIST)))
 				this.artist = tag.getFirst(FieldKey.ARTIST);
-			if (tag.getFirst(FieldKey.YEAR) != "")
+			if (!"".equals(tag.getFirst(FieldKey.YEAR)))
 				this.year = tag.getFirst(FieldKey.YEAR);
-			if (tag.getFirst(FieldKey.LYRICS) != "")
+			if (!"".equals(tag.getFirst(FieldKey.LYRICS)))
 				this.lyric = tag.getFirst(FieldKey.LYRICS);
 
 			this.duration = f.getAudioHeader().getTrackLength();

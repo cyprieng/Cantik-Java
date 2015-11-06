@@ -46,16 +46,6 @@ public class TrackArtist extends CentralArea implements Observer {
 	private TopTracksModel tableModel;
 
 	/**
-	 * Panel for the above elements
-	 */
-	private JPanel panel;
-
-	/**
-	 * hread updating artist info
-	 */
-	private Thread t;
-
-	/**
 	 * Store last artist shown
 	 */
 	private String lastArtist;
@@ -68,7 +58,7 @@ public class TrackArtist extends CentralArea implements Observer {
 		Playlist.getPlaylist().addObserver(this);
 
 		// Create panel
-		panel = new JPanel();
+		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.setBorder(new EmptyBorder(0, 10, 0, 10));
 		add(panel, true, false);
@@ -181,7 +171,7 @@ public class TrackArtist extends CentralArea implements Observer {
 					Song s2 = null;
 					while (it2.hasNext() && !find) {
 						s2 = (Song) it2.next();
-						if (s2.getTitle().toLowerCase().equals(t.getName().toLowerCase())) {
+						if (s2.getTitle().equalsIgnoreCase(t.getName())) {
 							find = true;
 						}
 					}
@@ -215,7 +205,7 @@ public class TrackArtist extends CentralArea implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		t = new Thread(new Runnable() {
+		Thread t = new Thread(new Runnable() {
 			public void run() {
 				updateInfo();
 			}

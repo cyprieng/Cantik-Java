@@ -42,16 +42,6 @@ public class FLACPlayer extends Observable implements Player, Runnable,
 	private Thread playerThread;
 
 	/**
-	 * Format of the song
-	 */
-	private AudioFormat fmt;
-
-	/**
-	 * Data line information
-	 */
-	private DataLine.Info info;
-
-	/**
 	 * Source data line
 	 */
 	private SourceDataLine line;
@@ -121,8 +111,8 @@ public class FLACPlayer extends Observable implements Player, Runnable,
 	 */
 	public void processStreamInfo(StreamInfo streamInfo) {
 		try {
-			fmt = streamInfo.getAudioFormat();
-			info = new DataLine.Info(SourceDataLine.class, fmt,
+			AudioFormat fmt = streamInfo.getAudioFormat();
+			DataLine.Info info = new DataLine.Info(SourceDataLine.class, fmt,
 					AudioSystem.NOT_SPECIFIED);
 			line = (SourceDataLine) AudioSystem.getLine(info);
 

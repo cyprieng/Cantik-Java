@@ -25,9 +25,6 @@ public class ParametersView extends CentralArea {
 
 				new ParametersWindow(); // Open window
 			}
-
-			public void componentHidden(ComponentEvent e) {
-			}
 		});
 	}
 }

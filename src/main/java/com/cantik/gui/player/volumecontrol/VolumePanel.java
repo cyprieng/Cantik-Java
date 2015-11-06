@@ -64,10 +64,5 @@ public class VolumePanel extends JPanel {
 						- vc.getPreferredSize().height - 20,
 				vc.getPreferredSize().width, vc.getPreferredSize().height
 		);
-		try {
-			finalize();
-		} catch (Throwable e) {
-			logger.log(Level.WARNING, e.getMessage());
-		}
 	}
 }

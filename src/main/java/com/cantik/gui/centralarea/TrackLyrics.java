@@ -24,11 +24,6 @@ public class TrackLyrics extends CentralArea implements Observer {
 	private JLabel lyric;
 
 	/**
-	 * Thread updating lyrics
-	 */
-	private Thread t;
-
-	/**
 	 * Store last song
 	 */
 	private Song lastSong;
@@ -90,7 +85,7 @@ public class TrackLyrics extends CentralArea implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		t = new Thread(new Runnable() {
+		Thread t = new Thread(new Runnable() {
 			public void run() {
 				updateLyrics();
 			}

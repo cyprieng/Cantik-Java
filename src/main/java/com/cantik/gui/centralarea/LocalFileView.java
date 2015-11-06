@@ -95,9 +95,10 @@ public class LocalFileView extends CentralArea {
 		// Show FileChooser when this CentralArea component is shown
 		addComponentListener(new ComponentAdapter() {
 			public void componentShown(ComponentEvent e) {
+				System.out.println("Test");
 				MainWindow.setCentralArea("Playlist"); // Show playlist
 
-				// Show file chooser and get the resule
+				// Show file chooser and get the result
 				int returnVal = fc.showOpenDialog(MainWindow.getMainWindow());
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					// Add files to the playlist
@@ -111,9 +112,6 @@ public class LocalFileView extends CentralArea {
 						}
 					}
 				}
-			}
-
-			public void componentHidden(ComponentEvent e) {
 			}
 		});
 	}

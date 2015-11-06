@@ -32,11 +32,9 @@ public class Core {
 				File appData = new File(System.getenv("APPDATA"));
 
 				// Create it
-				if (appData.exists() && appData.isDirectory()) {
-					if (new File(path).mkdirs()) {
-						configPath = path + File.separator;
-						return configPath;
-					}
+				if (appData.exists() && appData.isDirectory() && new File(path).mkdirs()) {
+					configPath = path + File.separator;
+					return configPath;
 				}
 			} else {
 				configPath = path + File.separator;

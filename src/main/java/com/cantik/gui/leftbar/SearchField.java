@@ -78,10 +78,12 @@ public class SearchField extends JTextField {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
+				// No action needed when releasing key
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
+				// No action needed when pressing key
 			}
 		});
 

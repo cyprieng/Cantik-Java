@@ -40,11 +40,5 @@ public class CenterJLabel extends LeftbarJLabel {
 						.getParent().getHeight() / 2 - this.getHeight() / 2,
 				this.getWidth(), this.getHeight()
 		);
-
-		try {
-			finalize();
-		} catch (Throwable e) {
-			logger.log(Level.WARNING, e.getMessage());
-		}
 	}
 }

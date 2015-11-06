@@ -16,21 +16,6 @@ public class PlaylistPopUpMenu extends JPopupMenu {
 	private static final long serialVersionUID = 687098535945310862L;
 
 	/**
-	 * Item "delete"
-	 */
-	private JMenuItem delete;
-
-	/**
-	 * Item "stop track"
-	 */
-	private JMenuItem stopTrack;
-
-	/**
-	 * Item "unset stop track"
-	 */
-	private JMenuItem stopTrackUnset;
-
-	/**
 	 * Init menu
 	 *
 	 * @param index
@@ -40,7 +25,7 @@ public class PlaylistPopUpMenu extends JPopupMenu {
 		super();
 
 		// Add item "delete"
-		delete = new JMenuItem(MainWindow.bundle.getString("removeFromPlaylist"));
+		JMenuItem delete = new JMenuItem(MainWindow.bundle.getString("removeFromPlaylist"));
 		add(delete);
 		delete.addActionListener(new ActionListener() {
 			@Override
@@ -52,7 +37,7 @@ public class PlaylistPopUpMenu extends JPopupMenu {
 		addSeparator();
 
 		// Add item "stop track"
-		stopTrack = new JMenuItem(MainWindow.bundle.getString("stopAfter"));
+		JMenuItem stopTrack = new JMenuItem(MainWindow.bundle.getString("stopAfter"));
 		add(stopTrack);
 		stopTrack.addActionListener(new ActionListener() {
 			@Override
@@ -62,7 +47,7 @@ public class PlaylistPopUpMenu extends JPopupMenu {
 		});
 
 		// Add item "unset stop track"
-		stopTrackUnset = new JMenuItem(MainWindow.bundle.getString("unsetStopAfter"));
+		JMenuItem stopTrackUnset = new JMenuItem(MainWindow.bundle.getString("unsetStopAfter"));
 		add(stopTrackUnset);
 		stopTrackUnset.addActionListener(new ActionListener() {
 			@Override

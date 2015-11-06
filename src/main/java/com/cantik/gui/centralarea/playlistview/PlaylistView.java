@@ -128,12 +128,12 @@ public class PlaylistView extends CentralArea implements Observer {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-
+				// Placeholder
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-
+				// Placeholder
 			}
 		});
 
@@ -165,10 +165,12 @@ public class PlaylistView extends CentralArea implements Observer {
 
 			@Override
 			public void mouseExited(MouseEvent e) {
+				// Placeholder
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				// Placeholder
 			}
 
 			@Override

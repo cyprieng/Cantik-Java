@@ -87,10 +87,10 @@ public class MainWindow {
 		// Central area
 		centralArea = new JPanel(new CardLayout());
 		centralArea.add(MusicLibraryView.getMusiLibraryView(), "Library");
-		centralArea.add(new LocalFileView(), "Local File");
+		centralArea.add(new LocalFileView(), "LocalFile");
 		centralArea.add(new PlaylistView(), "Playlist");
 		centralArea.add(new TrackLyrics(), "Lyrics");
-		centralArea.add(new TrackArtist(), "Artist Info");
+		centralArea.add(new TrackArtist(), "ArtistInfo");
 		centralArea.add(new ParametersView(), "Settings");
 
 		// Add elements
