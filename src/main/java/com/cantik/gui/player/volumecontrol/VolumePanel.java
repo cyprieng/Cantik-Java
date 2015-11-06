@@ -4,8 +4,6 @@ import com.cantik.gui.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Floating JPanel showing VolumeControl
@@ -14,11 +12,6 @@ import java.util.logging.Logger;
  */
 public class VolumePanel extends JPanel {
 	private static final long serialVersionUID = 8107614292050804904L;
-
-	/**
-	 * Logger for the class
-	 */
-	private static Logger logger = Logger.getLogger(VolumePanel.class.getName());
 
 	/**
 	 * Store the slider

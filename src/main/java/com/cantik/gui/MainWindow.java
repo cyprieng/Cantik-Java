@@ -47,17 +47,17 @@ public class MainWindow {
 	/**
 	 * Store the unique JFrame
 	 */
-	private static JFrame window;
+	private static final JFrame window;
 
 	/**
 	 * Store the central area panel
 	 */
-	private static JPanel centralArea;
+	private static final JPanel centralArea;
 
 	/**
 	 * Store the left bar
 	 */
-	private static LeftBar leftBar;
+	private static final LeftBar leftBar;
 
 	/**
 	 * Store the current and the previous card shown
@@ -72,7 +72,22 @@ public class MainWindow {
 	/**
 	 * Init window
 	 */
-	private MainWindow() {
+	static {
+		// Load log config file
+		try {
+			LogManager.getLogManager().readConfiguration(new FileInputStream("logging.properties"));
+		} catch (Exception e) {
+			try {
+				LogManager.getLogManager().readConfiguration(MainWindow.class.getClassLoader().getResourceAsStream("logging.properties"));
+			} catch (IOException e1) {
+			}
+		}
+
+		// Get the resource bundle
+		bundle = ResourceBundle.getBundle("Text", Locale.getDefault());
+
+		UIManager.getLookAndFeelDefaults().put("defaultFont", GUIParameters.getFont());
+
 		// Set name and icon
 		window = new JFrame("Cantik");
 		try {
@@ -113,64 +128,6 @@ public class MainWindow {
 
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.pack();
-		window.setVisible(true);
-		window.requestFocus();
-	}
-
-	/**
-	 * Get the MainWindow
-	 *
-	 * @return Return the main window and create it if necessary
-	 */
-	public static JFrame getMainWindow() {
-		if (window == null) {
-			new MainWindow();
-		}
-
-		return window;
-	}
-
-	/**
-	 * Change the central area
-	 *
-	 * @param toShow
-	 * 		The name of the panel to show
-	 */
-	public static void setCentralArea(String toShow) {
-		// Update card historic
-		previousCardShown = cardShown;
-		cardShown = toShow;
-
-		// Show card
-		CardLayout cl = (CardLayout) (centralArea.getLayout());
-		cl.show(centralArea, toShow);
-	}
-
-	/**
-	 * Get the previous card shown
-	 *
-	 * @return Name of the previous card
-	 */
-	public static String getPreviousCardShown() {
-		return previousCardShown;
-	}
-
-	public static void main(String[] args) {
-		// Load log config file
-		try {
-			LogManager.getLogManager().readConfiguration(new FileInputStream("logging.properties"));
-		} catch (Exception e) {
-			try {
-				LogManager.getLogManager().readConfiguration(MainWindow.class.getClassLoader().getResourceAsStream("logging.properties"));
-			} catch (IOException e1) {
-			}
-		}
-
-		// Get the resource bundle
-		bundle = ResourceBundle.getBundle("Text", Locale.getDefault());
-
-		UIManager.getLookAndFeelDefaults().put("defaultFont", GUIParameters.getFont());
-		getMainWindow();
 
 		String OS = Core.getOS();
 
@@ -203,5 +160,44 @@ public class MainWindow {
 			// No library => settings
 			setCentralArea("Settings");
 		}
+	}
+
+	/**
+	 * Get the MainWindow
+	 *
+	 * @return Return the main window and create it if necessary
+	 */
+	public static JFrame getMainWindow() {
+		return window;
+	}
+
+	/**
+	 * Change the central area
+	 *
+	 * @param toShow
+	 * 		The name of the panel to show
+	 */
+	public static void setCentralArea(String toShow) {
+		// Update card historic
+		previousCardShown = cardShown;
+		cardShown = toShow;
+
+		// Show card
+		CardLayout cl = (CardLayout) (centralArea.getLayout());
+		cl.show(centralArea, toShow);
+	}
+
+	/**
+	 * Get the previous card shown
+	 *
+	 * @return Name of the previous card
+	 */
+	public static String getPreviousCardShown() {
+		return previousCardShown;
+	}
+
+	public static void main(String[] args) {
+		window.setVisible(true);
+		window.requestFocus();
 	}
 }

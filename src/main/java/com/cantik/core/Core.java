@@ -50,11 +50,9 @@ public class Core {
 			File home = new File(System.getProperty("user.home"));
 
 			// Create it
-			if (home.exists() && home.isDirectory()) {
-				if (new File(path).mkdirs()) {
-					configPath = path + File.separator;
-					return configPath;
-				}
+			if (home.exists() && home.isDirectory() && new File(path).mkdirs()) {
+				configPath = path + File.separator;
+				return configPath;
 			}
 		} else {
 			configPath = path + File.separator;
