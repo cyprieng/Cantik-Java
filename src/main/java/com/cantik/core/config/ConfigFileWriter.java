@@ -16,19 +16,40 @@ import java.util.Set;
  */
 public class ConfigFileWriter {
 	/**
-	 * Wirte the ConfigFileParser in the config file
+	 * Write the ConfigFileParser in the config file
 	 *
 	 * @throws Exception
 	 * @see ConfigFileParser
 	 */
 	public static void writeConfigFile() throws Exception {
+		String configPath = Core.getUserPath() + "cantik.config";
+		writeFile(configPath);
+	}
+
+	/**
+	 * Write the ConfigFileParser in the config file
+	 *
+	 * @param configPath
+	 * 		Path of the config file to write.
+	 * @throws Exception
+	 * @see ConfigFileParser
+	 */
+	public static void writeConfigFile(String configPath) throws Exception {
+		writeFile(configPath);
+	}
+
+	/**
+	 * Write the ConfigFileParser in the config file
+	 *
+	 * @throws Exception
+	 * @see ConfigFileParser
+	 */
+	private static void writeFile(String configPath) throws Exception {
 		// Open config file
-		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(
-				Core.getUserPath() + "cantik.config")));
+		BufferedWriter bw = new BufferedWriter(new FileWriter(new File(configPath)));
 
 		// Run through the hashmap of ConfigFileParser
-		HashMap<String, String> params = ConfigFileParser.getConfigFileParser()
-				.getHashMap();
+		HashMap<String, String> params = ConfigFileParser.getConfigFileParser().getHashMap();
 		Set<String> keys = params.keySet();
 		Iterator<String> it = keys.iterator();
 

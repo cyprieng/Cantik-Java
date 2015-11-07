@@ -45,22 +45,6 @@ public class ConfigFileParser {
 	}
 
 	/**
-	 * Constructor: parse the given file
-	 *
-	 * @param configFile
-	 * 		File to parse
-	 */
-	private ConfigFileParser(File configFile) {
-		params = new HashMap<>();
-
-		try {
-			this.loadConfigFile(configFile);
-		} catch (IOException e) {
-			logger.log(Level.WARNING, e.getMessage());
-		}
-	}
-
-	/**
 	 * Load the given config file in the parameters.
 	 *
 	 * @param configFile
